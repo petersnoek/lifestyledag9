@@ -1,4 +1,7 @@
 /node_modules
+/node_modules.orig
+/resources.orig
+/public.orig
 /public/hot
 /public/storage
 /storage/*.key
@@ -10,5 +13,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+package-lock.orig.json
+package.orig.json
 /.idea
 /.vscode
