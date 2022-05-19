@@ -21,4 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
+
+
 require __DIR__.'/auth.php';
