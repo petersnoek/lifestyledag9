@@ -1,98 +1,56 @@
-@extends('layouts.simple')
+<x-guest-layout>
+    <x-auth-card>
+        <x-slot name="logo">
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </x-slot>
 
-@section('content')
-    <!-- Page Content -->
-    <div class="bg-image" style="background-image: url('media/photos/photo14@2x.jpg');">
-        <div class="row g-0 bg-primary-dark-op">
-            <!-- Meta Info Section -->
-            <div class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
-                <div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
-                    <div class="w-100">
-                        <a class="link-fx fw-semibold fs-2 text-white" href="/">
-                            Lifestyledag
-                        </a>
-                        <p class="text-white-75 me-xl-8 mt-2">
-                            Welkom bij Da Vinci College! Je vind hier alles over de lifestyledag.
-                        </p>
-                    </div>
-                </div>
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <!-- Email Address -->
+            <div>
+                <x-label for="email" :value="__('Email')" />
+
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
-            <!-- END Meta Info Section -->
 
-            <!-- Main Section -->
-            <div class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
-                <div class="p-3 w-100 d-lg-none text-center">
-                    <a class="link-fx fw-semibold fs-3 text-dark" href="/">
-                        Lifestyledag
+            <!-- Password -->
+            <div class="mt-4">
+                <x-label for="password" :value="__('Password')" />
+
+                <x-input id="password" class="block mt-1 w-full"
+                                type="password"
+                                name="password"
+                                required autocomplete="current-password" />
+            </div>
+
+            <!-- Remember Me -->
+            <div class="block mt-4">
+                <label for="remember_me" class="inline-flex items-center">
+                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
                     </a>
-                </div>
-                <div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
-                    <div class="w-100">
-                        <!-- Header -->
-                        <div class="text-center mb-5">
-                            <p class="mb-3">
-                                <i class="fa fa-2x fa-circle-notch text-primary-light"></i>
-                            </p>
-                            <h1 class="fw-bold mb-2">
-                                Inloggen
-                            </h1>
-                            <p class="fw-medium text-muted">
-                                Welkom! Log hier in of <a href="{{ route('register') }}">maak een nieuw account</a>.
-                            </p>
-                        </div>
-                        <!-- END Header -->
+                @endif
 
-                        <!-- Sign In Form -->
-                        <!-- jQuery Validation (.js-validation-signin class is initialized in js/pages/op_auth_signin.min.js which was auto compiled from _js/pages/op_auth_signin.js) -->
-                        <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                        <div class="row g-0 justify-content-center">
-                            <div class="col-sm-8 col-xl-4">
-                                <form class="js-validation-signin" action="{{ route('login') }}" method="POST">
-                                    @csrf
-
-                                    <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="E-mail">
-                                    </div>
-                                    <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord">
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div>
-                                            <a class="text-muted fs-sm fw-medium d-block d-lg-inline-block mb-1" href="op_auth_reminder3.html">
-                                                Wachtwoord vergeten?
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <button type="submit" class="btn btn-lg btn-alt-primary">
-                                                <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i> Inloggen
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- END Sign In Form -->
-                    </div>
-                </div>
-                <div class="px-4 py-3 w-100 d-lg-none d-flex flex-column flex-sm-row justify-content-between fs-sm text-center text-sm-start">
-                    <p class="fw-medium text-black-50 py-2 mb-0">
-                        <strong>OneUI 5.2</strong> &copy; <span data-toggle="year-copy"></span>
-                    </p>
-                    <ul class="list list-inline py-2 mb-0">
-                        <li class="list-inline-item">
-                            <a class="text-muted fw-medium" href="javascript:void(0)">Legal</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-muted fw-medium" href="javascript:void(0)">Contact</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-muted fw-medium" href="javascript:void(0)">Terms</a>
-                        </li>
-                    </ul>
-                </div>
+                <x-button class="ml-3">
+                    {{ __('Log in') }}
+                </x-button>
             </div>
-            <!-- END Main Section -->
-        </div>
-    </div>
-    <!-- END Page Content -->
-@endsection
+        </form>
+    </x-auth-card>
+</x-guest-layout>
