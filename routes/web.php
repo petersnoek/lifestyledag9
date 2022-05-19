@@ -23,5 +23,4 @@ Route::get('/dashboard', function () {
 
 Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
 
-
 require __DIR__.'/auth.php';
