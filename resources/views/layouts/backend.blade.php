@@ -53,7 +53,7 @@
               <!-- Side Header -->
               <div class="side-header side-content bg-white-op">
                   <!-- Logo -->
-                  <a class="fw-semibold text-dual" href="index.html">
+                  <a class="fw-semibold text-dual" href="{{ route('dashboard') }}">
                       <span class="smini-visible"><img src="/favicons/carrot-16.png"></span>
                       <span class="smini-hide fs-5 tracking-wider"><img src="/favicons/carrot-16.png" style="display:inline-block; margin-top:-3px; margin-right: 5px; vertical-align: middle">{{ config('app.name', 'Laravel') }}</span>
                   </a>
