@@ -49,103 +49,24 @@
           </div>
         </div>
       </div>
+      @foreach ($activities as $activity)
       <div class="col-md-6 col-xl-4">
         <div class="block block-rounded h-100 mb-0">
           <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
+            <h3 class="block-title">{{$activity->name}}</h3>
+            <p>{{$activity->executed_by}}</p>
           </div>
           <div class="block-content fs-sm text-muted">
+              <img src="{{$activity->thumbnail_image}}" alt="">
             <p>
-              ...
+              {{$activity->description}}
             </p>
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xl-4">
-        <div class="block block-rounded h-100 mb-0">
-          <div class="block-header block-header-default">
-            <h3 class="block-title">Block Title</h3>
-          </div>
-          <div class="block-content fs-sm text-muted">
-            <p>
-              ...
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+      @endforeach
+
+
   </div>
   <!-- END Page Content -->
 @endsection
