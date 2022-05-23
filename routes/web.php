@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('welcome');
+
+Route::get('/event/{id}', [App\Http\Controllers\EventController::class, 'show'])->name('event.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

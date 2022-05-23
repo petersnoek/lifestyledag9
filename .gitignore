@@ -17,3 +17,7 @@ package-lock.orig.json
 package.orig.json
 /.idea
 /.vscode
+.DS_Store
+/public/.DS_Store
+/public/css/.DS_Store
+
