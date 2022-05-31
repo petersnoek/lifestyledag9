@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ContactSeeder::class,
             EventSeeder::class,
             EventroundSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

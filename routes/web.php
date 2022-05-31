@@ -19,7 +19,7 @@ Route::get('/event/{id}', [App\Http\Controllers\EventController::class, 'show'])
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth','verified'])->name('dashboard');
 
 Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
 
