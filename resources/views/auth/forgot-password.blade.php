@@ -30,7 +30,8 @@
                             Wachtwoord vergeten
                         </h1>
                         <div class="mb-4 text-sm text-gray-600">
-                        {{ __('Wachtwoord vergeten? Geen probleem. Laat ons uw e-mailadres weten en we sturen u een link voor het opnieuw instellen van uw wachtwoord waarmee u een nieuwe kunt kiezen.') }}                        </div>
+                            {{ __('Wachtwoord vergeten? Geen probleem. Laat ons uw e-mailadres weten en we sturen u een link voor het opnieuw instellen van uw wachtwoord waarmee u een nieuwe kunt kiezen.') }}
+                        </div>
 
                         <!-- Session Status -->
                         <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -40,18 +41,17 @@
 
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
+                            <div class="row g-0 justify-content-center">
+                                <div class="col-sm-8 col-xl-4">
+                                    <!-- Email Address -->
+                                    <div class="mb-4">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="E-mail">
+                                    </div>
 
-                            <!-- Email Address -->
-                            <div>
-                                <x-label for="email" :value="__('Email')" />
-
-                                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-                            </div>
-
-                            <div class="flex items-center justify-end mt-4">
-                                <x-button>
-                                    {{ __('Email Password Reset Link') }}
-                                </x-button>
+                                    <button type="submit" class="btn btn-lg btn-alt-primary">
+                                            <i class="fa-regular fa-envelope"></i> Email Password Reset Link
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>

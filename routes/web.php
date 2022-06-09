@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,18 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth','verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::get('send-mail', function () {
+
+    $details = [
+        'title' => 'Sample Title From Mail',
+        'body' => 'This is sample content we have added for this test mail'
+    ];
+
+    Mail::to('test@gmail.com')->send(new \App\Mail\Uitnodiging($details));
+
+    dd("Email is Sent, please check your inbox.");
+});
+
+require __DIR__ . '/auth.php';
