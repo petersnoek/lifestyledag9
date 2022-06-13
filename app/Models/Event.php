@@ -23,4 +23,12 @@ class Event extends Model
         return ($this->hasMany('App\Models\Eventround', 'event_id', 'id')->count() > 0);
     }
 
+    public function activities() {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function enlistments() {
+        return $this->hasMany(Enlsitment::class);
+    }
+
 }

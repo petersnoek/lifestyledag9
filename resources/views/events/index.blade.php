@@ -20,6 +20,7 @@
 
             @foreach($events as $event)
             <!-- Story -->
+            @if ($event->frontpage == true)
             <div class="col-lg-4">
                 <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', [$event->id]) }}">
                     <img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg')}}" alt="">
@@ -36,6 +37,7 @@
                     </div>
                 </a>
             </div>
+            @endif
             <!-- END Story -->
             @endforeach
 

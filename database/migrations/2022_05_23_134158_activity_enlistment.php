@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('eventrounds', function (Blueprint $table) {
+        Schema::create('activity_enlistment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id');
-            $table->integer('round')->unsigned();
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
+            $table->foreignId('activity_id');
+            $table->foreignId('enlistment_id');
             $table->timestamps();
-
-            $table->unique(['event_id', 'round']);
-
         });
     }
 
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eventrounds');
+        //
     }
 };
