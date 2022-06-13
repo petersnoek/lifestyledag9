@@ -3,14 +3,22 @@
 @section('content')
 	<!-- Hero Content -->
 	<div class="bg-primary-dark">
-		<div class="content content-full pt-7 pb-6 text-center">
-			<h1 class="h2 mb-2 text-white">
-				The latest stories only for you.
+		<div class="content content-full pt-7 pb-6 text-center text-white">
+			<h1 class="h2 mb-2">
+                {{ $event_name or 'Event' }}<br>
 			</h1>
-			<h2 class="h4 fw-normal text-white-75 mb-0">
-				Feel free to explore and read.
-			</h2>
-		</div>
+            <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small><br>
+            <small><i class="fa fa-home"></i> {{ $event->location }}</small><br>
+            <small>{!!  $event->description or 'Description' !!}</small><br>
+            @if($event->has_rounds())
+                <small></small><br>
+                <h4>Rondes:</h4><br>
+                @foreach($event->eventrounds as $round)
+                    <span class="badge badge-primary">{{ $round->round }}</span> {{ Carbon\Carbon::parse($round->start_time)->format('H:i') }}
+                @endforeach
+            @endif
+
+        </div>
 	</div>
 	<!-- END Hero Content -->
 

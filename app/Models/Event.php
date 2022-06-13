@@ -9,6 +9,10 @@ class Event extends Model
 {
     use HasFactory;
 
+    public function displayName() {
+        return $this->name;
+    }
+
     public function eventrounds()
     {
         return $this->hasMany('App\Models\Eventround', 'event_id', 'id')->orderBy('round');
