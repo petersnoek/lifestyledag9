@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Aanmeld;
+use App\Models\AanmeldSession;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
+class AanmeldController extends Controller {
+  // gegevens opslaan
+  public function save() {
+    $data = AanmeldSession::hasData();
+    return view('aanmelden.show', [
+      'data' => $data
+    ]);
+  }
+
+  // gegevens in de sessie stoppen
+  public function getData(Request $request) {
+    $activiteit = $request->input('activiteit');
+    $beschrijving = $request->input('beschrijving');
+    $ronde = $request->input('ronde');
+    $capaciteit = $request->input('capaciteit');
+
+    Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
+    Session::save();
+
+    $data = array('activiteit'=>$activiteit, 'beschrijving'=>$beschrijving, 'ronde'=>$ronde, 'capaciteit'=>$capaciteit);
+    // DB::table('invite')->insert($data);
+    return redirect()->back();
+  }
+
+  // resultaten pagina weergeven
+  public function show() {
+    return view('aanmelden.show');
+  }
+
+  // gegevens ophalen en weergeven op de resultaten pagina
+  public function result($id) {
+    $aanmeldingen = Aanmeld::find($id);
+
+    if ($aanmeldingen == null) {
+      return redirect()->route('aanmelden.show');
+    }
+
+    $aanmeldingen->getAll();
+
+    return view('aanmelden.show', [
+      'id' => $id,
+      'aanmeldingen' => $aanmeldingen
+    ]);
+  }
+}
