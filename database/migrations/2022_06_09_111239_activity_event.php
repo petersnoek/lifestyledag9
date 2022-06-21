@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::create('activity_event', function (Blueprint $table) {
             $table->id();
             $table->foreignId('activity_id');
             $table->foreignId('event_id');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -5,20 +5,23 @@
 	<div class="bg-primary-dark">
 		<div class="content content-full pt-7 pb-6 text-center text-white">
 			<h1 class="h2 mb-2">
-                {{ $event_name or 'Event' }}<br>
+				{{ $event->name }}<br>
 			</h1>
-            <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small><br>
-            <small><i class="fa fa-home"></i> {{ $event->location }}</small><br>
-            <small>{!!  $event->description or 'Description' !!}</small><br>
-            @if($event->has_rounds())
-                <small></small><br>
-                <h4>Rondes:</h4><br>
-                @foreach($event->eventrounds as $round)
-                    <span class="badge badge-primary">{{ $round->round }}</span> {{ Carbon\Carbon::parse($round->start_time)->format('H:i') }}
-                @endforeach
-            @endif
+			<small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} -
+				{{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small><br>
+			<small><i class="fa fa-home"></i> {{ $event->location }}</small><br>
+			<small>{!! $event->description !!}</small><br>
+			@if ($event->has_rounds())
+				<small></small><br>
+				<h4>Rondes:</h4><br>
+				@foreach ($event->eventrounds as $round)
+					<span class="badge badge-primary">{{ $round->round }}</span>
 
-        </div>
+					{{ Carbon\Carbon::parse($round->start_time)->format('H:i') }}
+				@endforeach
+			@endif
+
+		</div>
 	</div>
 	<!-- END Hero Content -->
 
@@ -29,7 +32,7 @@
 			<!-- Story -->
 			@foreach ($activities as $activity)
 				<div class="col-lg-4">
-					<a class="block-rounded block-link-pop block overflow-hidden" href="">
+					<a class="block-rounded block-link-pop block overflow-hidden" href="/activity/{{ $activity->id }}">
 						<img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg') }}" alt="">
 						<div class="block-content">
 							<h4 class="mb-1">
@@ -41,13 +44,17 @@
 							<p class="fs-sm text-muted">
 								{{ $activity->description }}
 							</p>
-
-							@foreach ($activity->enlistments as $event_enlistement)
-								<p class="fs-sm fw-medium mb-2">
-									{{ $event_enlistement->event_id }}
-								</p>
-							@endforeach
-
+							<p class="fs-sm fw-medium mb-2">
+								@if ($event->has_rounds())
+									@foreach ($event->eventrounds as $round)
+										Ronde {{ $round->round }}:
+										@foreach ($activityRound as $rounds)
+											{{ $activity->availability_message($round->round, $rounds->max_participants) }}
+											<br>
+										@endforeach
+									@endforeach
+								@endif
+							</p>
 
 							{{-- @foreach ($activity->enlistments as $enlistments)
 								<p class="fs-sm fw-medium mb-2">

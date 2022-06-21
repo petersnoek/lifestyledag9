@@ -19,12 +19,12 @@ class Event extends Model
     }
 
     public function has_round($round) {
-        return ($this->hasMany('App\Models\Eventround', 'event_id', 'id')->where('round', $round)->count() > 0);
+        return $this->hasMany(Eventround::class, 'event_id', 'id')->where('round', $round)->count() > 0;
     }
 
     public function has_rounds()
     {
-        return ($this->hasMany('App\Models\Eventround', 'event_id', 'id')->count() > 0);
+        return $this->hasMany(Eventround::class, 'event_id', 'id')->count() > 0;
     }
 
     public function activities() {
@@ -32,7 +32,7 @@ class Event extends Model
     }
 
     public function enlistments() {
-        return $this->hasMany(Enlsitment::class);
+        return $this->hasMany(Enlistment::class);
     }
 
 }

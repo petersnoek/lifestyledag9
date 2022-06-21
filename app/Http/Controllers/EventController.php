@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\ActivityRound;
 use Illuminate\Http\Request;
 use App\Models\Event;
 
@@ -15,6 +16,7 @@ class EventController extends Controller
     public function show(Request $request, $id) {
         $event = Event::find($id);
         $event_name = $event->name;
+        $activityRound = ActivityRound::where('eventround_id', $id)->get();
         //dd($event->enlitments);
         $activity_enlistments = Activity::where('event_id', $id)->get();
         //dd($activity_enlistments);
@@ -22,6 +24,7 @@ class EventController extends Controller
             'event' => $event,
             'event_name' => $event_name,
             'activities' => $event->activities,
+            'activityRound' => $activityRound,
         ]);
     }
 }
