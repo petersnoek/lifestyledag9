@@ -83,6 +83,13 @@
                   </a>
               </li>
 
+              <li class="nav-main-item">
+                <a class="nav-main-link{{ request()->is('aanmelden.index') ? ' active' : '' }}" href="/aanmeldenResult">
+                    <i class="nav-main-link-icon si si-cursor"></i>
+                    <span class="nav-main-link-name">Aanmeldingen</span>
+                </a>
+              </li>
+
           </ul>
         </div>
         <!-- END Side Navigation -->
@@ -312,11 +319,8 @@
     <footer id="page-footer" class="bg-body-light">
       <div class="content py-3">
         <div class="row fs-sm">
-          <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-          </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-            <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">OneUI</a> &copy; <span data-toggle="year-copy"></span>
+            <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">Lifestyledag</a> &copy; <span data-toggle="year-copy"></span>
           </div>
         </div>
       </div>

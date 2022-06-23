@@ -12,43 +12,38 @@ class AanmeldController extends Controller {
   // gegevens opslaan
   public function save() {
     $data = AanmeldSession::hasData();
-    return view('aanmelden.show', [
+    return view('aanmeldenResult', [
       'data' => $data
     ]);
   }
 
-  // gegevens in de sessie stoppen
-  public function getData(Request $request) {
-    $activiteit = $request->input('activiteit');
-    $beschrijving = $request->input('beschrijving');
-    $ronde = $request->input('ronde');
-    $capaciteit = $request->input('capaciteit');
-
-    Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
-    Session::save();
-
-    $data = array('activiteit'=>$activiteit, 'beschrijving'=>$beschrijving, 'ronde'=>$ronde, 'capaciteit'=>$capaciteit);
-    // DB::table('invite')->insert($data);
-    return redirect()->back();
-  }
-
   // resultaten pagina weergeven
-  public function show() {
-    return view('aanmelden.show');
-  }
+  // public function show() {
+  //   return view('contacts/aanmeldenResult');
+  // }
+
+  // gegevens in de sessie stoppen
+  // public function getData(Request $request) {
+  //   $activiteit = $request->input('activiteit');
+  //   $beschrijving = $request->input('beschrijving');
+  //   $ronde = $request->input('ronde');
+  //   $capaciteit = $request->input('capaciteit');
+
+  //   Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
+  //   Session::save();
+
+  //   $data = array('activiteit'=>$activiteit, 'beschrijving'=>$beschrijving, 'ronde'=>$ronde, 'capaciteit'=>$capaciteit);
+  //   // DB::table('invite')->insert($data);
+  //   return redirect()->back();
+  // }
 
   // gegevens ophalen en weergeven op de resultaten pagina
-  public function result($id) {
-    $aanmeldingen = Aanmeld::find($id);
-
-    if ($aanmeldingen == null) {
-      return redirect()->route('aanmelden.show');
-    }
+  public function show() {
+    $aanmeldingen = Aanmeld::all();
 
     $aanmeldingen->getAll();
 
-    return view('aanmelden.show', [
-      'id' => $id,
+    return view('contacts/aanmeldenResult', [
       'aanmeldingen' => $aanmeldingen
     ]);
   }
