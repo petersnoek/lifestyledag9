@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;    
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +30,13 @@ Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'
         'body' => 'This is sample content we have added for this test mail'
     ];
 
+
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
 Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
 Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.end');
+
+
+require __DIR__ . '/auth.php';
 // Route voor aanmelding data opslaan + bedankt pagina
 // Route voor resultatenpagina van aanmeldingen
 // Route voor aanmeldings email
