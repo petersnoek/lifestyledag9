@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             InviteSeeder::class,
             EventSeeder::class,
             EventroundSeeder::class,
-            EnlistmentSeeder::class
+            EnlistmentSeeder::class,
             ActivitySeeder::class,
             UserSeeder::class
         ]);
