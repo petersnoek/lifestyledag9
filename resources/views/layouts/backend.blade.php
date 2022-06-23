@@ -84,7 +84,7 @@
               </li>
 
               <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('aanmelden.index') ? ' active' : '' }}" href="/aanmeldenResult">
+                <a class="nav-main-link{{ request()->is('aanmelden.show') ? ' active' : '' }}" href="/aanmeldenResult">
                     <i class="nav-main-link-icon si si-cursor"></i>
                     <span class="nav-main-link-name">Aanmeldingen</span>
                 </a>

@@ -77,14 +77,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                      {{-- @foreach($aanmeldingen as $aanmelding)
+                      @foreach($aanmeldingen as $aanmelding)
                           <tr>
                               <td class="">{{ $aanmelding->activiteit }}</td>
                               <td class="">{{ $aanmelding->beschrijving }}</td>
                               <td class="">{{ $aanmelding->ronde }}</td>
                               <td class="">{{ $aanmelding->capaciteit }}</td>
                           </tr>
-                      @endforeach  --}}
+                      @endforeach 
                     </tbody>
                 </table>
             </div>

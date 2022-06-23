@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;    
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,24 +40,8 @@ Route::get('send-mail', function () {
 // Route voor aanmeldings email
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
 
-// Route voor resultaat van aanmeldingen
-Route::get('aanmeldenResult', function () { return view('contacts/aanmeldenResult'); })->name('aanmelden.show');
-// Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
+// Route voor resultatenpagina van aanmeldingen
+Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
 
-// Route voor aanmelding mail data
-Route::post('aanmeldenEnd', function(Request $request) {
-    $activiteit = $request->input('activiteit');
-    $beschrijving = $request->input('beschrijving');
-    $ronde = $request->input('ronde');
-    $capaciteit = $request->input('capaciteit');
-
-    Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
-    Session::save();
-
-    $data = array('activiteit'=>$activiteit, 'beschrijving'=>$beschrijving, 'ronde'=>$ronde, 'capaciteit'=>$capaciteit);
-    // DB::table('invite')->insert($data);
-
-    return view('aanmeldenEnd');
-}
-)->name('aanmelden.end');
-// Route::get('aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.getData');
+// Route voor aanmelding data opslaan + bedankt pagina
+Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.end');

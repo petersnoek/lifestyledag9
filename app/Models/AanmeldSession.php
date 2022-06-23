@@ -12,10 +12,8 @@ class AanmeldSession {
     $capaciteit = Session::get('capaciteit');
     
     if ($activiteit !== null && $beschrijving !== null && $ronde !== null && $capaciteit !== null) {
-      // var_dump('Alle velden zijn juist ingevuld');
       return true;
     } else {
-      // var_dump('Niet alle velden zijn juist ingevuld');
       return false;
     }
   }
