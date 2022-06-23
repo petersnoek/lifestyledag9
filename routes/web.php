@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;    
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +30,9 @@ Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'
         'body' => 'This is sample content we have added for this test mail'
     ];
 
-    Mail::to('test@gmail.com')->send(new \App\Mail\Uitnodiging($details));
-
-    dd("Email is Sent, please check your inbox.");
-
-});
-
-require __DIR__ . '/auth.php';
+Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
+Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
+Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.end');
+// Route voor aanmelding data opslaan + bedankt pagina
+// Route voor resultatenpagina van aanmeldingen
+// Route voor aanmeldings email
