@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +18,19 @@ Route::get('/event/{id}', [App\Http\Controllers\EventController::class, 'show'])
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
 
-require __DIR__.'/auth.php';
+    $details = [
+        'title' => 'Sample Title From Mail',
+        'body' => 'This is sample content we have added for this test mail'
+    ];
+
+    Mail::to('test@gmail.com')->send(new \App\Mail\Uitnodiging($details));
+
+    dd("Email is Sent, please check your inbox.");
+
+});
+
+require __DIR__ . '/auth.php';
