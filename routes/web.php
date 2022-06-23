@@ -25,10 +25,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
 
-    $details = [
-        'title' => 'Sample Title From Mail',
-        'body' => 'This is sample content we have added for this test mail'
-    ];
+require __DIR__.'/auth.php';
+
 
 
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
@@ -37,6 +35,3 @@ Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'g
 
 
 require __DIR__ . '/auth.php';
-// Route voor aanmelding data opslaan + bedankt pagina
-// Route voor resultatenpagina van aanmeldingen
-// Route voor aanmeldings email
