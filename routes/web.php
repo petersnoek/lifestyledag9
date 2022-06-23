@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +11,10 @@ use Illuminate\Support\Facades\Mail;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +34,7 @@ Route::get('send-mail', function () {
     Mail::to('test@gmail.com')->send(new \App\Mail\Uitnodiging($details));
 
     dd("Email is Sent, please check your inbox.");
+
 });
 
 require __DIR__ . '/auth.php';

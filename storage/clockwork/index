@@ -1,0 +1,12 @@
+1655796509-1456-242810316,1655796509.1236,GET,/event/3,,404,41.357040405273,request
+1655796512-3829-1041013433,1655796512.3744,GET,/,Closure,200,24.385213851929,request
+1655796512-5409-1156038829,1655796512.5309,GET,/favicons/carrot-32.png,,404,24.702072143555,request
+1655796517-8398-1187785655,1655796517.8315,GET,/login,"App\Http\Controllers\Auth\AuthenticatedSessionController@create",200,78.218936920166,request
+1655796523-5308-1904415073,1655796523.5194,GET,/register,"App\Http\Controllers\Auth\RegisteredUserController@create",200,30.352830886841,request
+1655796523-5841-1077902210,1655796523.5761,GET,/js/pages/op_auth_signin.min.js,,404,15.49506187439,request
+1655796558-5943-876969397,1655796558.5729,POST,/register,"App\Http\Controllers\Auth\RegisteredUserController@store",302,64.3470287323,request
+1655796558-6454-1106237970,1655796558.6407,GET,/register,"App\Http\Controllers\Auth\RegisteredUserController@create",200,8.3799362182617,request
+1655796558-6705-1212361348,1655796558.6653,GET,/js/pages/op_auth_signin.min.js,,404,7.4310302734375,request
+1655796621-6837-1124997838,1655796621.6744,POST,/register,"App\Http\Controllers\Auth\RegisteredUserController@store",302,28.202056884766,request
+1655796621-7123-557452527,1655796621.7069,GET,/register,"App\Http\Controllers\Auth\RegisteredUserController@create",200,13.045072555542,request
+1655796621-7491-1151581215,1655796621.7412,GET,/js/pages/op_auth_signin.min.js,,404,11.613845825195,request
