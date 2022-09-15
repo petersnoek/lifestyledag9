@@ -24,7 +24,7 @@ class pageTablesDatatables {
         lengthMenu: "_MENU_",
         search: "_INPUT_",
         searchPlaceholder: "Search..",
-        info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+        info: "Pagina <strong>_PAGE_</strong> van <strong>_PAGES_</strong>",
         paginate: {
           first: '<i class="fa fa-angle-double-left"></i>',
           previous: '<i class="fa fa-angle-left"></i>',
@@ -38,26 +38,19 @@ class pageTablesDatatables {
     jQuery.extend(true, jQuery.fn.DataTable.Buttons.defaults, {
       dom: {
         button: {
-          className: 'btn btn-sm btn-primary'
+          className: 'btn btn-sm btn-light'
         },
       }
     });
 
-    // Init full DataTable
-    jQuery('.js-dataTable-full').dataTable({
-      pageLength: 5,
-      lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
-      autoWidth: false
-    });
-
     // Init DataTable with Buttons
     jQuery('.js-dataTable-buttons').dataTable({
-      pageLength: 5,
-      lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+      pageLength: 100,
+      lengthMenu: [[5, 10, 15, 20, 50, 100], [5, 10, 15, 20, 50, 100]],
       autoWidth: false,
-      buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-      dom: "<'row'<'col-sm-12'<'text-center bg-body-light py-2 mb-2'B>>>" +
-        "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
+      //buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+      //dom: "<'row'<'col-sm-12'<'text-end bg-body-light py-2 mb-2'B>>>" +
+      //  "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
     });
   }
 

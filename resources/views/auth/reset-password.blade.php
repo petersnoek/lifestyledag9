@@ -23,41 +23,43 @@
                     <div class="text-center mb-5">
                         <!-- Validation Errors -->
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                        <div class="row g-0 justify-content-center">
-                            <div class="col-sm-8 col-xl-4">
-                                <form method="POST" action="{{ route('password.update') }}">
-                                    @csrf
 
-                                    <!-- Password Reset Token -->
-                                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                        <form method="POST" action="{{ route('password.update') }}">
+                            @csrf
 
-                                    <!-- Email Address -->
-                                    <p class="mb-3">
-                            <i class="fa fa-2x fa-circle-notch text-primary-light"></i>
-                        </p>
+                            <!-- Password Reset Token -->
+                            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                            <!-- Email Address -->
+                            <p class="mb-3">
+                                <i class="fa fa-2x fa-circle-notch text-primary-light"></i>
+                            </p>
+                            <h1 class="fw-bold mb-2">
+                                Wachtwoord opnieuw instellen
+                            </h1><br>
+                            <div class="row g-0 justify-content-center">
+                                <div class="col-sm-8 col-xl-4">
                                     <div class="mb-4">
                                         <input type="text" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="E-mail">
                                     </div>
 
                                     <!-- Password -->
                                     <div class="mb-4">
-                                    <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord">
-                                </div>
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord">
+                                    </div>
 
                                     <!-- Confirm Password -->
 
                                     <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Wachtwoord">
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig Wachtwoord">
                                     </div>
 
-                                    <div class="flex items-center justify-end mt-4">
-                                        <x-button>
-                                            {{ __('Reset Password') }}
-                                        </x-button>
-                                    </div>
-                                </form>
+                                    <button type="submit" class="btn btn-lg btn-alt-primary">
+                                        <i class="fa-solid fa-key"></i> Reset Password
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
