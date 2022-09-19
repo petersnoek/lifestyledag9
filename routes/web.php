@@ -21,13 +21,13 @@ Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'
 require __DIR__.'/auth.php';
 
 // Test email versturen voor aanmelding
-// Route::get('send-mail', function () {
-//     Mail::to('test@gmail.com')->send(new \App\Mail\mailTemplate());
+Route::get('send-mail', function () {
+    Mail::to('test@gmail.com')->send(new \App\Mail\mailTemplate());
 
-//     dd("Email is sent, please check your inbox.");
-// });
+    dd("Email is sent, please check your inbox.");
+});
 
-Route::get('mail-send', [App\Http\Controllers\WelcomeController::class, 'mailSend']);
+// Route::get('mail-send', [App\Http\Controllers\WelcomeController::class, 'mailSend']);
 
 // Route voor aanmeldings email
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
