@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\WelcomeMail;
+use App\Mail\TestMail;
 
 
-class WelcomeController extends Controller
+class TestController extends Controller
 {
   public function mailSend() {
     $email = 'mail@hotmail.com';
 
     $mailInfo = [
-      'title' => 'Welcome New User',
-      'url' => 'https://www.remotestack.io'
+      'url' => 'http://127.0.0.1:8000/aanmelden'
     ];
 
-    Mail::to($email)->send(new WelcomeMail($mailInfo));
+    Mail::to($email)->send(new TestMail($mailInfo));
 
     return response()->json([
       'message' => 'Mail has sent.'
