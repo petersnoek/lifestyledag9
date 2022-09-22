@@ -54,6 +54,6 @@ class EventSeeder extends Seeder
             'updated_at' => $nu,
         ]);
 
-        $this->command->info('Seeding: added 3 events');
+        $this->command->info('Seeding: added events');
     }
 }

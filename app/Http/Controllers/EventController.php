@@ -10,7 +10,7 @@ use App\Models\Event;
 class EventController extends Controller
 {
     public function index(Request $request) {
-        return view('events.index', ['events' => Event::all()]);
+        return view('dashboard', ['events' => Event::all()]);
     }
 
     public function show(Request $request, $id) {
