@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Console\Commands\CreateRoutePermissionsCommand;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,9 @@ class DatabaseSeeder extends Seeder
             EventroundSeeder::class,
             EnlistmentSeeder::class,
             ActivitySeeder::class,
+            RoutePermissionsSeeder::class,
+            RoleSeeder::class,
+            AdminUserSeeder::class,
             UserSeeder::class
         ]);
     }
