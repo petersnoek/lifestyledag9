@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +18,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('welcome');
+Route::group(['middleware'=>['auth', 'verified']], function(){
+    Route::group(['prefix'=> '/event'], function(){
+        Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
+    });
 
-Route::get('/event/{id}', [App\Http\Controllers\EventController::class, 'show'])->name('event.show');
+    Route::get('/', [DashboardController::class, 'index'])->name('welcome');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'])->name('contacts.index');
 
