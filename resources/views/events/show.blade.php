@@ -75,12 +75,8 @@
 		<footer id="page-footer" class="bg-body-light">
 			<div class="content py-3">
 				<div class="row fs-sm">
-					<div class="col-sm-6 order-sm-2 text-sm-end py-1 text-center">
-						Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
-							href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-					</div>
 					<div class="col-sm-6 order-sm-1 text-sm-start py-1 text-center">
-						<a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">OneUI 5.2</a> &copy;
+						<a class="fw-semibold"  target="_blank">Lifestyledag</a> &copy;
 						<span data-toggle="year-copy"></span>
 					</div>
 				</div>
