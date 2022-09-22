@@ -28,7 +28,7 @@ Route::get('/contacts', [\App\Http\Controllers\ContactController::class, 'index'
 require __DIR__.'/auth.php';
 
 
-
+Route::get('/settings', function () { return view('settings'); })->name('settings');
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
 Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
 Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.end');
