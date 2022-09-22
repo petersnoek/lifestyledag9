@@ -1,21 +1,14 @@
 <?php
 
+use App\Http\Controllers\AanmeldController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Http\Request;    
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // Route voor dashboard + events
 Route::group(['middleware'=>['auth', 'verified']], function(){
@@ -34,11 +27,14 @@ Route::get('/settings', function () { return view('settings'); })->name('setting
 
 // Route voor aanmeldings email
 Route::get('aanmelden', function () { return view('aanmelden'); })->name('aanmelden.index');
-
-// Route voor resultatenpagina van aanmeldingen
-Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
+// Test email versturen voor aanmelding
+Route::get('send-mail', [App\Http\Controllers\TestController::class, 'mailSend']);
 
 // Route voor aanmelding data opslaan + bedankt pagina
+
+Route::get('/aanmeldenResult', [\App\Http\Controllers\AanmeldController::class, 'show'])->name('aanmelden.show');
+// Route voor resultatenpagina van aanmeldingen
 Route::post('/aanmeldenEnd', [\App\Http\Controllers\AanmeldController::class, 'getData'])->name('aanmelden.end');
+
 
 require __DIR__ . '/auth.php';
