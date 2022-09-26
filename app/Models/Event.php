@@ -15,7 +15,7 @@ class Event extends Model
 
     public function eventrounds()
     {
-        return $this->hasMany('App\Models\Eventround', 'event_id', 'id')->orderBy('round');
+        return $this->hasMany(Eventround::class, 'event_id', 'id')->orderBy('round');
     }
 
     public function has_round($round) {

@@ -74,23 +74,39 @@
 
         <!-- Side Navigation -->
         <div class="content-side">
-          <ul class="nav-main">
+            <ul class="nav-main">
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="{{ route('contacts.index') }}">
+                        <i class="nav-main-link-icon si si-cursor"></i>
+                        <span class="nav-main-link-name">Contactpersonen</span>
+                    </a>
+                </li>
 
-              <li class="nav-main-item">
-                  <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="/contacts">
-                      <i class="nav-main-link-icon si si-cursor"></i>
-                      <span class="nav-main-link-name">Contactpersonen</span>
-                  </a>
-              </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('aanmelden.show') ? ' active' : '' }}" href="{{ route('aanmelden.show') }}">
+                        <i class="nav-main-link-icon si si-cursor"></i>
+                        <span class="nav-main-link-name">Aanmeldingen</span>
+                    </a>
+                </li>
 
-              <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('aanmelden.show') ? ' active' : '' }}" href="/aanmeldenResult">
-                    <i class="nav-main-link-icon si si-cursor"></i>
-                    <span class="nav-main-link-name">Aanmeldingen</span>
-                </a>
-              </li>
+                @can(['roles.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">roles</span>
+                        </a>
+                    </li>
+                @endcan
 
-          </ul>
+                @can(['permissions.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('permissions.index') ? ' active' : '' }}" href="{{ route('permissions.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">permissions</span>
+                        </a>
+                    </li>
+                @endcan
+            </ul>
         </div>
         <!-- END Side Navigation -->
       </div>
@@ -126,7 +142,7 @@
           <!-- END Open Search Section -->
 
           <!-- Search Form (visible on larger screens) -->
-          <form class="d-none d-md-inline-block" action="/dashboard" method="POST">
+          <form class="d-none d-md-inline-block" action="{{ route('dashboard') }}" method="POST">
             @csrf
             <div class="input-group input-group-sm">
               <input type="text" class="form-control form-control-alt" placeholder="Search.." id="page-header-search-input2" name="page-header-search-input2">
@@ -145,13 +161,13 @@
           <div class="dropdown d-inline-block ms-2">
             <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="Header Avatar" style="width: 21px;">
-              <span class="d-none d-sm-inline-block ms-2">{{Auth::user()->name;}}</span>
+              <span class="d-none d-sm-inline-block ms-2">{{Auth::user()->name}}</span>
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
-                <p class="mt-2 mb-0 fw-medium">{{Auth::user()->name;}}</p>
+                <p class="mt-2 mb-0 fw-medium">{{Auth::user()->name}}</p>
                 <p class="mb-0 text-muted fs-sm fw-medium">Student</p>
               </div>
               <div class="p-2">
