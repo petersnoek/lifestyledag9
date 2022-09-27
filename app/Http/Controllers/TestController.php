@@ -13,7 +13,7 @@ class TestController extends Controller
     $email = 'mail@hotmail.com';
 
     $mailInfo = [
-      'url' => 'http://127.0.0.1:8000/aanmelden'
+      'url' => 'http://lifestyledag9.itenmedia.nl/public/aanmelden'
     ];
 
     Mail::to($email)->send(new TestMail($mailInfo));
