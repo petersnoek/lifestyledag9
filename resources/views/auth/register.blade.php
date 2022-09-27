@@ -30,9 +30,6 @@
                     <div class="w-100">
                         <!-- Header -->
                         <div class="text-center mb-5">
-                            <p class="mb-3">
-                                <i class="fa fa-2x fa-circle-notch text-primary-light"></i>
-                            </p>
                             <h1 class="fw-bold mb-2">
                                 Maak een nieuw account
                             </h1>
@@ -48,21 +45,21 @@
                                     @csrf
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="name" name="name" placeholder="Naam">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="name" name="name" placeholder="Naam" required>
                                     </div>
                                     <div class="mb-4">
-                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="Email" required>
                                     </div>
                                     <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord">
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord" required>
                                     </div>
                                     <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig wachtwoord">
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig wachtwoord" required>
                                     </div>
                                     <div class="mb-4">
                                         <div class="d-md-flex align-items-md-center justify-content-md-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="signup-terms" name="signup-terms">
+                                                <input class="form-check-input" type="checkbox" value="" id="signup-terms" name="signup-terms" required>
                                                 <label class="form-check-label" for="signup-terms">Ik ga akkoord met de voorwaarden</label>
                                             </div>
                                             <div class="py-2">
@@ -71,9 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-lg btn-alt-success">
-                                            <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Registreren
-                                        </button>
+                                        <button type="submit" class="btn btn-lg btn-alt-success">Registreren</button>
                                     </div>
                                 </form>
                             </div>
