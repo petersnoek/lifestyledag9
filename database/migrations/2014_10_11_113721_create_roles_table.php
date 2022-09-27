@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('activity_rounds', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('activity_id');
-            $table->foreignId('eventround_id');
-            $table->unsignedInteger('max_participants')->default(1);
-            $table->timestamps();
-        });
+        // Schema::create('roles', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string("name");
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_rounds');
+        // Schema::dropIfExists('roles');
     }
 };
