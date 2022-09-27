@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;    
+use Illuminate\Support\Facades\Session;
+>>>>>>> dev
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\EventController;
@@ -8,7 +14,11 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TestController;
+<<<<<<< HEAD
 use App\Http\Controllers\FallbackController;
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> dev
 
     // Route voor dashboard + events
 Route::group(['middleware'=>['auth', 'verified']], function(){
@@ -26,6 +36,10 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 
+<<<<<<< HEAD
+=======
+    // Route voor aanmeldings email
+>>>>>>> dev
     // Route voor aanmelding data opslaan + bedankt pagina
     // Route voor resultatenpagina van aanmeldingen
     Route::group(['prefix'=> '/aanmelden'], function(){
@@ -39,7 +53,10 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
     });
 
+<<<<<<< HEAD
     // Route voor aanmeldings email
+=======
+>>>>>>> dev
     Route::get('/', [DashboardController::class, 'index'])->name('welcome');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
@@ -62,4 +79,8 @@ Route::group(['middleware' => ['permission']], function() {
     Route::resource('permissions', PermissionsController::class);
 });
 
+<<<<<<< HEAD
 require __DIR__ . '/auth.php';
+=======
+require __DIR__. '/auth.php';
+>>>>>>> dev
