@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;    
-use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\EventController;
@@ -11,9 +8,8 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TestController;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UsersController;
 
-    // Route voor dashboard + events
 Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::group(['prefix'=> '/event'], function(){
         Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
@@ -58,7 +54,13 @@ Route::group(['middleware' => ['guest']], function() {
 // Route voor rollensysteem
 Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => 'users'], function() {
-
+        Route::get('/', [UsersController::class, 'index'])->name('users.index');
+        // Route::get('/create', [UsersController::class, 'create'])->name('users.create');
+        // Route::post('/create', [UsersController::class, 'store'])->name('users.store');
+        Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
+        Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
+        Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
+        // Route::delete('/{user}/delete', [UsersController::class, 'destroy'])->name('users.destroy')->whereNumber('user');
     });
 
     Route::resource('roles', RolesController::class);
