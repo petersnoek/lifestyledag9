@@ -31,13 +31,14 @@
 		<div class="row"> 
  
 			<!-- Story --> 
+			<?php $number = 1; ?>
 			@foreach ($activities as $activity) 
 				<div class="col-lg-4"> 
 					<a class="block-rounded block-link-pop block overflow-hidden" href="/activity/{{ $activity->id }}"> 
 						<img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg') }}" alt=""> 
 						<div class="block-content"> 
 							<h4 class="mb-1"> 
-								{{ $activity->name }} 
+								{{ $number ++ . " " . $activity->name }} 
 							</h4> 
 							<p class="fs-sm fw-medium mb-2"> 
 								{{ $activity->executed_by }} 
