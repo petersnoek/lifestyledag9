@@ -29,15 +29,6 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 
-    // Route voor aanmeldings email
-    // Route voor aanmelding data opslaan + bedankt pagina
-    // Route voor resultatenpagina van aanmeldingen
-    Route::group(['prefix'=> '/aanmelden'], function(){
-        Route::get('/', function () { return view('aanmelden'); })->name('aanmelden.index');
-        Route::get('/result', [AanmeldController::class, 'show'])->name('aanmelden.show');
-        Route::post('/end', [AanmeldController::class, 'getData'])->name('aanmelden.end');
-    });
-
     // Test email versturen voor aanmelding
     Route::group(['prefix'=> '/tests'], function(){
         Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
