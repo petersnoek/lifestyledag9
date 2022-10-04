@@ -55,13 +55,6 @@
 									@endforeach
 								@endif
 							</p>
-
-							{{-- @foreach ($activity->enlistments as $enlistments)
-								<p class="fs-sm fw-medium mb-2">
-									{{ $enlistments->round_id }}
-								</p>
-							@endforeach --}}
-
 						</div>
 					</a>
 				</div>
