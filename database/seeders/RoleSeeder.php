@@ -17,39 +17,45 @@ class RoleSeeder extends Seeder
     {
         // Permission::whereIn("name", [])->get();
 
+        // var_export(Permission::pluck('name')->all());
+
         // $permissionnames = [
-        //     "aanmelden.end",
-        //     "aanmelden.index",
-        //     "aanmelden.show",
-        //     "contacts.index",
-        //     "dashboard",
-        //     "event.show",
-        //     "login",
-        //     "logout",
-        //     "password.confirm",
-        //     "password.email",
-        //     "password.request",
-        //     "password.reset",
-        //     "password.update",
-        //     "permissions.create",
-        //     "permissions.destroy",
-        //     "permissions.edit",
-        //     "permissions.index",
-        //     "permissions.show",
-        //     "permissions.store",
-        //     "permissions.update",
-        //     "register",
-        //     "roles.create",
-        //     "roles.destroy",
-        //     "roles.edit",
-        //     "roles.index",
-        //     "roles.show",
-        //     "roles.store",
-        //     "roles.update",
-        //     "verification.notice",
-        //     "verification.send",
-        //     "verification.verify",
-        //     "welcome"
+        //     'aanmelden.end',
+        //     'aanmelden.index',
+        //     'aanmelden.show',
+        //     'contacts.index',
+        //     'dashboard',
+        //     'event.show',
+        //     'login',
+        //     'logout',
+        //     'password.confirm',
+        //     'password.email',
+        //     'password.request',
+        //     'password.reset',
+        //     'password.update',
+        //     'permissions.create',
+        //     'permissions.destroy',
+        //     'permissions.edit',
+        //     'permissions.index',
+        //     'permissions.show',
+        //     'permissions.store',
+        //     'permissions.update',
+        //     'register',
+        //     'roles.create',
+        //     'roles.destroy',
+        //     'roles.edit',
+        //     'roles.index',
+        //     'roles.show',
+        //     'roles.store',
+        //     'roles.update',
+        //     'settings',
+        //     'users.edit',
+        //     'users.index',
+        //     'users.show',
+        //     'users.update',
+        //     'verification.notice',
+        //     'verification.send',
+        //     'verification.verify',
         // ];
 
         $role = Role::create(['name' => 'student']);
@@ -66,8 +72,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify",
-            "welcome"
+            "verification.verify"
         ])->get();
         $role->permissions()->attach($permissions);
 
@@ -88,8 +93,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify",
-            "welcome"
+            "verification.verify"
         ])->get();
         $role->permissions()->attach($permissions);
 
