@@ -79,7 +79,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="{{ route('dashboard') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">dashboard</span>
+                            <span class="nav-main-link-name">Dashboard</span>
                         </a>
                     </li>
                 @endcan
@@ -106,7 +106,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">roles</span>
+                            <span class="nav-main-link-name">Roles</span>
                         </a>
                     </li>
                 @endcan
@@ -115,7 +115,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('permissions.index') ? ' active' : '' }}" href="{{ route('permissions.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">permissions</span>
+                            <span class="nav-main-link-name">Permissions</span>
                         </a>
                     </li>
                 @endcan
@@ -124,7 +124,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('users.index') ? ' active' : '' }}" href="{{ route('users.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">users</span>
+                            <span class="nav-main-link-name">Users</span>
                         </a>
                     </li>
                 @endcan
