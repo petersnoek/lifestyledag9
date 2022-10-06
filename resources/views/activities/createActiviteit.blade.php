@@ -67,7 +67,10 @@
                         <div class="mb-4">
                           <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten">
                         </div>
-
+                        
+                        <div>
+                          <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
+                        </div>
 
 
                         <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" onclick="event.preventDefault(); this.form.submit();">

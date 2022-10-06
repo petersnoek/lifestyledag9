@@ -16,8 +16,12 @@ class Activity extends Model
         'name',
         'description',
         'event_id',
+        'owner_user_id',
     ];
 
+    public function owner() {
+        return $this->belongsTo(User::class); //!!!! idk how to do this !!!!
+    }
     public function event() {
         return $this->belongsTo(Event::class);
     }

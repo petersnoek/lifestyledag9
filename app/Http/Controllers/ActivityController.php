@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\Event;
+use App\Models\User;
 use App\Models\Eventround;
 
 class ActivityController extends Controller
@@ -37,12 +38,13 @@ class ActivityController extends Controller
         $beschrijving = $request->input('beschrijving');
         $event_id = $request->input('event');
         $capaciteit = $request->input('capaciteit');
-
+        $user_id = $request->input('user_id');
+        /* $user = User::where('id', $user_id);
+        dd($user->name); */
         /* Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
         Session::save(); */
-
         // $data = array('name'=>$naam, 'description'=>$beschrijving, 'event_id'=>$event_id);
-        Activity::create(['name'=>$naam,'executed_by'=>null, 'description'=>$beschrijving, 'event_id'=>$event_id]);
+        Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
         //maak de kopel table input
         return redirect('/dashboard');
     }
