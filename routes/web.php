@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AanmeldController;
+use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
@@ -29,8 +30,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 
-    // Test email versturen voor aanmelding
-    Route::group(['prefix'=> '/tests'], function(){
+    // Mail versturen voor workshophouders
+    Route::group(['prefix'=> '/mail'], function(){
         Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
     });
 

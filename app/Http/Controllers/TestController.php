@@ -1,20 +1,24 @@
 <?php
-
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 
 
-class TestController extends Controller
-{
+class TestController extends Controller {
   public function mailSend() {
-    $email = 'mail@hotmail.com';
+    $email = 'lifestyledag@hotmail.com';
 
-    $mailInfo = [
-      'url' => 'http://lifestyledag9.itenmedia.nl/public/aanmelden'
-    ];
+    $mailInfo = DB::select( 
+      "SELECT enlistments.round_id, users.name
+      FROM enlistments 
+      INNER JOIN users 
+      ON enlistments.user_id=users.id
+      WHERE enlistments.activity_id = 1"
+    );
+   
+    var_dump($mailInfo);
 
     Mail::to($email)->send(new TestMail($mailInfo));
 

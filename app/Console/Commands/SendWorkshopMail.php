@@ -8,29 +8,14 @@ use Illuminate\Support\Facades\Mail;
 
 class SendWorkshopMail extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'info:day';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Send a email to the workshop owner with information of the rounds';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         // $endDate = date('2022-12-04 09:00:00');
-        // $currentDate = date('Y-m-d H:i:s');
+        // $currentDate = Carbon::now();
 
         // if($currentDate > $endDate){
             // $activityOwner = 'Workshophouder';
@@ -52,7 +37,7 @@ class SendWorkshopMail extends Command
                 });
             }
              
-            $this->info('worksop information sent to all workshop owners');
+            $this->info('worksop information sent to workshop owner');
         // }
     }
 }

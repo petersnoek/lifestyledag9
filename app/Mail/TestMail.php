@@ -29,7 +29,7 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Aanmelden Lifestyledag')
+        return $this->subject('Inschrijvingen workshop')
             ->markdown('emails.testMail')
             ->with('mailInfo', $this->mailInfo);
     }
