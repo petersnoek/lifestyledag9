@@ -1,18 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;    
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;  
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\TestController;
-use Illuminate\Support\Facades\DB;
 
     // Route voor dashboard + events
 Route::group(['middleware'=>['auth', 'verified']], function(){
@@ -28,11 +22,6 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
-    });
-
-    // Mail versturen voor workshophouders
-    Route::group(['prefix'=> '/mail'], function(){
-        Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('welcome');

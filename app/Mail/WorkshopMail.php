@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable
+class WorkshopMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $mailInfo;
@@ -30,7 +30,7 @@ class TestMail extends Mailable
     public function build()
     {
         return $this->subject('Inschrijvingen workshop')
-            ->markdown('emails.testMail')
+            ->markdown('emails.WorkshopMail')
             ->with('mailInfo', $this->mailInfo);
     }
 }
