@@ -5,6 +5,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FallbackController;
@@ -81,5 +82,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 });
+
+Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
+Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
 
 require __DIR__. '/auth.php';

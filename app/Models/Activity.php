@@ -12,6 +12,12 @@ class Activity extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'event_id',
+    ];
+
     public function event() {
         return $this->belongsTo(Event::class);
     }
