@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\Event;
 use App\Models\User;
 use App\Models\Eventround;
+use App\Models\ActivityRound;
 
 class ActivityController extends Controller
 {
@@ -27,25 +28,24 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        // Eventround::where("event_id", 1)->get();
-        /* $eventrounds = Event::find(1)->eventrounds() */
+        /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
         return view('activities.createActiviteit', ['events' => Event::all(), 'rounds' => Eventround::all()]);
     }
-
-      // gegevens van aanmeldingsformulier in sessie stoppen
+/* request all the forum data, create the activity and it's activity rounds */
     public function getData(Request $request) {
         $naam = $request->input('naam');
         $beschrijving = $request->input('beschrijving');
         $event_id = $request->input('event');
         $capaciteit = $request->input('capaciteit');
         $user_id = $request->input('user_id');
-        /* $user = User::where('id', $user_id);
-        dd($user->name); */
-        /* Session::put($activiteit, $beschrijving, $ronde, $capaciteit);
-        Session::save(); */
-        // $data = array('name'=>$naam, 'description'=>$beschrijving, 'event_id'=>$event_id);
-        Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
-        //maak de kopel table input
+
+        $activity = Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
+        
+        $event = Event::find($event_id);
+        foreach($event->eventrounds as $eventround){
+            ActivityRound::create(['activity_id'=>$activity->id, 'eventround_id'=>$eventround->id, 'max_participants'=>$capaciteit]);
+        }
+
         return redirect('/dashboard');
     }
 

@@ -39,15 +39,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
     });
 
-    // Route voor aanmeldings email
-    // Route voor aanmelding data opslaan + bedankt pagina
-    // Route voor resultatenpagina van aanmeldingen
-    Route::group(['prefix'=> '/aanmelden'], function(){
-        Route::get('/', function () { return view('aanmelden'); })->name('aanmelden.index');
-        Route::get('/result', [AanmeldController::class, 'show'])->name('aanmelden.show');
-        Route::post('/end', [AanmeldController::class, 'getData'])->name('aanmelden.end');
-    });
-
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         // Route::get('/create', [UsersController::class, 'create'])->name('users.create');
