@@ -16,38 +16,59 @@ class SendWorkshopMail extends Command
 
     public function handle()
     {
+        // Haal de huidige datum op
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
+
+        // Haal de workshophouders op waarvan de inschrijfdatum verlopen is
         $getUser = DB::select(
-            "SELECT activities.executed_by, events.enlist_stops_at  
+            "SELECT activities.owner_user_id, events.enlist_stops_at  
             FROM `activities` 
             INNER JOIN `events` 
-            WHERE events.enlist_stops_at = '2022-08-31 08:00:00'" // $dateNow
+            WHERE events.enlist_stops_at = '2022-08-31 08:00:00' AND activities.owner_user_id = 'Dewi'" // $dateNow
         ); 
-        $user = $getUser[0]->executed_by;
-        $workshophouders = $user;
-        var_dump($workshophouders);
 
-        $mailInfo = DB::select( 
-            "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.executed_by as workshophouder, eventrounds.start_time, eventrounds.end_time
-            FROM enlistments 
-            INNER JOIN users
-            ON enlistments.user_id=users.id
-            INNER JOIN activities
-            ON enlistments.activity_id=activities.id
-            INNER JOIN activities as activities2
-            ON enlistments.activity_id=activities.id
-            INNER JOIN eventrounds
-            ON enlistments.round_id=eventrounds.id
-            WHERE activities.executed_by = $workshophouders"
-        );
+        $number = 0;
+        foreach ($getUser as $key => $value) {
+            if(!$getUser){
+                $number ++;
+                $user = $getUser[$number]->owner_user_id;
+                $workshophouders = $user;
 
-        foreach (str_split($workshophouders) as $value) {
-            foreach ($value as $workshophouder) {
-                Mail::to($workshophouder->email)->send(new WorkshopMail($mailInfo));
-            };
+                // Haal de data van de activiteit op per workshophouder
+                $mailInfo = DB::select( 
+                    "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.owner_user_id as workshophouder, eventrounds.start_time, eventrounds.end_time
+                    FROM enlistments 
+                    INNER JOIN users
+                    ON enlistments.user_id=users.id
+                    INNER JOIN activities
+                    ON enlistments.activity_id=activities.id
+                    INNER JOIN activities as activities2
+                    ON enlistments.activity_id=activities.id
+                    INNER JOIN eventrounds
+                    ON enlistments.round_id=eventrounds.id
+                    WHERE activities.owner_user_id = 'Dewi'" // $workshophouders
+                );
+        
+                // Haal de email van de workshophouders op
+                $workshopEmail = DB::select(
+                    "SELECT DISTINCT contacts.email, activities.owner_user_id as workshophouder
+                    FROM enlistments 
+                    INNER JOIN activities
+                    ON enlistments.activity_id=activities.id
+                    INNER JOIN contacts
+                    WHERE activities.owner_user_id = 'Dewi'" // $workshophouders
+                );
+
+                // Verstuur de mail met de opgehaalde data
+                foreach (str_split($workshophouders) as $value) {
+                    foreach ($value as $workshophouder) {
+                        Mail::to($workshophouder->$workshopEmail)->send(new WorkshopMail($mailInfo));
+                    };
+                }
+            }
+            $this->info('workshop information sent to workshop owner');
         }
-        $this->info('workshop information sent to workshop owner');
 
 
 
@@ -57,7 +78,7 @@ class SendWorkshopMail extends Command
 
 
         // $mailInfo = DB::select( 
-        //     "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.executed_by as workshophouder, eventrounds.start_time, eventrounds.end_time
+        //     "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.owner_user_id as workshophouder, eventrounds.start_time, eventrounds.end_time
         //     FROM enlistments 
         //     INNER JOIN users
         //     ON enlistments.user_id=users.id
@@ -67,7 +88,7 @@ class SendWorkshopMail extends Command
         //     ON enlistments.activity_id=activities.id
         //     INNER JOIN eventrounds
         //     ON enlistments.round_id=eventrounds.id
-        //     WHERE activities.executed_by = 'Marc & Peter'"
+        //     WHERE activities.owner_user_id = 'Marc & Peter'"
         //     );
 
         // $users = User::all();

@@ -39,7 +39,7 @@
 								{{ $activity->name }}
 							</h4>
 							<p class="fs-sm fw-medium mb-2">
-								{{ $activity->executed_by }}
+								{{ $activity->owner_user_id }}
 							</p>
 							<p class="fs-sm text-muted">
 								{{ $activity->description }}
