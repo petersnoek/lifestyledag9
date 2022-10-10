@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -15,9 +16,17 @@ class SendWorkshopMail extends Command
 
     public function handle()
     {
-        $getUser = DB::select("SELECT executed_by FROM `activities` WHERE id = 3");
-        $user = implode(" ", $getUser);
+        $currentDate = Carbon::now();
+        $dateNow = $currentDate->format('Y-m-d H:i:s');
+        $getUser = DB::select(
+            "SELECT activities.executed_by, events.enlist_stops_at  
+            FROM `activities` 
+            INNER JOIN `events` 
+            WHERE events.enlist_stops_at = '2022-08-31 08:00:00'" // $dateNow
+        ); 
+        $user = $getUser[0]->executed_by;
         $workshophouders = $user;
+        var_dump($workshophouders);
 
         $mailInfo = DB::select( 
             "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.executed_by as workshophouder, eventrounds.start_time, eventrounds.end_time
@@ -33,12 +42,12 @@ class SendWorkshopMail extends Command
             WHERE activities.executed_by = $workshophouders"
         );
 
-        foreach (str_split($workshophouders) as $values) {
-            foreach ($values as $workshophouder) {
+        foreach (str_split($workshophouders) as $value) {
+            foreach ($value as $workshophouder) {
                 Mail::to($workshophouder->email)->send(new WorkshopMail($mailInfo));
             };
         }
-        $this->info('worksop information sent to workshop owner');
+        $this->info('workshop information sent to workshop owner');
 
 
 
@@ -65,5 +74,6 @@ class SendWorkshopMail extends Command
         // foreach ($users as $user) {
         //     Mail::to($user->email)->send(new WorkshopMail($mailInfo));
         // };
+        // $this->info('workshop information sent to workshop owner');
     }   
 }
