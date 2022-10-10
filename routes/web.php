@@ -39,6 +39,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
     });
 
+
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         // Route::get('/create', [UsersController::class, 'create'])->name('users.create');
@@ -55,6 +56,9 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+
+    Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
+    Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
 });
 
 Route::group(['middleware' => ['guest']], function() {
@@ -74,7 +78,6 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     });
 });
 
-Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
-Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
+
 
 require __DIR__. '/auth.php';
