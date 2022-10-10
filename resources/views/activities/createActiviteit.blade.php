@@ -47,7 +47,7 @@
                         <!-- live query when select drop down -->
 
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="naam" name="naam" placeholder="Activiteit Naam">
+                          <input type="text" class="form-control form-control-lg form-control-alt py-3" name="naam" placeholder="Activiteit Naam" required>
                         </div>
 
                         <div class="mb-4">
@@ -56,7 +56,7 @@
 
                         <div class="mb-4 form-control form-control-lg form-control-alt py-3">
                           <label class="ml-3">Evenement:</label>
-                          <select class="" id="event" name="event">
+                          <select class="" id="event" name="event" required>
                             <option>-</option>
                           @foreach($events as $event)
                             <option value='{{$event->id}}'>{{$event->name}}</option>
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten">
+                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten" required>
                         </div>
                         
                         <div>
@@ -73,7 +73,7 @@
                         </div>
 
 
-                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" onclick="event.preventDefault(); this.form.submit();">
+                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" this.form.submit();">
                           <i></i> Maak Activiteit
                         </button>
 
