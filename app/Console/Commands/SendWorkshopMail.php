@@ -35,9 +35,9 @@ class SendWorkshopMail extends Command
                 $user = $getUser[$number]->owner_user_id;
                 $workshophouders = $user;
 
-                // Haal de data van de activiteit op per workshophouder
+                // Haal de data van de activiteit op per workshophouder en haal de mail op van de workshophouder
                 $mailInfo = DB::select( 
-                    "SELECT DISTINCT enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.owner_user_id as workshophouder, eventrounds.start_time, eventrounds.end_time
+                    "SELECT DISTINCT contacts.email, enlistments.round_id, enlistments.event_id, users.name, activities.name as activity, activities.owner_user_id as workshophouder, eventrounds.start_time, eventrounds.end_time
                     FROM enlistments 
                     INNER JOIN users
                     ON enlistments.user_id=users.id
@@ -47,23 +47,14 @@ class SendWorkshopMail extends Command
                     ON enlistments.activity_id=activities.id
                     INNER JOIN eventrounds
                     ON enlistments.round_id=eventrounds.id
-                    WHERE activities.owner_user_id = 'Dewi'" // $workshophouders
-                );
-        
-                // Haal de email van de workshophouders op
-                $workshopEmail = DB::select(
-                    "SELECT DISTINCT contacts.email, activities.owner_user_id as workshophouder
-                    FROM enlistments 
-                    INNER JOIN activities
-                    ON enlistments.activity_id=activities.id
-                    INNER JOIN contacts
+                    INNER JOIN contacts 
                     WHERE activities.owner_user_id = 'Dewi'" // $workshophouders
                 );
 
                 // Verstuur de mail met de opgehaalde data
                 foreach (str_split($workshophouders) as $value) {
                     foreach ($value as $workshophouder) {
-                        Mail::to($workshophouder->$workshopEmail)->send(new WorkshopMail($mailInfo));
+                        Mail::to($workshophouder->email)->send(new WorkshopMail($mailInfo));
                     };
                 }
             }
