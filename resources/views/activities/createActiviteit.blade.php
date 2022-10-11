@@ -57,7 +57,7 @@
                         <div class="mb-4 form-control form-control-lg form-control-alt py-3">
                           <label class="ml-3">Evenement:</label>
                           <select class="" id="event" name="event" required>
-                            <option>-</option>
+                            <option value="">-</option>
                           @foreach($events as $event)
                             <option value='{{$event->id}}'>{{$event->name}}</option>
                           @endforeach
