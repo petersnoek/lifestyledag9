@@ -21,6 +21,12 @@ class UserSeeder extends Seeder
                 'email' => 'basverdoorn@hotmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$WtIejhN/EWGTAR4bjxrSt.GzhykLHADApprKYDfOa6P8NUgA2ddIC',
+            ],
+            [
+                'name' => 'Pieter',
+                'email' => '99047256@mydavinci.nl',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$qgwRljCpvoHAPFGqB6sOgelHP1Qz9Ela0SH2MNW50SKczWbPYF78W',
             ]
         ];
 

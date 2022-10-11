@@ -1,17 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;    
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AanmeldController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\TestController;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\FallbackController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionsController;
 
     // Route voor dashboard + events
 Route::group(['middleware'=>['auth', 'verified']], function(){
@@ -30,7 +26,7 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     });
 
     // Test email versturen voor aanmelding
-    Route::group(['prefix'=> '/tests'], function(){
+    Route::group(['prefix'=> '/mail'], function(){
         Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
     });
 

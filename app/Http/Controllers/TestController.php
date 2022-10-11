@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
 
+use App\Mail\TestMail;
+use App\Models\Enlistment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
-  public function mailSend() {
-    $email = 'mail@hotmail.com';
+  public function mailSend()
+  {
+    $email = 'lifestyledag@hotmail.com';
 
-    $mailInfo = [
-      'url' => 'http://lifestyledag9.itenmedia.nl/public/aanmelden'
-    ];
+    $mailInfo = Enlistment::whereUserId(Auth::id())->get();
 
     Mail::to($email)->send(new TestMail($mailInfo));
 

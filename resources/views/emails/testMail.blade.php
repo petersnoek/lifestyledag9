@@ -1,11 +1,24 @@
 @component('mail::message')
-# Aanmelden Lifestyledag
-Hierbij de uitnodiging of u mee wilt doen aan de Lifestyledag 2022 in Gorinchem. 
-<br>
-Wilt u meehelpen? Klik op de onderstaande link om de uitnodiging te accepteren en u aan te melden.
+    # Opgegeven activiteiten.
 
-@component('mail::button', ['url' => $mailInfo['url'], 'color' => 'success'])
-Aanmelden
-@endcomponent
+    {{ Auth::user()->name; }}, 
+    Hier ziet u een overzicht van de door jouw opgegeven activiteiten voor evenement: <br>
+    {{ $mailInfo[1]->event->name }}
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ronde</th>
+                <th scope="col">Student</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($mailInfo as $info)
+                <tr>
+                    <td>activity: {{ $info->activity->name }}</td>
+                    <td>user: {{ $info->user->name }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endcomponent
