@@ -9,10 +9,19 @@ class enlistment extends Model
 {
     use HasFactory;
 
-    public function activity() {
+    public function activity()
+    {
         return $this->belongsTo(Activity::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
+    public function round()
+    {
+        return $this->belongsTo(Eventround::class);
+    }
 
 }

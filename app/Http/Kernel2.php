@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
 
         if($currentDate == $endDate){ 
             $schedule->command('info:day')
-            ->$endDate(10);
+            ->$endDate(19);
         }
 
         // Schedule command
