@@ -90,15 +90,6 @@
                     </li>
                 @endcan
 
-                @can(['aanmelden.show'])
-                    <li class="nav-main-item">
-                        <a class="nav-main-link{{ request()->is('aanmelden.show') ? ' active' : '' }}" href="{{ route('aanmelden.show') }}">
-                            <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">Aanmeldingen</span>
-                        </a>
-                    </li>
-                @endcan
-
                 @can(['roles.index'])
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
