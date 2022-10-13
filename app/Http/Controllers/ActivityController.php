@@ -29,24 +29,10 @@ class ActivityController extends Controller
     public function create()
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
-        return view('activities.createActiviteit', ['events' => Event::all(), 'rounds' => Eventround::all()]);
-    }
-/* request all the forum data, create the activity and it's activity rounds */
-    public function getData(Request $request) {
-        $naam = $request->input('naam');
-        $beschrijving = $request->input('beschrijving');
-        $event_id = $request->input('event');
-        $capaciteit = $request->input('capaciteit');
-        $user_id = $request->input('user_id');
-
-        $activity = Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
-        
-        $event = Event::find($event_id);
-        foreach($event->eventrounds as $eventround){
-            ActivityRound::create(['activity_id'=>$activity->id, 'eventround_id'=>$eventround->id, 'max_participants'=>$capaciteit]);
-        }
-
-        return redirect('/dashboard');
+        return response()->view('activities.create', [
+            'events' => Event::all(),
+            'rounds' => Eventround::all()
+        ]);
     }
 
     /**
@@ -57,7 +43,20 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $naam = $request->input('naam');
+        $beschrijving = $request->input('beschrijving');
+        $event_id = $request->input('event');
+        $capaciteit = $request->input('capaciteit');
+        $user_id = $request->input('user_id');
+
+        $activity = Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
+
+        $event = Event::find($event_id);
+        foreach($event->eventrounds as $eventround){
+            ActivityRound::create(['activity_id'=>$activity->id, 'eventround_id'=>$eventround->id, 'max_participants'=>$capaciteit]);
+        }
+
+        return redirect()->route('dashboard');
     }
 
     /**
