@@ -73,8 +73,8 @@
                         </div>
 
 
-                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" this.form.submit();">
-                          <i></i> Maak Activiteit
+                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" this.form.submit();>
+                          Maak Activiteit
                         </button>
 
                     </form>
