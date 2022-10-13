@@ -5,6 +5,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
@@ -52,6 +53,9 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+
+    Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
+    Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
 });
 
 Route::group(['middleware' => ['guest']], function() {
@@ -70,5 +74,7 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 });
+
+
 
 require __DIR__. '/auth.php';
