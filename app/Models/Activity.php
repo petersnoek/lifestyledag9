@@ -13,7 +13,7 @@ class Activity extends Model
     use HasFactory;
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //,'owner_user_id'
     }
 
 

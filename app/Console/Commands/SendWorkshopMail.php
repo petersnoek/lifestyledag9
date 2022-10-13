@@ -42,17 +42,25 @@ class SendWorkshopMail extends Command
 
                 // Haal data op per workshophouder voor de mail
                 $mailInfo = Enlistment::whereActivityId($activity)->get();
-                var_dump($mailInfo);
 
                 // Verstuur de mail met data naar de workshophouder
                 $userInfo = DB::select(
-                    "SELECT DISTINCT activities.owner_user_id, users.name, users.email 
+                    "SELECT DISTINCT activities.owner_user_id, users.name as workshophouder, users.email, activities.name as activity 
                     FROM `activities` 
                     INNER JOIN users 
                     ON activities.owner_user_id = users.id
                     WHERE activities.owner_user_id = $workshophouder"
                 );
-                Mail::to($userInfo[0]->email)->send(new WorkshopMail($mailInfo));
+
+                $studentInfo = DB::select(
+                    "SELECT users.name, enlistments.user_id 
+                    FROM `enlistments` 
+                    INNER JOIN users 
+                    ON users.id=enlistments.user_id 
+                    WHERE activity_id = $activity"
+                );
+
+                Mail::to($userInfo[0]->email)->send(new WorkshopMail($mailInfo, $userInfo, $studentInfo));
                 // Mail::to($userInfo[$number]->email)->send(new WorkshopMail($mailInfo));
             }
             $this->info('workshop information sent to workshop owner');

@@ -44,6 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function enlistments(){
-        return $this->hasMany(Enlistment::class);
+        return $this->hasMany(Enlistment::class); //,'owner_user_id'
     }
 }

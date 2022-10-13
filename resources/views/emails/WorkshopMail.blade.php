@@ -1,9 +1,9 @@
 @component('mail::message')
 # Inschrijvingen workshop
 
-Beste {{$mailInfo[0]->workshophouder}},
+Beste {{$userInfo[0]->workshophouder}},
 <br>
-Het inschrijven is gesloten, hier is een lijst met alle aanmeldingen van uw workshop: {{$mailInfo[0]->activity}}
+Het inschrijven is gesloten, hier is een lijst met alle aanmeldingen van uw workshop: {{$userInfo[0]->activity}}
 
 <table class="table" style="border-spacing: 20px;">
   <thead>
@@ -17,12 +17,13 @@ Het inschrijven is gesloten, hier is een lijst met alle aanmeldingen van uw work
   <tbody>
     @foreach ($mailInfo as $info)
       <tr>
-        <td>{{$info->round_id}}</td>
-        <td>{{$info->start_time}}</td>
-        <td>{{$info->end_time}}</td>
-        <td>{{$info->name}}</td>
+        <td>{{$info->round->round}}</td>
+        <td>{{$info->round->start_time}}</td>
+        <td>{{$info->round->end_time}}</td>
+        <td>{{$Info->name}}</td>
       </tr>
     @endforeach
+    {{$studentInfo[0]->name}}
   </tbody>
 </table>
 @endcomponent
