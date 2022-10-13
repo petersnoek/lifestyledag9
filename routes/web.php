@@ -6,7 +6,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
@@ -37,17 +36,15 @@ Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function(){
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+        Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
 
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
-        // Route::get('/create', [UsersController::class, 'create'])->name('users.create');
-        // Route::post('/create', [UsersController::class, 'store'])->name('users.store');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
-        // Route::delete('/{user}/delete', [UsersController::class, 'destroy'])->name('users.destroy')->whereNumber('user');
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
