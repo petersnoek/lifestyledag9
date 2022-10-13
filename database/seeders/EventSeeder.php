@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class EventSeeder extends Seeder
             'created_at' => $nu,
             'updated_at' => $nu,
         ]);
-
+        
         DB::table('events')->insert([
             'id' => 2,
             'name' => 'Lifestyledag 2016',
@@ -53,5 +54,6 @@ class EventSeeder extends Seeder
             'updated_at' => $nu,
         ]);
 
+        $this->command->info('Seeding: added events');
     }
 }

@@ -49,5 +49,8 @@ class ContactSeeder extends Seeder
         DB::table('contacts')->insert(['roepnaam' => 'Judith',          'tussenvoegsel' => null,        'achternaam' => 'Mesker',       'email' => 'jmesker@davinci.nl',    'op_mailinglijst' => true,  'mobiel' => null,            'organisatie' => 'Da vinci College',    'edities_meegedaan' => '2019', 'activiteit_titel' => 'Zorgteam',                        'notities' => 'Onze school kent een zorgteam. Ze zijn er voor jou.\r\nMaak kennis op deze dag en vraag wat ze voor jou kunnen betekenen. Altijd handig om al wat gezichten te leren kennen.', 'user_id' => null, 'created_by' => $admin_user_id, 'last_edited_by' => null, 'created_at' => $created_at_2019,]);
 
         // DB::table('contacts')->insert(['roepnaam' => '', 'tussenvoegsel' => '', 'achternaam' => '', 'email' => '', 'op_mailinglijst' => true, 'mobiel' => '', 'organisatie' => '', 'edities_meegedaan' => '2019', 'activiteit_titel' => '', 'notities' => null, 'user_id' => null, 'created_by' => $admin_user_id, 'last_edited_by' => null, 'created_at' => $created_at_2019,]);
+
+        $this->command->info('Seeding: added 24 contacts');
+
     }
 }
