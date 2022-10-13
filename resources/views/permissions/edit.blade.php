@@ -1,4 +1,4 @@
-@extends('layouts.app-master')
+@extends('layouts.backend')
 
 @section('content')
     <div class="bg-light p-4 rounded">

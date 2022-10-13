@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
-            $table->string('executed_by');
+            $table->foreignId('owner_user_id');
             $table->string('name');
             $table->string('description')->nullable()->default('');
             $table->string('location')->nullable()->default('');
+            $table->boolean('isActive')->default(false);
             $table->timestamps();
         });
     }
