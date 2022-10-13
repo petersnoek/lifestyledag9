@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;    
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
@@ -10,6 +14,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\DB;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
