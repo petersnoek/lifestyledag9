@@ -5,6 +5,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AanmeldController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FallbackController;
@@ -38,14 +39,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
     });
 
-    // Route voor aanmeldings email
-    // Route voor aanmelding data opslaan + bedankt pagina
-    // Route voor resultatenpagina van aanmeldingen
-    Route::group(['prefix'=> '/aanmelden'], function(){
-        Route::get('/', function () { return view('aanmelden'); })->name('aanmelden.index');
-        Route::get('/result', [AanmeldController::class, 'show'])->name('aanmelden.show');
-        Route::post('/end', [AanmeldController::class, 'getData'])->name('aanmelden.end');
-    });
 
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
@@ -63,6 +56,9 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+
+    Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
+    Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
 });
 
 Route::group(['middleware' => ['guest']], function() {
@@ -81,5 +77,7 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 });
+
+
 
 require __DIR__. '/auth.php';
