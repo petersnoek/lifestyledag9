@@ -26,15 +26,16 @@ class SendLoginInformation
      */
     public function handle(WorkshopholderGenerated $event)
     {
-        $useremail = $event->email;
+        $userEmail = $event->email;
         $password = $event->password;
 
         $mailInfo = [
-            'userEmail' => $useremail,
+            'userEmail' => $userEmail,
             'password' => $password,
             'url' => Route('login')
         ];
 
         Mail::to('lifestyledag9@hotmail.com')->send(new LoginInformation($mailInfo));
+        $event = null;
     }
 }

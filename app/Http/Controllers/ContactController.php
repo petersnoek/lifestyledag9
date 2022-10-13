@@ -50,8 +50,13 @@ class ContactController extends Controller
             $contact = Contact::find($value);
             $fullname = trim($contact->displayName());
 
+            if ($contact->user_id !== null) {
+                array_push($failedUsers, ['contact'=> $contact, 'errors'=> ['Contact heeft al een gebruiker.']]);
+                continue;
+            }
+
             if ($fullname == null || $fullname == '') {
-                array_push($failedUsers, ['contact'=> $contact, 'errors'=> ['contact has no name']]);
+                array_push($failedUsers, ['contact'=> $contact, 'errors'=> ['Contact heeft geen naam.']]);
                 continue;
             }
 
@@ -77,11 +82,20 @@ class ContactController extends Controller
             $role = Role::where('name', 'workshophouder')->first()->id;
             $user->syncRoles($role);
 
-            // $contact->user->attach($user->id);
-            // $contact->created_by->attach(Auth::user()->id);
+            // $contact->user()->attach($user->id);
+            // $contact->created_by()->attach(Auth::user()->id);
+
+            // $contact->last_edited_by()->sync(Auth::user()->id);
+
+            // $contact->last_edited_by()->save(Auth::user());
+            // $user2 = User::find(Auth::user()->id);
+
+            // $contact->user()->associate($user);
+            // $contact->last_edited_by()->associate($user2);
+            // $user->contact_last_edited_by()->save(Auth::user());
 
             $contact->user_id = $user->id;
-            $contact->created_by = Auth::user()->id;
+            $contact->last_edited_by = Auth::user()->id;
             $contact->save();
             // $contact->user()->save($user->id);
             // $contact->created_by()->save(Auth::user()->id);
