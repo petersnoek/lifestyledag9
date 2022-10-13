@@ -35,7 +35,7 @@
           Dashboard
         </h1>
         <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-          Welkom op de website van Lifestyledag, {{Auth::user()->name}}.
+          Welkom op de website van Lifestyledag, {{Auth::user()->name;}}.
         </h2>
       </div>
       <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">

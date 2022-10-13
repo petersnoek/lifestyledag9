@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+
+        Schema::create('activity_event', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('activity_id');
             $table->foreignId('event_id');
-            $table->string('executed_by');
-            $table->string('name');
-            $table->string('description')->nullable()->default('');
-            $table->string('location')->nullable()->default('');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activities');
+        //
     }
 };

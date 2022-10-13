@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -24,11 +24,8 @@ class UserSeeder extends Seeder
             ]
         ];
 
-        $role = Role::where('name', 'student')->first()->id;
-
         foreach ($data as $key => $value) {
-            $user = User::create($value);
-            $user->syncRoles($role);
+            User::create($value);
         }
     }
 }
