@@ -6,7 +6,6 @@ use App\Mail\TestMail;
 use App\Models\Enlistment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
@@ -18,8 +17,6 @@ class TestController extends Controller
 
     Mail::to($email)->send(new TestMail($mailInfo));
 
-    return response()->json([
-      'message' => 'Mail has sent.'
-    ], Response::HTTP_OK);
+    return redirect('dashboard');
   }
 }

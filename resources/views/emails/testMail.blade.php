@@ -14,6 +14,7 @@
     </thead>
     <tbody>
         @foreach ($mailInfo as $info)
+            <tr>
                 <td>{{ $info->activity->name }}</td>
                 <td>{{ $info->round_id }}</td>
                 <td>{{ $info->round->start_time }}</td>
