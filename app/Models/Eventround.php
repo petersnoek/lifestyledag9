@@ -11,6 +11,11 @@ class Eventround extends Model
 
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo(Event::class);
+    }
+
+    public function enlistments()
+    {
+        return $this->hasMany(Enlistment::class, 'round_id');
     }
 }

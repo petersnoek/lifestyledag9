@@ -3,13 +3,11 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Enlistment;
-use Illuminate\Support\Facades\DB;
+use App\Models\Event;
+use App\Mail\WorkshopMail;
+use App\Models\Eventround;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\WorkshopMail;
-use App\Models\Activity;
 
 class SendWorkshopMail extends Command
 {
@@ -22,48 +20,24 @@ class SendWorkshopMail extends Command
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
 
-        // Haal de workshophouders op waarvan de inschrijfdatum verlopen is
-        $getUser = DB::select(
-            "SELECT DISTINCT activities.owner_user_id, events.enlist_stops_at, activities.id  
-            FROM `activities` 
-            INNER JOIN `users`
-            ON activities.owner_user_id=users.id
-            INNER JOIN `events` 
-            WHERE events.enlist_stops_at = '2022-08-31 08:00:00' AND users.workshop_owner = '1'" // $dateNow
-        ); 
-        // Loop door de opgehaalde workshophouders heen
-        $number = 0;
-        foreach ($getUser as $key => $value) {
-            if(isset($getUser) == true){
-                $number++;
-                $user = $value->owner_user_id;
-                $activity = $value->id;
-                $workshophouder = $user;
+        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
+        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->where("id", 4)->get(); // deze regel is om van 1 activiteit de mail te sturen anders stuur je ze van allemaal en krijg je 20 mails binnen.
 
-                // Haal data op per workshophouder voor de mail
-                $mailInfo = Enlistment::whereActivityId($activity)->get();
+        foreach ($activiteiten as $activity) {
+            $workshophouder = $activity->user()->first();
+            $round_ids = $activity->enlistments()->distinct('round_id')->select('round_id')->get()->toArray();
+            $eventrounds = Eventround::whereIn('id', [$round_ids])->get()->sortBy('round');
 
-                // Verstuur de mail met data naar de workshophouder
-                $userInfo = DB::select(
-                    "SELECT DISTINCT activities.owner_user_id, users.name as workshophouder, users.email, activities.name as activity 
-                    FROM `activities` 
-                    INNER JOIN users 
-                    ON activities.owner_user_id = users.id
-                    WHERE activities.owner_user_id = $workshophouder"
-                );
+            $mailInfo = [
+                'activity' => $activity->name,
+                'workshophouder' => $workshophouder->name,
+                'eventrounds' => $eventrounds
+            ];
 
-                $studentInfo = DB::select(
-                    "SELECT users.name, enlistments.user_id 
-                    FROM `enlistments` 
-                    INNER JOIN users 
-                    ON users.id=enlistments.user_id 
-                    WHERE activity_id = $activity"
-                );
+            Mail::to('lifestyledag9@hotmail.com')->send(new WorkshopMail($mailInfo));
 
-                Mail::to($userInfo[0]->email)->send(new WorkshopMail($mailInfo, $userInfo, $studentInfo));
-                // Mail::to($userInfo[$number]->email)->send(new WorkshopMail($mailInfo));
-            }
-            $this->info('workshop information sent to workshop owner');
+            // $this->info('workshop information sent to workshop owner');
+            $this->info('workshop information sent to lifestyledag9@hotmail.com');
         }
-    }   
+    }
 }
