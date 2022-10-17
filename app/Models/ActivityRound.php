@@ -14,8 +14,8 @@ class ActivityRound extends Model
         'eventround_id',
         'max_participants',
     ];
-}
 
     public function activity() { 
         return $this->belongsTo(Activity::class); 
     } 
+}
