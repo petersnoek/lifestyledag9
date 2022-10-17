@@ -65,11 +65,6 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 Route::group(['middleware'=>['auth', 'verified']], function(){
-    // Test email versturen voor aanmelding
-    Route::group(['prefix'=> '/tests'], function(){
-        Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
-    });
-
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');

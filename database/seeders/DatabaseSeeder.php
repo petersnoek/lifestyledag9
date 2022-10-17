@@ -25,10 +25,6 @@ class DatabaseSeeder extends Seeder
             EventroundSeeder::class,
             EnlistmentSeeder::class,
             ActivitySeeder::class,
-            RoutePermissionsSeeder::class,
-            RoleSeeder::class,
-            AdminUserSeeder::class,
-            UserSeeder::class
         ]);
     }
 }

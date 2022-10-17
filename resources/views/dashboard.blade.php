@@ -49,6 +49,8 @@
         </ol>
       </nav>
     </div>
+       {{-- <a class="btn-sm btn-alt-secondary" href="http://lifestyledag9.itenmedia.nl/public/nieuwe-activiteit">Activteit aanmaken</a> --}}
+       <a class="btn-sm btn-alt-secondary" href="http://127.0.0.1:8000/nieuwe-activiteit">Activteit aanmaken</a> 
   </div>
 </div>
 <!-- END Hero -->
@@ -56,7 +58,6 @@
 	 <!-- Page Content -->
    <div class="content content-boxed">
     <div class="row">
-
         @foreach($events as $event)
         <!-- Story -->
         @if ($event->frontpage == true)
