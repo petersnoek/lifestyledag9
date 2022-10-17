@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Activity;
 use App\Models\Event;
-use App\Models\User;
+use App\Models\Activity;
 use App\Models\Eventround;
+use App\Rules\NamePattern;
+use Illuminate\Http\Request;
 use App\Models\ActivityRound;
+use Illuminate\Validation\Rule;
+use App\Rules\DescriptionPattern;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
@@ -43,17 +47,33 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $naam = $request->input('naam');
-        $beschrijving = $request->input('beschrijving');
-        $event_id = $request->input('event');
-        $capaciteit = $request->input('capaciteit');
-        $user_id = $request->input('user_id');
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'max:255', new NamePattern()],
+            'description' => [new DescriptionPattern()],
+            'event_id' => ['required', Rule::exists(Event::class, 'id')],
+            'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
+        ]);
 
-        $activity = Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
+        if ($validator->fails()) {
+            return redirect()->route('activities.create')->withinput($request->all())->with('errors', $validator->errors());
+        }
 
+        $event_id = $request->event_id;
         $event = Event::find($event_id);
-        foreach($event->eventrounds as $eventround){
-            ActivityRound::create(['activity_id'=>$activity->id, 'eventround_id'=>$eventround->id, 'max_participants'=>$capaciteit]);
+
+        $activity = new Activity();
+        $activity->name = $request->name;
+        $activity->description = $request->description;
+        $activity->event_id = $event_id;
+        $activity->owner_user_id = Auth::user()->id;
+        $activity->save();
+
+        foreach($event->eventrounds()->get() as $eventround){
+            $activityRound = new ActivityRound();
+            $activityRound->activity_id = $activity->id;
+            $activityRound->eventround_id = $eventround->id;
+            $activityRound->max_participants = $request->max_participants;
+            $activityRound->save();
         }
 
         return redirect()->route('dashboard');

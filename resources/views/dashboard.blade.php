@@ -49,8 +49,7 @@
         </ol>
       </nav>
     </div>
-       {{-- <a class="btn-sm btn-alt-secondary" href="http://lifestyledag9.itenmedia.nl/public/nieuwe-activiteit">Activteit aanmaken</a> --}}
-       <a class="btn-sm btn-alt-secondary" href="http://127.0.0.1:8000/nieuwe-activiteit">Activteit aanmaken</a> 
+    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a> 
   </div>
 </div>
 <!-- END Hero -->

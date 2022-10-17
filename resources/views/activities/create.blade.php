@@ -33,47 +33,32 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div class="col-sm-8 col-xl-6">
-
-                    <!-- @foreach($events as $event)
-                      <div>{{$event->id}}{{$event->name}}</div>
-                    @endforeach
-                    @foreach($rounds as $round)
-                      <div>{{$round->id}}</div>
-                    @endforeach -->
                     <form action="{{ route('activity.store') }}" method="POST">
-
                         @csrf
 
-                        <!-- live query when select drop down -->
-
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" name="naam" placeholder="Activiteit Naam" required>
+                          <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam" required>
                         </div>
 
                         <div class="mb-4">
-                          <textarea type="text" class="form-control form-control-lg form-control-alt py-3" id="beschrijving" name="beschrijving" placeholder="Beschrijving"></textarea>
+                          <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving"></textarea>
                         </div>
 
                         <div class="mb-4 form-control form-control-lg form-control-alt py-3">
                           <label class="ml-3">Evenement:</label>
-                          <select class="" id="event" name="event" required>
-                            <option value="">-</option>
-                          @foreach($events as $event)
-                            <option value='{{$event->id}}'>{{$event->name}}</option>
-                          @endforeach
+                          <select name="event_id" required>
+                            <option value="" disabled selected hidden>-</option>
+                            @foreach($events as $event)
+                                <option value='{{$event->id}}'>{{$event->name}}</option>
+                            @endforeach
                           </select>
                         </div>
 
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten" required>
+                          <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten" required>
                         </div>
 
-                        <div>
-                          <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
-                        </div>
-
-
-                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" this.form.submit();>
+                        <button type="submit" class="btn btn-lg btn-alt-primary">
                           Maak Activiteit
                         </button>
 
