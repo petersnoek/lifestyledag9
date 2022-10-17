@@ -9,7 +9,6 @@ use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\TestController;
 
 
 // ------------ nieuwe route met permission aanmaken -----------------
