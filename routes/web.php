@@ -41,11 +41,16 @@ Route::group(['middleware' => ['permission']], function() {
     });
 
 
-    Route::group(['prefix' => 'users'], function() {
+    Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
+    });
+
+    Route::group(['prefix' => '/activity'], function() {
+        Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
+        Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -54,9 +59,6 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
-
-    Route::get('/nieuwe-activiteit', [ActivityController::class, 'create'])->name('activity.create');
-    Route::post('/end', [ActivityController::class, 'getData'])->name('activity.create.end');
 });
 
 Route::group(['middleware' => ['guest']], function() {

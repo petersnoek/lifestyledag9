@@ -33,17 +33,17 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div class="col-sm-8 col-xl-6">
-                  
+
                     <!-- @foreach($events as $event)
                       <div>{{$event->id}}{{$event->name}}</div>
                     @endforeach
                     @foreach($rounds as $round)
                       <div>{{$round->id}}</div>
                     @endforeach -->
-                    <form action="{{ route('activity.create.end') }}" method="POST">
-                        
+                    <form action="{{ route('activity.store') }}" method="POST">
+
                         @csrf
-                        
+
                         <!-- live query when select drop down -->
 
                         <div class="mb-4">
@@ -67,7 +67,7 @@
                         <div class="mb-4">
                           <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten" required>
                         </div>
-                        
+
                         <div>
                           <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
                         </div>
