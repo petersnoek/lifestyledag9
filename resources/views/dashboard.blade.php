@@ -49,7 +49,7 @@
         </ol>
       </nav>
     </div>
-    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a> 
+    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a>
   </div>
 </div>
 <!-- END Hero -->
