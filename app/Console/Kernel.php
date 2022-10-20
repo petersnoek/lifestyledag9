@@ -19,13 +19,13 @@ class Kernel extends ConsoleKernel
         $currentDate = Carbon::now();
         // $dateNow = $currentDate->format('Y-m-d H:i:s');
         // $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
-        $currentDate = "2022-08-31 08:10:00";
-        $endDate = Event::where('enlist_stops_at', "2022-08-31 08:00:00")->select('enlist_stops_at')->first();
+        $currentDate = "2022-10-10 15:10:00";
+        $endDate = Event::where('enlist_stops_at', "2022-10-10 15:10:00")->select('enlist_stops_at')->first();
 
-        if($currentDate > $endDate['enlist_stops_at']){
+        if($currentDate == $endDate['enlist_stops_at']){
             $schedule->command('info:day')
-            ->when(function() use($currentDate, $endDate){ 
-            return Carbon::create($endDate['enlist_stops_at']/*$currentDate*/)->isPast(/*$endDate['enlist_stops_at']*/);
+            ->when(function() use($endDate){ 
+            return Carbon::create($endDate['enlist_stops_at'])->isPast();
             });
         }
     }

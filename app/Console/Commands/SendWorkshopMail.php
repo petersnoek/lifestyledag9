@@ -20,8 +20,9 @@ class SendWorkshopMail extends Command
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
 
-        // $activiteiten = Event::where("enlist_stops_at", $dateNow->first()->activities()->get());
-        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->where("id", 4)->get(); 
+        // $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get());
+        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->where("id", 4)->get();
+        // $activiteiten = Event::where("enlist_stops_at", "2022-10-10 15:10:00")->first()->activities()->where("id", 5)->get();
 
         foreach ($activiteiten as $activity) {
             $workshophouder = $activity->user()->first();
