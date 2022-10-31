@@ -33,48 +33,46 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div class="col-sm-8 col-xl-6">
-                  
-                    <!-- @foreach($events as $event)
-                      <div>{{$event->id}}{{$event->name}}</div>
-                    @endforeach
-                    @foreach($rounds as $round)
-                      <div>{{$round->id}}</div>
-                    @endforeach -->
-                    <form action="{{ route('activity.create.end') }}" method="POST">
-                        
+                    <form action="{{ route('activity.store') }}" method="POST">
                         @csrf
                         
-                        <!-- live query when select drop down -->
+                        @if (count($errors) > 0)
+                            @foreach($errors as $error)
+                                <div style="color: #841717; background-color: #f8d4d4; margin-bottom: 5px; padding: 5px; box-shadow: 0 0.125rem #f4bebe; border-radius: 5px">
+                                    {{$error[0]}}
+                                </div>
+                            @endforeach
+                        @endif
 
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" name="naam" placeholder="Activiteit Naam" required>
+                            <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam"  value="{{ old('name')}}" required>
                         </div>
+                        
 
                         <div class="mb-4">
-                          <textarea type="text" class="form-control form-control-lg form-control-alt py-3" id="beschrijving" name="beschrijving" placeholder="Beschrijving"></textarea>
+                            <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
                         </div>
 
                         <div class="mb-4 form-control form-control-lg form-control-alt py-3">
-                          <label class="ml-3">Evenement:</label>
-                          <select class="" id="event" name="event" required>
+                            <label class="ml-3">Evenement:</label>
+                            <select name="event_id" required>
                             <option value="">-</option>
-                          @foreach($events as $event)
-                            <option value='{{$event->id}}'>{{$event->name}}</option>
-                          @endforeach
-                          </select>
+                            @foreach($events as $event)
+                                <option
+                                    @if (old('event_id') == $event->id)
+                                        {{'selected'}} 
+                                    @endif
+                                value='{{$event->id}}'>{{$event->name}}</option>
+                            @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="capaciteit" name="capaciteit" placeholder="Max aantal studenten" required>
-                        </div>
-                        
-                        <div>
-                          <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
+                            <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten" value="{{ old('max_participants')}}" required>
                         </div>
 
-
-                        <button type="submit" class="btn btn-lg btn-alt-primary" id="sendInvite" this.form.submit();>
-                          Maak Activiteit
+                        <button type="submit" class="btn btn-lg btn-alt-primary">
+                            Maak Activiteit
                         </button>
 
                     </form>
