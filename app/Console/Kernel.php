@@ -15,13 +15,12 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        // Schedule command
+        // Haal de huidige datum op en zet deze in een query
         $currentDate = Carbon::now();
-        // $dateNow = $currentDate->format('Y-m-d H:i:s');
-        // $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
-        $currentDate = "2022-10-10 15:10:00";
-        $endDate = Event::where('enlist_stops_at', "2022-10-10 15:10:00")->select('enlist_stops_at')->first();
+        $dateNow = $currentDate->format('Y-m-d H:i:s');
+        $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
 
+        // Als de huidige datum gelijk is aan de datum in de db wordt de schedule uitgevoerd
         if($currentDate == $endDate['enlist_stops_at']){
             $schedule->command('info:day')
             ->when(function() use($endDate){ 

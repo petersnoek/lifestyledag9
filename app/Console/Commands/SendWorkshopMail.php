@@ -20,10 +20,10 @@ class SendWorkshopMail extends Command
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
 
-        // $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get());
-        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->where("id", 4)->get();
-        // $activiteiten = Event::where("enlist_stops_at", "2022-10-10 15:10:00")->first()->activities()->where("id", 5)->get();
+        // Haal de activiteiten op waar de huidige datum verlopen is
+        $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get();
 
+        // Loop door de resultaten van de query
         foreach ($activiteiten as $activity) {
             $workshophouder = $activity->user()->first();
             $round_ids = $activity->enlistments()->distinct('round_id')->select('round_id')->get()->toArray();
@@ -36,8 +36,8 @@ class SendWorkshopMail extends Command
                 'eventrounds' => $eventrounds
             ];
 
-            Mail::to('lifestyledag9@hotmail.com')->send(new WorkshopMail($mailInfo));
-            // Mail::to($mailInfo["email"])->send(new WorkshopMail($mailInfo));
+            // Verstuur de mail
+            Mail::to($mailInfo["email"])->send(new WorkshopMail($mailInfo));
 
             $this->info('workshop information sent to workshop owner');
         }

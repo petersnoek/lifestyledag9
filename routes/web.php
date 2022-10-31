@@ -8,7 +8,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
 
-    // Route voor dashboard + events
+// Route voor events
 Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::group(['prefix'=> '/event'], function(){
         Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
@@ -24,11 +24,13 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 
+    // Route voor dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('welcome');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
 });
 
+// Route voor fallback
 Route::group(['middleware' => ['guest']], function() {
     Route::fallback([FallbackController::class, 'fallback1']);
     Route::get('/', function () {
