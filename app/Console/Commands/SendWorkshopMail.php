@@ -19,9 +19,11 @@ class SendWorkshopMail extends Command
         // Haal de huidige datum op
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
+        $dateNow = "2022-08-31 08:00:00";
 
         // Haal de activiteiten op waar de huidige datum verlopen is
-        $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get();
+        $number = 4;
+        $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->where("id", $number)->get();
 
         // Loop door de resultaten van de query
         foreach ($activiteiten as $activity) {
