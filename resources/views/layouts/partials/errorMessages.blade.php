@@ -24,15 +24,25 @@
             @if (is_array($failedUsers) && count($failedUsers) > 0)
                 @foreach ($failedUsers as $failedUser)
                     <li>Contact met naam: {{ $failedUser['contact']->displayName() }}, kon niet worden aangemaakt door errors:
-                        @foreach ($failedUser['errors']->messages() as $key => $errorMessages)
-                            @foreach ($errorMessages as $message)
-                                @if (end($errorMessages) === $message)
-                                {{  rtrim($message,'.') }}.
+                        @if ($failedUser['errors'] instanceof Illuminate\Support\MessageBag)
+                            @foreach ($failedUser['errors']->messages() as $key => $errorMessages)
+                                @foreach ($errorMessages as $message)
+                                    @if (end($errorMessages) === $message)
+                                    {{  rtrim($message,'.') }}.
+                                    @else
+                                    {{  rtrim($message,'.') }},
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        @else
+                            @foreach ($failedUser['errors'] as $key => $errorMessages)
+                                @if (end($failedUser['errors']) === $errorMessages)
+                                {{  rtrim($errorMessages,'.') }}.
                                 @else
-                                {{  rtrim($message,'.') }},
+                                {{  rtrim($errorMessages,'.') }},
                                 @endif
                             @endforeach
-                        @endforeach
+                        @endif
                     </li>
                 @endforeach
             @endif

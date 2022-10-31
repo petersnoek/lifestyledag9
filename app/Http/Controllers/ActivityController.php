@@ -55,7 +55,7 @@ class ActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('activities.create')->withinput($request->all())->with('errors', $validator->errors());
+            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors());
         }
 
         $event_id = $request->event_id;
