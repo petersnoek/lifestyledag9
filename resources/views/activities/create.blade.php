@@ -38,7 +38,7 @@
                         
                         @if (count($errors) > 0)
                             @foreach($errors as $error)
-                                <div style="color: #841717; background-color: #f8d4d4; margin-bottom: 5px; padding: 5px; box-shadow: 0 0.125rem #f4bebe; border-radius: 5px">
+                                <div class="alert alert-danger">
                                     {{$error[0]}}
                                 </div>
                             @endforeach
@@ -69,6 +69,10 @@
 
                         <div class="mb-4">
                             <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten" value="{{ old('max_participants')}}" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <input type="file" name="image">
                         </div>
 
                         <button type="submit" class="btn btn-lg btn-alt-primary">
