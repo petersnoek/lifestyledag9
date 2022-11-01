@@ -19,14 +19,10 @@ class SendWorkshopMail extends Command
        // Haal de huidige datum op
        $currentDate = Carbon::now();
        $dateNow = $currentDate->format('Y-m-d H:i:s');
+       $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get();
+       // $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
 
-    //    $number = 4;
-    //    $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->where("id", $number)->get();
-       $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
-       // $number++;
-
-    //    var_dump(count($activiteiten));
-
+       // Loop door de activiteiten heen en pak alle data hiervan
         foreach ($activiteiten as $activity) {
             $workshophouder = $activity->user()->first();
             $round_ids_select = $activity->enlistments()->distinct('round_id')->select('round_id')->get()->toArray();
@@ -37,7 +33,6 @@ class SendWorkshopMail extends Command
                     array_push($round_ids, $value["round_id"]);
                 }
             }
-            // var_dump($round_ids);
             
             $eventrounds = Eventround::whereIn('id', $round_ids)->get()->sortBy('round');
 
@@ -49,8 +44,8 @@ class SendWorkshopMail extends Command
             ];
 
             // Verstuur de mail
-            // Mail::to($mailInfo["email"])->send(new WorkshopMail($mailInfo));
-            Mail::to('lifestyledag9@hotmail.com')->send(new WorkshopMail($mailInfo));
+            Mail::to($mailInfo["email"])->send(new WorkshopMail($mailInfo));
+            // Mail::to('lifestyledag9@hotmail.com')->send(new WorkshopMail($mailInfo));
 
             $this->info('workshop information sent to workshop owner');
         }
