@@ -8,6 +8,7 @@ use App\Models\Eventround;
 use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,31 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($event_id)
     {
-        //
+        $event_id = ['event_id' => Crypt::decrypt($event_id)];
+        $validator = Validator::make($event_id, [
+            'event_id' => ['required', Rule::exists(Event::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
+        }
+
+        $event_id = $event_id['event_id'];
+
+        $event = Event::find($event_id);
+        $eventRounds = Eventround::where('event_id', $event->id)->get();
+        $activityRounds = [];
+        foreach($eventRounds as $eventRound){
+            array_push($activityRounds, ActivityRound::where('eventround_id', $eventRound->id)->get());
+        }
+
+        return response()->view('activities.index', [
+            'event' => $event,
+            'activities' => $event->activities,
+            'activityRound' => $activityRounds,
+        ]);
     }
 
     /**

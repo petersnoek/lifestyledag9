@@ -31,8 +31,27 @@ class Activity extends Model
         return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
     }
 
-    function availability_message($eventround_nr, $eventround_id) {
-        $enlistment_count = $this->enlistments()->where('round_id', $eventround_nr)->count();
+    function availability($eventround_id) {
+        $enlistment_count = $this->enlistments()->where('round_id', $eventround_id)->count();
+        $round = $this->rounds()->where('eventround_id', $eventround_id)->first();
+
+        if($round == null) {
+            $max_participants = 0;
+        } else {
+            $max_participants = $round->max_participants;
+        }
+
+        if ($max_participants <= 0) {
+            return false;
+        } else if ($enlistment_count >= $max_participants) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function availability_message($eventround_id) {
+        $enlistment_count = $this->enlistments()->where('round_id', $eventround_id)->count();
         $round = $this->rounds()->where('eventround_id', $eventround_id)->first();
         if($round == null) {
             $max_participants = 0;

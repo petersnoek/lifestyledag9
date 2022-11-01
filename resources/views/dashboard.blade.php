@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('css_before')
+{{-- @section('css_before')
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
@@ -23,7 +23,15 @@
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
-@endsection
+@endsection --}}
+
+<style>
+    .event-card-button {
+        padding: 0px;
+        border: none;
+        text-align: left;
+    }
+</style>
 
 @section('content')
 <!-- Hero -->
@@ -61,7 +69,7 @@
         <!-- Story -->
         @if ($event->frontpage == true)
         <div class="col-lg-4">
-            <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', [$event->id]) }}">
+            <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('activity.index', ['event_id' => Crypt::encrypt($event->id)]) }}">
                 <img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg')}}" alt="">
                 <div class="block-content">
                     <h4 class="mb-1">
