@@ -29,7 +29,7 @@ class RolesController extends Controller
         $roles = Role::orderBy('id','DESC')->paginate(5);
         $i = ($request->input('page', 1) - 1) * 5;
         return response()->view('roles.index',[
-            'roles' => compact('roles'),
+            'roles' => $roles,
             'i' => $i
         ]);
     }

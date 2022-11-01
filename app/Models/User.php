@@ -42,4 +42,34 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function contact()
+    // {
+    //     return $this->hasOne(Contact::class, 'user_id', 'id');
+    // }
+
+    // public function contact_created_by()
+    // {
+    //     return $this->hasMany(Contact::class, 'created_by', 'id');
+    // }
+
+    // public function contact_last_edited_by()
+    // {
+    //     return $this->hasMany(Contact::class, 'last_edited_by', 'id');
+    // }
+
+    public function contact()
+    {
+        return $this->hasOne(Contact::class, 'id', 'user_id');
+    }
+
+    public function contact_created_by()
+    {
+        return $this->hasMany(Contact::class, 'id', 'created_by');
+    }
+
+    public function contact_last_edited_by()
+    {
+        return $this->hasMany(Contact::class, 'id', 'last_edited_by');
+    }
 }

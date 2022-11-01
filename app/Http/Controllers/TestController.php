@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
 
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
@@ -13,7 +12,7 @@ class TestController extends Controller
     $email = 'mail@hotmail.com';
 
     $mailInfo = [
-      'url' => 'http://lifestyledag9.itenmedia.nl/public/aanmelden'
+      'url' => Route('aanmelden.index')
     ];
 
     Mail::to($email)->send(new TestMail($mailInfo));

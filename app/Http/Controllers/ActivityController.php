@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Activity;
 use App\Models\Event;
-use App\Models\User;
+use App\Models\Activity;
 use App\Models\Eventround;
+use App\Rules\NamePattern;
+use Illuminate\Http\Request;
 use App\Models\ActivityRound;
+use Illuminate\Validation\Rule;
+use App\Rules\DescriptionPattern;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
@@ -29,24 +33,10 @@ class ActivityController extends Controller
     public function create()
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
-        return view('activities.createActiviteit', ['events' => Event::all(), 'rounds' => Eventround::all()]);
-    }
-/* request all the forum data, create the activity and it's activity rounds */
-    public function getData(Request $request) {
-        $naam = $request->input('naam');
-        $beschrijving = $request->input('beschrijving');
-        $event_id = $request->input('event');
-        $capaciteit = $request->input('capaciteit');
-        $user_id = $request->input('user_id');
-
-        $activity = Activity::create(['name'=>$naam,'owner_user_id'=>$user_id, 'description'=>$beschrijving, 'event_id'=>$event_id]);
-        
-        $event = Event::find($event_id);
-        foreach($event->eventrounds as $eventround){
-            ActivityRound::create(['activity_id'=>$activity->id, 'eventround_id'=>$eventround->id, 'max_participants'=>$capaciteit]);
-        }
-
-        return redirect('/dashboard');
+        return response()->view('activities.create', [
+            'events' => Event::all(),
+            'rounds' => Eventround::all()
+        ]);
     }
 
     /**
@@ -57,12 +47,14 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+
         /*server side validate user given data with requirements and patterns(see app\rules)  */
         /*custom error messages might be needed..*/
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
+
             'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
@@ -72,6 +64,7 @@ class ActivityController extends Controller
 
         $event_id = $request->event_id;
         $event = Event::find($event_id);
+
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
@@ -79,6 +72,7 @@ class ActivityController extends Controller
         $activity->event_id = $event_id;
         $activity->owner_user_id = Auth::user()->id;
         $activity->save();
+
     /*create all the needed activity rounds and insert data into corresponding attribute*/
         foreach($event->eventrounds()->get() as $eventround){
             $activityRound = new ActivityRound();

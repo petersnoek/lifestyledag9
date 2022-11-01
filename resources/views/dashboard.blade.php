@@ -49,6 +49,7 @@
         </ol>
       </nav>
     </div>
+    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a>
   </div>
 </div>
 <!-- END Hero -->
@@ -56,7 +57,6 @@
 	 <!-- Page Content -->
    <div class="content content-boxed">
     <div class="row">
-
         @foreach($events as $event)
         <!-- Story -->
         @if ($event->frontpage == true)
