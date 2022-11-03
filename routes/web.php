@@ -34,7 +34,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
-
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
@@ -43,13 +42,16 @@ Route::group(['middleware' => ['permission']], function() {
     });
 
     Route::group(['prefix' => '/activity'], function() {
-        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
+
+        //edit functie werkt nog niet.
+        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit')->whereNumber('activity_id');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
+        Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

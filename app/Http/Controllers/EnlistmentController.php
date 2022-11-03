@@ -49,7 +49,6 @@ class EnlistmentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // return redirect()->route('activity.index', ['event_id' => Crypt::encrypt(intval($request->event_id))])->with('errors', ['Error met data inschrijving.']);
             return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
         }
 
@@ -68,10 +67,10 @@ class EnlistmentController extends Controller
             $enlistment->user_id = Auth::user()->id;
             $enlistment->save();
 
-            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)]);
+            return redirect()->route('dashboard');
         }
 
-        return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Niet mogelijk om voor deze activiteiten ronde in te schrijven.']);
+        return redirect()->route('dashboard')->with('errors', ['Niet mogelijk om voor deze activiteiten ronde in te schrijven.']);
     }
 
     /**
@@ -114,8 +113,23 @@ class EnlistmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'enlistment_id' => ['required', 'numeric', Rule::exists(Enlistment::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
+        }
+
+        $enlistment_id = intval($request->enlistment_id);
+        $enlistment = Enlistment::find($enlistment_id);
+
+        if ($enlistment->is_owner()) {
+            $enlistment->delete();
+            return redirect()->route('dashboard');
+        }
+        return redirect()->route('dashboard')->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
     }
 }

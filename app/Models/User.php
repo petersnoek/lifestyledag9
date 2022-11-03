@@ -43,21 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    // public function contact()
-    // {
-    //     return $this->hasOne(Contact::class, 'user_id', 'id');
-    // }
-
-    // public function contact_created_by()
-    // {
-    //     return $this->hasMany(Contact::class, 'created_by', 'id');
-    // }
-
-    // public function contact_last_edited_by()
-    // {
-    //     return $this->hasMany(Contact::class, 'last_edited_by', 'id');
-    // }
-
     public function contact()
     {
         return $this->hasOne(Contact::class, 'id', 'user_id');
@@ -71,5 +56,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function contact_last_edited_by()
     {
         return $this->hasMany(Contact::class, 'id', 'last_edited_by');
+    }
+
+    function is_enlisted_for($activity_id) {
+        $activity = Activity::findOrFail($activity_id);
+        $event = Event::findOrFail($activity->event_id);
+
+        return $event = Enlistment::where([['event_id', $event->id], ['activity_id', $activity->id], ['user_id', $this->id]])->exists();
+    }
+
+    function enlistments_for_event($event_id) {
+        $event = Event::findOrFail($event_id);
+
+        return $this->hasMany(Enlistment::class)->where('event_id', $event->id)->orderBy('round_id', 'asc')->get();
     }
 }

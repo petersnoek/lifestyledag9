@@ -21,31 +21,8 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($event_id)
-    {
-        $event_id = ['event_id' => Crypt::decrypt($event_id)];
-        $validator = Validator::make($event_id, [
-            'event_id' => ['required', Rule::exists(Event::class, 'id')]
-        ]);
+    public function index() {
 
-        if ($validator->fails()) {
-            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
-        }
-
-        $event_id = $event_id['event_id'];
-
-        $event = Event::find($event_id);
-        $eventRounds = Eventround::where('event_id', $event->id)->get();
-        $activityRounds = [];
-        foreach($eventRounds as $eventRound){
-            array_push($activityRounds, ActivityRound::where('eventround_id', $eventRound->id)->get());
-        }
-
-        return response()->view('activities.index', [
-            'event' => $event,
-            'activities' => $event->activities,
-            'activityRound' => $activityRounds,
-        ]);
     }
 
     /**
@@ -119,9 +96,17 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+        }
+
+        $activity_id = intval($request->activity_id);
     }
 
     /**
