@@ -27,7 +27,9 @@
               <h3 class="block-title">Gebruikers Profiel</h3>
             </div>
             <div class="block-content">
-              <form action="be_pages_projects_edit.html" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+              <?php  $userId = Auth::id(); ?>
+              <form action="{{ route('users.update2', [$userId]) }}" method="GET"> 
+                @csrf
                 <div class="row push">
                   <div class="col-lg-4">
                     <p class="fs-sm text-muted">
@@ -35,12 +37,17 @@
                   </div>
                   <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
-                      <label class="form-label" for="one-profile-edit-name">Naam</label>
-                      <input type="text" class="form-control" id="one-profile-edit-name" name="one-profile-edit-name" placeholder="Vul je naam in.." value="">
+                      <label class="form-label" for="name">Naam</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Vul je naam in..">
+                    </div>
+                  <div class="col-lg-8 col-xl-5">
+                    <div class="mb-4">
+                      <label class="form-label" for="classCode">Klascode</label>
+                      <input type="text" class="form-control" id="classCode" name="classCode" placeholder="Vul je klascode in..">
                     </div>
                     <div class="mb-4">
                       <button type="submit" class="btn btn-alt-primary">
-                        Update
+                        Update gegevens
                       </button>
                     </div>
                   </div>

@@ -73,6 +73,7 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
+        Route::get('/update/{id}', [UsersController::class, 'update2'])->name('users.update2')->whereNumber('user');
     });
 });
 
