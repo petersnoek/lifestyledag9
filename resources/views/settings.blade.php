@@ -44,10 +44,10 @@
                       <label class="form-label" for="classCode">Klascode</label>
                       <input type="text" class="form-control" id="classCode" name="classCode" placeholder="Vul je klascode in..">
                     </div>
-                    {{-- <div class="mb-4">
+                    <div class="mb-4">
                       <label class="form-label" for="email">Email</label>
                       <input type="text" class="form-control" id="email" name="email" placeholder="Vul je email in..">
-                    </div> --}}
+                    </div>
                     <div class="mb-4">
                       <button type="submit" class="btn btn-alt-primary">
                         Update gegevens

@@ -57,9 +57,21 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->classCode = $request->input('classCode');
-        // $user->email = $request->input('email');
+        $user->email = $request->input('email');
+
+        // als een request input null is pak dan de waarde van de database
+        if($request->name == null){
+            $user->name = Auth::user()->name;
+        }
+        if($request->classCode == null){
+            $user->classCode = Auth::user()->classCode;
+        }
+        if($request->email == null){
+            $user->email = Auth::user()->email;
+        }
+
         $user->update();
-        
+
         return redirect()->back()->with('status','User updated successfully');
     }
 
