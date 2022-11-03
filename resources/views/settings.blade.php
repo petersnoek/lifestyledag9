@@ -40,11 +40,14 @@
                       <label class="form-label" for="name">Naam</label>
                       <input type="text" class="form-control" id="name" name="name" placeholder="Vul je naam in..">
                     </div>
-                  <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
                       <label class="form-label" for="classCode">Klascode</label>
                       <input type="text" class="form-control" id="classCode" name="classCode" placeholder="Vul je klascode in..">
                     </div>
+                    {{-- <div class="mb-4">
+                      <label class="form-label" for="email">Email</label>
+                      <input type="text" class="form-control" id="email" name="email" placeholder="Vul je email in..">
+                    </div> --}}
                     <div class="mb-4">
                       <button type="submit" class="btn btn-alt-primary">
                         Update gegevens

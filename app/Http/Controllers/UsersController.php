@@ -55,8 +55,9 @@ class UsersController extends Controller
     // Update klascode van de student
     public function update2(Request $request, $id) {
         $user = User::find($id);
-        $user->classCode = $request->input('classCode');
         $user->name = $request->input('name');
+        $user->classCode = $request->input('classCode');
+        // $user->email = $request->input('email');
         $user->update();
         
         return redirect()->back()->with('status','User updated successfully');
