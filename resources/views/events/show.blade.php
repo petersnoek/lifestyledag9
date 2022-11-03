@@ -35,7 +35,7 @@
 			@foreach ($activities as $activity) 
 				<div class="col-lg-4"> 
 					<a class="block-rounded block-link-pop block overflow-hidden" href="/activity/{{ $activity->id }}"> 
-						<img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg') }}" alt=""> 
+						<img class="img-fluid" src="{{ asset('storage/ActivityHeaders/'.$activity->image) }}" alt=""> 
 						<div class="block-content"> 
 							<h4 class="mb-1"> 
 								{{ $number ++ . " " . $activity->name }} 

@@ -32,52 +32,60 @@
     <div class="content">
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
-                <div class="col-sm-8 col-xl-6">
-                    <form action="{{ route('activity.store') }}" method="POST">
+                <div >
+                    @if (count($errors) > 0)
+                        @foreach($errors as $error)
+                            <div class="mb-4 alert alert-danger">
+                                {{$error[0]}}
+                            </div>
+                        @endforeach
+                    @endif
+                    <form class="d-flex justify-content-evenly" action="{{ route('activity.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         
-                        @if (count($errors) > 0)
-                            @foreach($errors as $error)
-                                <div class="alert alert-danger">
-                                    {{$error[0]}}
-                                </div>
-                            @endforeach
-                        @endif
+                        <div class="col-sm-8 col-xl-6">
+                            <div class="mb-4">
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam"  value="{{ old('name')}}" required>
+                            </div>
+                            
 
-                        <div class="mb-4">
-                            <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam"  value="{{ old('name')}}" required>
-                        </div>
+                            <div class="mb-4">
+                                <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
+                            </div>
+
+                            <div class="mb-4 form-floating">
+                                <select id="eventSelect" class="form-select form-control-alt" name="event_id" required>
+                                <option value="">-</option>
+                                @foreach($events as $event)
+                                    <option
+                                        @if (old('event_id') == $event->id)
+                                            {{'selected'}} 
+                                        @endif
+                                    value='{{$event->id}}'>{{$event->name}}</option>
+                                @endforeach
+                                </select>
+                                <label for="eventSelect">Evenement:</label>
+                            </div>
+
+                            <div class="mb-4">
+                                <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten per ronde" value="{{ old('max_participants')}}" required>
+                            </div>
+
                         
-
-                        <div class="mb-4">
-                            <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
                         </div>
-
-                        <div class="mb-4 form-control form-control-lg form-control-alt py-3">
-                            <label class="ml-3">Evenement:</label>
-                            <select name="event_id" required>
-                            <option value="">-</option>
-                            @foreach($events as $event)
-                                <option
-                                    @if (old('event_id') == $event->id)
-                                        {{'selected'}} 
-                                    @endif
-                                value='{{$event->id}}'>{{$event->name}}</option>
-                            @endforeach
-                            </select>
+                        <div class="col-sm-8 col-xl-5">
+                            <div class="mb-4 ">
+                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 row">
+                                    <img id="headerPreview" class="bg-white w-100 p-0" src="">
+                                </div>
+                                <input class="form-control form-control-alt rounded-0 rounded-bottom py-3 w-100 row" type="file" name="image"onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])">
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-lg btn-alt-primary">
+                                Maak Activiteit
+                                </button>
+                            </div>
                         </div>
-
-                        <div class="mb-4">
-                            <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten" value="{{ old('max_participants')}}" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <input type="file" name="image">
-                        </div>
-
-                        <button type="submit" class="btn btn-lg btn-alt-primary">
-                            Maak Activiteit
-                        </button>
 
                     </form>
                 </div>
