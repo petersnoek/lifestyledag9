@@ -59,7 +59,7 @@ class UsersController extends Controller
         $user->classCode = $request->input('classCode');
         $user->email = $request->input('email');
 
-        // als een request input null is pak dan de waarde van de database
+        // Als een request input null is pak dan de waarde van de database
         if($request->name == null){
             $user->name = Auth::user()->name;
         }
@@ -72,7 +72,7 @@ class UsersController extends Controller
 
         $user->update();
 
-        return redirect()->back()->with('status','User updated successfully');
+        return redirect()->back();
     }
 
     public function destroy(User $user) {
