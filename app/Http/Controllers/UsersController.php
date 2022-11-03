@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\NamePattern;
+use App\Rules\ClassCodePattern;
 
 class UsersController extends Controller
 {
@@ -54,6 +57,15 @@ class UsersController extends Controller
 
     // Update klascode van de student
     public function update2(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'max:255', new NamePattern()],
+            'classCode' => [new ClassCodePattern()]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('settings')->withinput($request->all())->with('errors', $validator->errors()->getMessages());
+        }
+
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->classCode = $request->input('classCode');

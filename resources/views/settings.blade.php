@@ -30,6 +30,15 @@
               <?php  $userId = Auth::id(); ?>
               <form action="{{ route('users.update2', [$userId]) }}" method="GET"> 
                 @csrf
+
+                @if (count($errors) > 0)
+                  @foreach($errors as $error)
+                      <div style="color: #841717; background-color: #f8d4d4; margin-bottom: 5px; padding: 5px; box-shadow: 0 0.125rem #f4bebe; border-radius: 5px">
+                        {{$error[0]}}
+                      </div>
+                  @endforeach
+                @endif
+
                 <div class="row push">
                   <div class="col-lg-4">
                     <p class="fs-sm text-muted">
@@ -46,7 +55,7 @@
                     </div>
                     <div class="mb-4">
                       <label class="form-label" for="email">Email</label>
-                      <input type="text" class="form-control" id="email" name="email" placeholder="Vul je email in..">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Vul je email in..">
                     </div>
                     <div class="mb-4">
                       <button type="submit" class="btn btn-alt-primary">
