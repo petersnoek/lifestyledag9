@@ -25,11 +25,6 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 
-    // Test email versturen voor aanmelding
-    Route::group(['prefix'=> '/mail'], function(){
-        Route::get('/send-mail', [TestController::class, 'mailSend'])->name('tests.send-mail');
-    });
-
     Route::get('/', [DashboardController::class, 'index'])->name('welcome');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
