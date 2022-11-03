@@ -58,8 +58,9 @@ class EnlistmentController extends Controller
 
         $activity_availability = Activity::find($activity_id)->availability($round_id);
         $enlistment_for_round_exists = Enlistment::where('user_id', Auth::user()->id)->where('round_id', $round_id)->exists();
+        $registrations_possible = Event::find($event_id)->registrations_possible();
 
-        if ($activity_availability && !$enlistment_for_round_exists) {
+        if ($activity_availability && !$enlistment_for_round_exists && $registrations_possible) {
             $enlistment = new Enlistment();
             $enlistment->event_id = $event_id;
             $enlistment->activity_id = $activity_id;
@@ -68,6 +69,10 @@ class EnlistmentController extends Controller
             $enlistment->save();
 
             return redirect()->route('dashboard');
+        } else if (!$registrations_possible) {
+            return redirect()->route('dashboard')->with('errors', ['Registraties voor dit event zijn nog niet begonnen of al geëindigt.']);
+        } else if ($enlistment_for_round_exists) {
+            return redirect()->route('dashboard')->with('errors', ['U bent al ingeschreven voor een activiteit in deze ronde.']);
         }
 
         return redirect()->route('dashboard')->with('errors', ['Niet mogelijk om voor deze activiteiten ronde in te schrijven.']);

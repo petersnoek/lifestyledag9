@@ -26,18 +26,24 @@
                         <h1 class="h3 fw-bold mb-2">
                             Inschrijvingen
                         </h1>
-                        @if(Auth::check())
+                        @if(Auth::check() && $event->registrations_possible())
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
                                 <form action="{{ route('enlistment.destroy') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="enlistment_id" value="{{$enlist->id}}">
-                                    <small><span class="badge bg-primary rounded-pill">{{ $enlist->eventrounds()->first()->round }}</span>{{ $enlist->activity->name }}
+                                    <small><span class="badge bg-primary rounded-pill"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}
                                         <button type="submit" class="">
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
                                     </small>
                                 </form>
                             @endforeach
+                        @elseif (!$event->registrations_possible())
+                            @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
+                                <small class="text-muted"><span class="badge rounded-pill bg-muted">{{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small>
+                            @endforeach
+                            <br><br>
+                            <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigt.</small></b>
                         @else
                             <small>Om je te kunnen inschrijven voor activiteiten moet je eerst inloggen.</small>
                         @endif
@@ -89,9 +95,9 @@
                                     {{ $activity->description }}
                                 </p>
                                 @if ($event->has_rounds())
-                                    @if ( Auth::user()->is_enlisted_for($activity->id) )
+                                    @if ( Auth::user()->is_enlisted_for($activity->id) && $event->registrations_possible())
                                         <span class="text-center text-success">je bent ingeschreven voor deze activiteit</span>
-                                    @else
+                                    @elseif ($event->registrations_possible())
                                         @foreach ($event->eventrounds as $round)
                                             <form action="{{ route('enlistment.store') }}" method="POST">
                                                 @csrf
@@ -105,6 +111,8 @@
                                                 </button>
                                             </form>
                                         @endforeach
+                                    @else
+                                        <span class="text-center text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigt.</span>
                                     @endif
                                 @endif
                             </div>
