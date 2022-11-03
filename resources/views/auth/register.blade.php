@@ -51,6 +51,9 @@
                                         <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="Email" required>
                                     </div>
                                     <div class="mb-4">
+                                        <input type="classCode" class="form-control form-control-lg form-control-alt py-3" id="classCode" name="classCode" placeholder="Klascode">
+                                    </div>
+                                    <div class="mb-4">
                                         <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord" required>
                                     </div>
                                     <div class="mb-4">

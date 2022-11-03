@@ -14,11 +14,13 @@ class UserSeeder extends Seeder
             [
                 'name' => 'test',
                 'email' => 'test@gmail.com',
+                'classCode' => '20A5',
                 'password' => '$2y$10$A24g/HB33S7.JK5kYZnc/OPpaPzUE8p6QQiv6G3QGwIB4y2RIxZhC',
             ],
             [
                 'name' => 'Bas Verdoorn',
                 'email' => 'basverdoorn@hotmail.com',
+                'classCode' => '20A5',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$WtIejhN/EWGTAR4bjxrSt.GzhykLHADApprKYDfOa6P8NUgA2ddIC',
             ]

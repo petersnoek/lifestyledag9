@@ -27,7 +27,7 @@ use App\Http\Controllers\ContactController;
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
-// Route voor rollensysteem
+// Route voor evenementen
 Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix'=> '/event'], function(){
         Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
@@ -39,7 +39,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
-
+    // Route voor userbeheer 
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
@@ -47,19 +47,23 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
     });
 
+    // Route voor activiteiten
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
     });
 
+    // Route voor dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
-
+ 
+    // Route voor rollensysteem
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
 });
 
+// Route voor guests
 Route::group(['middleware' => ['guest']], function() {
     Route::fallback([FallbackController::class, 'fallback1']);
     Route::get('/', function(){return redirect()->route('login');});
