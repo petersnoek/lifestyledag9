@@ -23,7 +23,7 @@ class SendWorkshopMail extends Command
         $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
 
         // Loop door de activiteiten heen en pak alle data hiervan
-        if(isset($activiteiten) && $activiteiten !== false){
+        if(isset($activiteiten) && $activiteiten !== false || $activiteiten !== null){
             foreach ($activiteiten as $activity) {
                 $workshophouder = $activity->user()->first();
                 $round_ids_select = $activity->enlistments()->distinct('round_id')->select('round_id')->get()->toArray();
