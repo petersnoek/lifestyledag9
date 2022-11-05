@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
@@ -9,7 +8,7 @@ use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\EnlistmentController;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -29,16 +28,11 @@ use App\Http\Controllers\ContactController;
 
 // Route voor rollensysteem
 Route::group(['middleware' => ['permission']], function() {
-    Route::group(['prefix'=> '/event'], function(){
-        Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
-    });
-
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function(){
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
-
 
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
@@ -50,6 +44,14 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
+
+        //edit functie werkt nog niet.
+        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit')->whereNumber('activity_id');
+    });
+
+    Route::group(['prefix' => '/enlistment'], function() {
+        Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
+        Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

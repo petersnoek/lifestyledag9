@@ -20,9 +20,8 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+
     }
 
     /**
@@ -102,9 +101,17 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+        }
+
+        $activity_id = intval($request->activity_id);
     }
 
     /**
