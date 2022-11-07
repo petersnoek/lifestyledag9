@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ContactController;
@@ -44,6 +45,10 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+});
+
+Route::get('console/schedule', function () {
+    Artisan::call('info:student');
 });
 
 require __DIR__. '/auth.php';

@@ -27,6 +27,10 @@ class Kernel extends ConsoleKernel
         if (isset($endDate)) {
             // Als de huidige datum gelijk is aan de datum in de db wordt de schedule uitgevoerd
             if ($currentDate == $endDate['enlist_stops_at']) {
+                $schedule->command('info:day')
+                    ->when(function () use ($endDate) {
+                        return Carbon::create($endDate['enlist_stops_at'])->isPast();
+                    });
                 $schedule->command('info:student')
                     ->when(function () use ($endDate) {
                         return Carbon::create($endDate['enlist_stops_at'])->isPast();
