@@ -55,10 +55,10 @@ class UsersController extends Controller
             ->withSuccess(__('User updated successfully.'));
     }
 
-    // Update klascode van de student
+    // Update gegevens van de student
     public function update2(Request $request, $id) {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:255', new NamePattern()],
+            'name' => ['max:50', new NamePattern()],
             'classCode' => [new ClassCodePattern()]
         ]);
 

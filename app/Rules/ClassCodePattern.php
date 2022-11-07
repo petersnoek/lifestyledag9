@@ -17,6 +17,6 @@ class ClassCodePattern implements Rule
 
     public function message()
     {
-        return 'Error: Allen nummers en letters zijn toegestaan.';
+        return 'Error: Alleen nummers en letters zijn toegestaan bij de klascode.';
     }
 }
