@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ContactController;

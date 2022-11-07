@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Mail\Studentmail;
 use App\Models\Enlistment;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class SendStudentmail extends Command
@@ -20,14 +19,12 @@ class SendStudentmail extends Command
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
 
+        //Haal de user_id uit de database en laat dat ID maar 1 keer voorkomen (anders verzend hij de mail 3x)
         $users = Enlistment::select('user_id')->distinct()->get();
 
+        //voor elke gebruiker loop door zijn gegevens heen en zet die data in een array om in de mail te zetten.
         foreach ($users as $user) {
             $enlistments = Enlistment::where('user_id', $user['user_id'])->get();
-
-
-            // $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get());
-            // $activiteiten = Event::where("enlist_stops_at", "2022-10-10 15:10:00")->first()->activities()->where("id", 5)->get();
 
             $student = $enlistments->first()->user;
             $mailInfo = [
@@ -36,7 +33,7 @@ class SendStudentmail extends Command
             ];
 
             $activities = [];
-
+            //loop door alle enlistmens per gebruiker en pak de data per activiteit en zet ze in de $activities array.
             foreach ($enlistments as $enlistment) {
                 $activityInfo = [
                     'activity' => $enlistment->activity->name,
@@ -47,9 +44,8 @@ class SendStudentmail extends Command
                 $activities[] = $activityInfo;
             }
             Mail::to($mailInfo['email'])->send(new Studentmail($mailInfo, $activities));
-            // Mail::to($mailInfo["email"])->send(new Studentmail($mailInfo));
 
-            $this->info('workshop information sent to student owner');
+            $this->info('enlistment information was sent to the students email');
         }
     }
 }
