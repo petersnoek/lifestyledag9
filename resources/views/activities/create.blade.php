@@ -78,7 +78,7 @@
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 row">
                                     <img id="headerPreview" class="bg-white w-100 p-0" src="">
                                 </div>
-                                <input class="form-control form-control-alt rounded-0 rounded-bottom py-3 w-100 row" type="file" name="image"onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])">
+                                <input class="form-control form-control-alt rounded-0 rounded-bottom py-3 w-100 row" type="file" name="image"onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">

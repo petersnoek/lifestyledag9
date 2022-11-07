@@ -35,7 +35,8 @@
 			@foreach ($activities as $activity) 
 				<div class="col-lg-4"> 
 					<a class="block-rounded block-link-pop block overflow-hidden" href="/activity/{{ $activity->id }}"> 
-						<img class="img-fluid" src="{{ asset('storage/ActivityHeaders/'.$activity->image) }}" alt=""> 
+					
+						<img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="">
 						<div class="block-content"> 
 							<h4 class="mb-1"> 
 								{{ $number ++ . " " . $activity->name }} 
