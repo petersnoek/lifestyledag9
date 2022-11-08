@@ -24,7 +24,7 @@ class SendStudentmail extends Command
 
         //voor elke gebruiker loop door zijn gegevens heen en zet die data in een array om in de mail te zetten.
         foreach ($users as $user) {
-            $enlistments = Enlistment::where('user_id', $user['user_id'])->get();
+            $enlistments = Enlistment::where('user_id', $user['user_id'])->get()->sortBy('round');
 
             $student = $enlistments->first()->user;
             $mailInfo = [
