@@ -16,7 +16,6 @@ class EnlistmentSeeder extends Seeder
      */
     public function run()
     {
-
         $nu = Carbon::now();
 
         DB::table('enlistments')->insert(['event_id' => 3, 'activity_id' => 1, 'round_id' => 1, 'user_id' => 4, 'created_at' => $nu, 'updated_at' => $nu,]);

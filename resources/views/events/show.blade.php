@@ -39,7 +39,7 @@
 								{{ $activity->name }}
 							</h4>
 							<p class="fs-sm fw-medium mb-2">
-								{{ $activity->executed_by }}
+								{{ $activity->owner_user_id }}
 							</p>
 							<p class="fs-sm text-muted">
 								{{ $activity->description }}
@@ -55,13 +55,6 @@
 									@endforeach
 								@endif
 							</p>
-
-							{{-- @foreach ($activity->enlistments as $enlistments)
-								<p class="fs-sm fw-medium mb-2">
-									{{ $enlistments->round_id }}
-								</p>
-							@endforeach --}}
-
 						</div>
 					</a>
 				</div>

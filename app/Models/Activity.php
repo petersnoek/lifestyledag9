@@ -12,6 +12,10 @@ class Activity extends Model
 {
     use HasFactory;
 
+    public function user() {
+        return $this->belongsTo(User::class, 'owner_user_id'); //,'owner_user_id'
+    }
+
     public function event() {
         return $this->belongsTo(Event::class);
     }
@@ -19,7 +23,7 @@ class Activity extends Model
     public function enlistments() {
         return $this->hasMany(Enlistment::class);
     }
-
+    
     function max_participants() {
         return $this->hasMany(ActivityRound::class);
     }
