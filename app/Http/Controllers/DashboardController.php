@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -13,7 +15,13 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $events = Event::where('frontpage', true)->get();
+        $User = User::find(Auth::User()->id);
+        if ($User->can('view-any-event')) {
+            $events = Event::all();
+        } else {
+            $events = Event::where('frontpage', true)->get();
+        }
+
         return response()->view('dashboard', [
             'events' => $events
         ]);
