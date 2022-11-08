@@ -24,6 +24,7 @@ class RoleSeeder extends Seeder
             "dashboard",
             "activity.index",
             "enlistment.store",
+            "enlistment.destroy",
             "login",
             "logout",
             "password.confirm",

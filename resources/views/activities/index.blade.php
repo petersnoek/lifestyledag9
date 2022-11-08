@@ -31,17 +31,17 @@
                                     @csrf
                                     <input type="hidden" name="enlistment_id" value="{{$enlist->id}}">
                                     <input type="hidden" name="event_id" value="{{$event->id}}">
-                                    
+
                                     <small><span class="badge bg-primary rounded-pill"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}
                                         <button type="submit" class="">
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
                                     </small>
-                                </form>
+                                </form><br>
                             @endforeach
                         @elseif (!$event->registrations_possible())
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
-                                <small class="text-muted"><span class="badge rounded-pill bg-muted">{{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small>
+                                <small class="text-muted"><span class="badge rounded-pill bg-muted"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small><br>
                             @endforeach
                             <br><br>
                             <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigt.</small></b>
@@ -82,7 +82,7 @@
                             </ul>
                             </div>
                             @endcan
-                            <img src="{{ asset('media/photos/photo2@2x.jpg') }}" class="img-fluid card-img-top" alt="...">
+                            <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="">
                             <div class="card-body">
                                 <h4 class="mb-1 text-start">
                                     {{ $number++ . " " . $activity->name }}

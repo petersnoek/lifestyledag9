@@ -16,14 +16,29 @@ class ActivityRoundsSeeder extends Seeder
     {
         $data = [
             [
-                'activity_id' => 3,
+                'activity_id' => 4,
                 'eventround_id' => 4,
                 'max_participants' => 15
             ],
             [
+                'activity_id' => 4,
+                'eventround_id' => 5,
+                'max_participants' => 15
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 6,
+                'max_participants' => 15
+            ],
+            [
+                'activity_id' => 3,
+                'eventround_id' => 4,
+                'max_participants' => 8
+            ],
+            [
                 'activity_id' => 3,
                 'eventround_id' => 5,
-                'max_participants' => 10
+                'max_participants' => 8
             ],
             [
                 'activity_id' => 3,
@@ -33,7 +48,7 @@ class ActivityRoundsSeeder extends Seeder
             [
                 'activity_id' => 2,
                 'eventround_id' => 4,
-                'max_participants' => 15
+                'max_participants' => 10
             ],
             [
                 'activity_id' => 2,
@@ -43,7 +58,7 @@ class ActivityRoundsSeeder extends Seeder
             [
                 'activity_id' => 2,
                 'eventround_id' => 6,
-                'max_participants' => 8
+                'max_participants' => 10
             ],
         ];
 

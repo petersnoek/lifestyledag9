@@ -35,11 +35,11 @@ class Enlistment extends Model
         if ($this->user_id == Auth::user()->id) {
             return true;
         }
+        return false;
+    }
 
     public function round()
     {
         return $this->belongsTo(Eventround::class);
-    }
-        return false;
     }
 }
