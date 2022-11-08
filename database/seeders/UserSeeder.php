@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\enlistment;
-use App\Models\Role;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
