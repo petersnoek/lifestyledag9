@@ -12,9 +12,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) {
-        $events = Event::all();
-        return view('dashboard', [
+    public function index() {
+        $events = Event::where('frontpage', true)->get();
+        return response()->view('dashboard', [
             'events' => $events
         ]);
     }

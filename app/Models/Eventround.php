@@ -11,6 +11,6 @@ class Eventround extends Model
 
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo(Event::class);
     }
 }
