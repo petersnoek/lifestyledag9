@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             EventroundSeeder::class,
             ActivitySeeder::class,
+
+            ActivityRoundsSeeder::class,
             EnlistmentSeeder::class
         ]);
     }

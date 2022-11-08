@@ -1,4 +1,4 @@
-@extends('layouts.app-master')
+@extends('layouts.backend')
 
 @section('content')
     <div class="bg-light p-4 rounded">
@@ -62,7 +62,6 @@
                 <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
-
     </div>
 @endsection
 

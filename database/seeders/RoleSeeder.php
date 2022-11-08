@@ -15,27 +15,62 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roleSet1 = Permission::whereIn("name", ["welcome", "dashboard"])->get();
+        // Permission::whereIn("name", [])->get();
 
-        // $role = Role::create(['name' => 'student']);
-        // $permissions = $roleSet1->merge(Permission::whereIn("name", ["welcome", "dashboard"])->get());
-        // $permissions = $roleSet1;
-        // $role->permissions()->attach($permissions);
+        // var_export(Permission::pluck('name')->all());
 
-        // $role = Role::create(['name' => 'workshophouder']);
-        // $permissions = $roleSet1->merge(Permission::whereIn("name", ["aanmelden.index", "aanmelden.show", "aanmelden.end"])->get());
-        // $role->syncPermissions($permissions);
+        $role = Role::create(['name' => 'student']);
+        $permissions = Permission::whereIn("name", [
+            "dashboard",
+            "activity.index",
+            "enlistment.store",
+            "login",
+            "logout",
+            "password.confirm",
+            "password.email",
+            "password.request",
+            "password.reset",
+            "password.update",
+            "register",
+            "verification.notice",
+            "verification.send",
+            "verification.verify"
+        ])->get();
+        $role->permissions()->attach($permissions);
+
+        $role = Role::create(['name' => 'workshophouder']);
+        $permissions = Permission::whereIn("name", [
+            "aanmelden.end",
+            "aanmelden.index",
+            "aanmelden.show",
+            "dashboard",
+            "activity.index",
+            "login",
+            "logout",
+            "password.confirm",
+            "password.email",
+            "password.request",
+            "password.reset",
+            "password.update",
+            "register",
+            "verification.notice",
+            "verification.send",
+            "verification.verify",
+            "activity.create",
+            "activity.store"
+        ])->get();
+        $role->permissions()->attach($permissions);
 
         // $role = Role::create(['name' => 'workshophouderbeheerder']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->syncPermissions($permissions);
+        // $role->permissions()->attach($permissions);
 
         // $role = Role::create(['name' => 'ontwikkelaar']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->syncPermissions($permissions);
+        // $role->permissions()->attach($permissions);
 
         $role = Role::create(['name' => 'admin']);
         $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
+        $role->permissions()->attach($permissions);
     }
 }

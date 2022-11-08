@@ -41,9 +41,6 @@
   <!-- Sidebar -->
     <nav id="sidebar" aria-label="Main Navigation">
 
-
-
-
         <!-- Sidebar Scrolling -->
       <div class="js-sidebar-scroll">
 
@@ -75,18 +72,29 @@
         <!-- Side Navigation -->
         <div class="content-side">
             <ul class="nav-main">
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="{{ route('contacts.index') }}">
-                        <i class="nav-main-link-icon si si-cursor"></i>
-                        <span class="nav-main-link-name">Contactpersonen</span>
-                    </a>
-                </li>
+                @can(['dashboard'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="{{ route('dashboard') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Dashboard</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can(['contacts.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="{{ route('contacts.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Contactpersonen</span>
+                        </a>
+                    </li>
+                @endcan
 
                 @can(['roles.index'])
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">roles</span>
+                            <span class="nav-main-link-name">Roles</span>
                         </a>
                     </li>
                 @endcan
@@ -95,7 +103,16 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('permissions.index') ? ' active' : '' }}" href="{{ route('permissions.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">permissions</span>
+                            <span class="nav-main-link-name">Permissions</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can(['users.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('users.index') ? ' active' : '' }}" href="{{ route('users.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Users</span>
                         </a>
                     </li>
                 @endcan
