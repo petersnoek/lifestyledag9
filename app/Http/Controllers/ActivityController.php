@@ -8,6 +8,7 @@ use App\Models\Eventround;
 use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +21,23 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index($event_id)
+    {
+        $event_id = ['event_id' => Crypt::decrypt($event_id)];
+        $validator = Validator::make($event_id, [
+            'event_id' => ['required', Rule::exists(Event::class, 'id')]
+        ]);
 
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
+        }
+
+        $event_id = $event_id['event_id'];
+        $event = Event::find($event_id);
+
+        return response()->view('activities.index', [
+            'event' => $event
+        ]);
     }
 
     /**
@@ -46,9 +62,6 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-
-        /*server side validate user given data with requirements and patterns(see app\rules)  */
-        /*custom error messages might be needed..*/
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
@@ -58,7 +71,7 @@ class ActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getMessages());
+            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors());
         }
 
         $event_id = $request->event_id;
@@ -80,7 +93,6 @@ class ActivityController extends Controller
         $activity->owner_user_id = Auth::user()->id;
         $activity->save();
 
-    /*create all the needed activity rounds and insert data into corresponding attribute*/
         foreach($event->eventrounds()->get() as $eventround){
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
@@ -111,15 +123,15 @@ class ActivityController extends Controller
      */
     public function edit(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
+        // ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
-        }
+        // if ($validator->fails()) {
+        //     return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+        // }
 
-        $activity_id = intval($request->activity_id);
+        // $activity_id = intval($request->activity_id);
     }
 
     /**

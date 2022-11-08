@@ -68,14 +68,14 @@ class EnlistmentController extends Controller
             $enlistment->user_id = Auth::user()->id;
             $enlistment->save();
 
-            return redirect()->route('dashboard');
+            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)]);
         } else if (!$registrations_possible) {
-            return redirect()->route('dashboard')->with('errors', ['Registraties voor dit event zijn nog niet begonnen of al geëindigt.']);
+            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Registraties voor dit event zijn nog niet begonnen of al geëindigt.']);
         } else if ($enlistment_for_round_exists) {
-            return redirect()->route('dashboard')->with('errors', ['U bent al ingeschreven voor een activiteit in deze ronde.']);
+            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['U bent al ingeschreven voor een activiteit in deze ronde.']);
         }
 
-        return redirect()->route('dashboard')->with('errors', ['Niet mogelijk om voor deze activiteiten ronde in te schrijven.']);
+        return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Niet mogelijk om voor deze activiteiten ronde in te schrijven.']);
     }
 
     /**
@@ -121,20 +121,22 @@ class EnlistmentController extends Controller
     public function destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'enlistment_id' => ['required', 'numeric', Rule::exists(Enlistment::class, 'id')]
+            'enlistment_id' => ['required', 'numeric', Rule::exists(Enlistment::class, 'id')],
+            'event_id' => ['required', 'numeric', Rule::exists(Event::class, 'id')]
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
         }
 
+        $event_id = intval($request->event_id);
         $enlistment_id = intval($request->enlistment_id);
         $enlistment = Enlistment::find($enlistment_id);
 
         if ($enlistment->is_owner()) {
             $enlistment->delete();
-            return redirect()->route('dashboard');
+            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)]);
         }
-        return redirect()->route('dashboard')->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
+        return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
     }
 }
