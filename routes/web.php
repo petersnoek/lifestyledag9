@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Artisan;
 
 // Route voor events
 Route::group(['middleware'=>['auth', 'verified']], function(){
@@ -46,6 +47,11 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+});
+
+// Mail voor workshophouder inschrijvingen
+Route::get('mail/workshophouder', function () {
+    Artisan::call('info:day');
 });
 
 require __DIR__. '/auth.php';
