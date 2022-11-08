@@ -27,5 +27,18 @@ class RoutePermissionsSeeder extends Seeder
                 }
             }
         }
+
+        $other_permissions = [
+            "edit-any-activity",
+            "view-any-event"
+        ];
+
+        foreach ($other_permissions as $other_permission) {
+            $permission = Permission::where('name', $other_permission)->first();
+
+            if (is_null($permission)) {
+                permission::create(['name' => $other_permission]);
+            }
+        }
     }
 }
