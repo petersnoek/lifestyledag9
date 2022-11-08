@@ -6,8 +6,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\EnlistmentController;
 
 // ------------ nieuwe route met permission aanmaken -----------------
@@ -21,10 +22,17 @@ use App\Http\Controllers\EnlistmentController;
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
 
+
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
+
+// Route voor events
+Route::group(['middleware'=>['auth', 'verified']], function(){
+    Route::group(['prefix'=> '/event'], function(){
+        Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
+});
 
 // Route voor rollensysteem
 Route::group(['middleware' => ['permission']], function() {
@@ -62,7 +70,9 @@ Route::group(['middleware' => ['permission']], function() {
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
 });
+});
 
+// Route voor fallback
 Route::group(['middleware' => ['guest']], function() {
     Route::fallback([FallbackController::class, 'fallback1']);
     Route::get('/', function(){return redirect()->route('login');});
@@ -74,5 +84,15 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 });
+
+// Mail voor workshophouder inschrijvingen
+Route::get('mail/workshophouder', function () {
+    Artisan::call('info:day');
+});
+
+Route::get('console/mailstudent', function () {
+    Artisan::call('info:student');
+});
+
 
 require __DIR__. '/auth.php';
