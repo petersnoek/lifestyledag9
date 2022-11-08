@@ -30,6 +30,6 @@ class NamePattern implements Rule
      */
     public function message()
     {
-        return 'Not a valid :attribute. only letters, numbers, spaces, and some special characters are allowed.';
+        return 'Invalid :attribute. only letters, numbers, spaces, and some special characters are allowed.';
     }
 }

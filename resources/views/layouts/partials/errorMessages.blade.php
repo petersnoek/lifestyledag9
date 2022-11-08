@@ -1,3 +1,7 @@
+<?php
+$failedUsers = [];
+$errors = [];
+?>
 @if (session('failedUsers'))
     <?php $failedUsers = session('failedUsers'); ?>
 @endif
@@ -7,17 +11,17 @@
 
 @if ((!empty($failedUsers) && count($failedUsers) >= 1) || (!empty($errors) && (is_string($errors) || count($errors) > 0)))
     <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <strong>Whoops!</strong> There were some problems.<br><br>
         <ul>
             @if (is_string($errors))
-                <li>{{ $errors }}</li>
+                <li>{{ ucfirst(rtrim($errors,'.')) }}.</li>
             @elseif (is_array($errors))
                 @foreach ($errors as $error)
-                    <li>{{ $error }}</li>
+                    <li>{{ ucfirst(rtrim($error,'.')) }}.</li>
                 @endforeach
             @elseif ($errors->count() > 0)
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li>{{ ucfirst(rtrim($error,'.')) }}.</li>
                 @endforeach
             @endif
 
@@ -28,18 +32,18 @@
                             @foreach ($failedUser['errors']->messages() as $key => $errorMessages)
                                 @foreach ($errorMessages as $message)
                                     @if (end($errorMessages) === $message)
-                                    {{  rtrim($message,'.') }}.
+                                    {{ ucfirst(rtrim($message,'.')) }}.
                                     @else
-                                    {{  rtrim($message,'.') }},
+                                    {{ ucfirst(rtrim($message,'.')) }},
                                     @endif
                                 @endforeach
                             @endforeach
                         @else
                             @foreach ($failedUser['errors'] as $key => $errorMessages)
                                 @if (end($failedUser['errors']) === $errorMessages)
-                                {{  rtrim($errorMessages,'.') }}.
+                                {{ ucfirst(rtrim($errorMessages,'.')) }}.
                                 @else
-                                {{  rtrim($errorMessages,'.') }},
+                                {{ ucfirst(rtrim($errorMessages,'.')) }},
                                 @endif
                             @endforeach
                         @endif
