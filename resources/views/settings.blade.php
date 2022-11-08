@@ -9,7 +9,7 @@
               </div>
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
               <h2 class="h4 fw-normal text-white-75">
-              {{Auth::user()->name}}
+              {{Auth::user()->name;}}
               </h2>
               <a class="btn btn-alt-secondary" href="{{ route('dashboard') }}">
                 <i class="fa fa-fw fa-arrow-left text-danger"></i> Terug naar dashboard
@@ -31,6 +31,7 @@
                 <div class="row push">
                   <div class="col-lg-4">
                     <p class="fs-sm text-muted">
+                      
                     </p>
                   </div>
                   <div class="col-lg-8 col-xl-5">
@@ -60,6 +61,7 @@
                 <div class="row push">
                   <div class="col-lg-4">
                     <p class="fs-sm text-muted">
+                    
                     </p>
                   </div>
                   <div class="col-lg-8 col-xl-5">
@@ -92,6 +94,7 @@
           <!-- END Connections -->
         </div>
         <!-- END Page Content -->
+      
     <!--
         OneUI JS
 
