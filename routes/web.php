@@ -42,11 +42,12 @@ Route::group(['middleware' => ['permission']], function() {
     });
 
     Route::group(['prefix' => '/activity'], function() {
+        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
         //edit functie werkt nog niet.
-        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit')->whereNumber('activity_id');
+        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
