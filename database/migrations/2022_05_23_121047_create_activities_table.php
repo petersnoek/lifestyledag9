@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('isActive')->default(false);
             $table->timestamps();
 
+
             $table->foreign('event_id')->references('id')->on('events');
             $table->foreign('owner_user_id')->references('id')->on('users');
         });
