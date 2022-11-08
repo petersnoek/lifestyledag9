@@ -6,7 +6,6 @@ use App\Models\Activity;
 use App\Models\ActivityRound;
 use Illuminate\Http\Request;
 use App\Models\Event;
-use App\Models\Eventround;
 
 class EventController extends Controller
 {
@@ -16,20 +15,16 @@ class EventController extends Controller
 
     public function show(Request $request, $id) {
         $event = Event::find($id);
-        $eventRounds = Eventround::where('event_id', $event->id)->get();
-        $activityRounds = [];
-        foreach($eventRounds as $eventRound){
-            array_push($activityRounds, ActivityRound::where('eventround_id', $eventRound->id)->get());
-        }
+        $event_name = $event->name;
+        $activityRound = ActivityRound::where('eventround_id', $id)->get();
         //dd($event->enlitments);
-/*         $act = Activity::find('2'); */
-        /* dd($act->owner()->name); */
         $activity_enlistments = Activity::where('event_id', $id)->get();
         //dd($activity_enlistments);
         return view('events.show', [
             'event' => $event,
+            'event_name' => $event_name,
             'activities' => $event->activities,
-            'activityRound' => $activityRounds,
+            'activityRound' => $activityRound,
         ]);
     }
 }

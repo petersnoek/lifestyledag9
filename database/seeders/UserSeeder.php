@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\enlistment;
-use App\Models\Role;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,14 +28,17 @@ class UserSeeder extends Seeder
                 'email' => '99047256@mydavinci.nl',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$qgwRljCpvoHAPFGqB6sOgelHP1Qz9Ela0SH2MNW50SKczWbPYF78W',
+            ],
+            [
+                'name' => 'Student',
+                'email' => 'student@hotmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm'
             ]
         ];
 
-        $role = Role::where('name', 'student')->first()->id;
-
         foreach ($data as $key => $value) {
-            $user = User::create($value);
-            $user->syncRoles($role);
+            User::create($value);
         }
     }
 }
