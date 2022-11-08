@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends Controller
@@ -16,7 +17,7 @@ class PermissionsController extends Controller
     {
         $permissions = Permission::all();
 
-        return response()->view('permissions.index', [
+        return view('permissions.index', [
             'permissions' => $permissions
         ]);
     }
@@ -28,7 +29,7 @@ class PermissionsController extends Controller
      */
     public function create()
     {
-        return response()->view('permissions.create');
+        return view('permissions.create');
     }
 
     /**
@@ -57,7 +58,7 @@ class PermissionsController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return response()->view('permissions.edit', [
+        return view('permissions.edit', [
             'permission' => $permission
         ]);
     }
