@@ -47,7 +47,7 @@ Route::group(['middleware' => ['permission']], function() {
     Route::resource('permissions', PermissionsController::class);
 });
 
-Route::get('console/schedule', function () {
+Route::get('console/mailstudent', function () {
     Artisan::call('info:student');
 });
 
