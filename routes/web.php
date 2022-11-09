@@ -6,7 +6,6 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\EnlistmentController;
@@ -27,12 +26,6 @@ use App\Http\Controllers\EnlistmentController;
 // 1. maak een route en stop deze in Route group met middleware auth
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
-
-// Route voor events
-Route::group(['middleware'=>['auth', 'verified']], function(){
-    Route::group(['prefix'=> '/event'], function(){
-        Route::get('/{id}', [EventController::class, 'show'])->name('event.show')->whereNumber('id');
-});
 
 // Route voor rollensysteem
 Route::group(['middleware' => ['permission']], function() {
@@ -70,7 +63,6 @@ Route::group(['middleware' => ['permission']], function() {
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
 });
-});
 
 // Route voor fallback
 Route::group(['middleware' => ['guest']], function() {
@@ -83,6 +75,12 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
+
+    // migrate en seed de database zonder console. na gebruik uitzetten met comments
+    // Route::get('migrate', function () {
+    //     Artisan::call('migrate:fresh');
+    //     Artisan::call('db:seed');
+    // });
 });
 
 // Mail voor workshophouder inschrijvingen
