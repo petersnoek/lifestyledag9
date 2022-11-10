@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Nette\Utils\DateTime;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
@@ -35,12 +33,6 @@ class Event extends Model
 
     public function enlistments() {
         return $this->hasMany(Enlistment::class);
-    }
-    public function registrations_possible() {
-        $enlist_starts_at = Carbon::parse($this->enlist_starts_at);
-        $enlist_stops_at = Carbon::parse($this->enlist_stops_at);
-
-        return Carbon::now()->between($enlist_starts_at, $enlist_stops_at);
     }
 
 }
