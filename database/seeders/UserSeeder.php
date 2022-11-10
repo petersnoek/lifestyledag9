@@ -37,8 +37,11 @@ class UserSeeder extends Seeder
             ]
         ];
 
+        $role = Role::where('name', 'student')->first()->id;
+
         foreach ($data as $key => $value) {
-            User::create($value);
+            $user = User::create($value);
+            $user->syncRoles($role);
         }
     }
 }

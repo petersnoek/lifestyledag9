@@ -15,12 +15,9 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roleSet1 = Permission::whereIn("name", ["welcome", "dashboard"])->get();
+        // Permission::whereIn("name", [])->get();
 
-        // $role = Role::create(['name' => 'student']);
-        // $permissions = $roleSet1->merge(Permission::whereIn("name", ["welcome", "dashboard"])->get());
-        // $permissions = $roleSet1;
-        // $role->permissions()->attach($permissions);
+        // var_export(Permission::pluck('name')->all());
 
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
@@ -67,14 +64,14 @@ class RoleSeeder extends Seeder
 
         // $role = Role::create(['name' => 'workshophouderbeheerder']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->syncPermissions($permissions);
+        // $role->permissions()->attach($permissions);
 
         // $role = Role::create(['name' => 'ontwikkelaar']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->syncPermissions($permissions);
+        // $role->permissions()->attach($permissions);
 
         $role = Role::create(['name' => 'admin']);
         $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
+        $role->permissions()->attach($permissions);
     }
 }
