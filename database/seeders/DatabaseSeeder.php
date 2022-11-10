@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             UserSeeder::class,
             ContactSeeder::class,
-            InviteSeeder::class,
             EventSeeder::class,
             EventroundSeeder::class,
             ActivitySeeder::class,
