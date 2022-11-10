@@ -63,6 +63,11 @@ Route::group(['middleware' => ['permission']], function() {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+
+    // Route voor settingspagina
+    Route::group(['prefix'=> '/settings'], function(){
+        Route::get('/', function () { return view('settings'); })->name('settings');
+    });
 });
 
 // Route voor fallback
@@ -71,18 +76,12 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function(){return redirect()->route('login');});
 });
 
-Route::group(['middleware'=>['auth', 'verified']], function(){
-    // Route voor settingspagina
-    Route::group(['prefix'=> '/settings'], function(){
-        Route::get('/', function () { return view('settings'); })->name('settings');
-    });
+// migrate en seed de database zonder console. na gebruik uitzetten met comments
+// Route::get('migrate', function () {
+//     Artisan::call('migrate:fresh');
+//     Artisan::call('db:seed');
+// });
 
-    // migrate en seed de database zonder console. na gebruik uitzetten met comments
-    // Route::get('migrate', function () {
-    //     Artisan::call('migrate:fresh');
-    //     Artisan::call('db:seed');
-    // });
-});
 
 // Mail voor workshophouder inschrijvingen
 Route::get('mail/workshophouder', function () {
