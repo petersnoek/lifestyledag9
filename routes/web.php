@@ -7,8 +7,9 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
+use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
