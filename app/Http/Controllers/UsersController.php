@@ -58,8 +58,8 @@ class UsersController extends Controller
     // Update gegevens van de student
     public function update2(Request $request, $id) {
         $validator = Validator::make($request->all(), [
-            'name' => ['max:50', new NamePattern()],
-            'classCode' => [new ClassCodePattern()]
+            'name' => ['max:255', 'nullable', new NamePattern()],
+            'classCode' => ['nullable', new ClassCodePattern()]
         ]);
 
         if ($validator->fails()) {

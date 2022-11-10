@@ -12,11 +12,11 @@ class NamePattern implements Rule
     }
     public function passes($attribute, $value)
     {
-        return preg_match('/^[^A-Za-z]+$/', $value);
+        return preg_match('/^[A-Za-z]+$/', $value);
     }
 
     public function message()
     {
-        return 'Error: Alleen nummers en letters zijn toegestaan.';
+        return 'Error: Alleen letters zijn toegestaan.';
     }
 }

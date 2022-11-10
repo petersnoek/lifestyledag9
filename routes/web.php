@@ -27,6 +27,7 @@ use App\Http\Controllers\ContactController;
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
+Route::group(['middleware'=>['auth', 'verified']], function(){
 // Route voor evenementen
 Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix'=> '/event'], function(){
@@ -69,7 +70,6 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function(){return redirect()->route('login');});
 });
 
-Route::group(['middleware'=>['auth', 'verified']], function(){
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');

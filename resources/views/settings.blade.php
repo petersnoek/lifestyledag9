@@ -10,6 +10,10 @@
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
               <h2 class="h4 fw-normal text-white-75">
               {{Auth::user()->name}}
+              <br>
+              {{Auth::user()->email}}
+              <br>
+              {{Auth::user()->classCode}}
               </h2>
               <a class="btn btn-alt-secondary" href="{{ route('dashboard') }}">
                 <i class="fa fa-fw fa-arrow-left text-danger"></i> Terug naar dashboard

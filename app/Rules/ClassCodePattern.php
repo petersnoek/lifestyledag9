@@ -12,7 +12,7 @@ class ClassCodePattern implements Rule
 
     public function passes($attribute, $value)
     {
-      return preg_match('/^[^A-Za-z0-9]+$/', $value);
+      return preg_match('/^[A-Za-z0-9]+$/', $value);
     }
 
     public function message()
