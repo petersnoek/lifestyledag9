@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Student',
-                'email' => 'student@hotmail.com',
+                'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm'
             ]
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
         $workshopholders = [
             [
                 'name' => 'Workshophouder',
-                'email' => 'workshophouder@hotmail.com',
+                'email' => 'workshophouder@gmail.com',
                 'password' => '$2y$10$XVD0huqiYWSc8JrfXaWiKeatdaYlvTeSUvsv4N1N9so0Oabo97IMK',
             ]
         ];

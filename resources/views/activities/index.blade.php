@@ -82,7 +82,7 @@
                             </ul>
                             </div>
                             @endcan
-                            <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="">
+                            <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                             <div class="card-body">
                                 <h4 class="mb-1 text-start">
                                     {{ $number++ . " " . $activity->name }}
