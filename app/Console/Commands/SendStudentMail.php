@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Mail\Studentmail;
+use App\Mail\StudentMail;
 use App\Models\Enlistment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -43,7 +43,7 @@ class SendStudentmail extends Command
 
                 $activities[] = $activityInfo;
             }
-            Mail::to($mailInfo['email'])->send(new Studentmail($mailInfo, $activities));
+            Mail::to($mailInfo['email'])->send(new StudentMail($mailInfo, $activities));
 
             $this->info('enlistment information was sent to the students email');
         }
