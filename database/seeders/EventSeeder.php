@@ -54,17 +54,6 @@ class EventSeeder extends Seeder
             'updated_at' => $nu,
         ]);
 
-        // DB::table('events')->insert([
-        //     'id' => 3,
-        //     'name' => 'Lifestyledag 2022',
-        //     'frontpage' => true,
-        //     'description' => 'Samen met andere eerstejaars studenten ga je verschillende activiteiten doen die te maken hebben met (lichamelijk en geestelijk) gezond leven.',
-        //     'starts_at' => Carbon::create(2022, 8, 31, 8, 30, 0)->format('Y-m-d H:i:s'),
-        //     'ends_at' => Carbon::create(2022, 8, 31, 15, 0, 0)->format('Y-m-d H:i:s'),
-        //     'enlist_starts_at' => Carbon::yesterday(),
-        //     'enlist_stops_at' => Carbon::tomorrow(),
-        //     'created_at' => $nu,
-        //     'updated_at' => $nu,
-        // ]);
+        $this->command->info('Seeding: added events');
     }
 }
