@@ -58,7 +58,8 @@ class RoleSeeder extends Seeder
             "verification.send",
             "verification.verify",
             "activity.create",
-            "activity.store"
+            "activity.store",
+            "activity.destroy"
         ])->get();
         $role->permissions()->attach($permissions);
 

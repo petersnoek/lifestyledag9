@@ -66,7 +66,7 @@ class ActivityController extends Controller
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
-            'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
+            'image' => ['image', 'mimes:jpeg,png,jpg'], /* needs file type validation */
             'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
@@ -78,22 +78,22 @@ class ActivityController extends Controller
         $event = Event::find($event_id);
 
         /* stores image in public/ActivityHeaders folder */
-        if(isset($request->image)){
+        if (isset($request->image)) {
             $request->image->store('activityHeaders', 'public');
         }
-        
+
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
         $activity->description = $request->description;
-        if(isset($request->image)){
+        if (isset($request->image)) {
             $activity->image = $request->image->hashName();
         }
         $activity->event_id = $event_id;
         $activity->owner_user_id = Auth::user()->id;
         $activity->save();
 
-        foreach($event->eventrounds()->get() as $eventround){
+        foreach ($event->eventrounds()->get() as $eventround) {
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
             $activityRound->eventround_id = $eventround->id;
@@ -152,8 +152,17 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'numeric', Rule::exists(activity::class, 'id')],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
+        }
+
+        $activity_id = intval($request->activity_id);
+        return redirect()->route('activity.index', ['activity_id' => Crypt::encrypt($activity_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
     }
 }

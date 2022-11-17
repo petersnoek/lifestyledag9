@@ -49,7 +49,9 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
         //edit functie werkt nog niet.
-        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
+        Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+
+        Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {

@@ -75,13 +75,31 @@
                                         <input type="hidden" name="activity_id" value="{{$activity->id}}">
 
                                         <button type="submit" disabled class="">
-                                            edit <i class="si si-note"></i>
+                                            Edit <i class="si si-note"></i>
                                         </button>
                                     </form>
                                 </li>
                             </ul>
                             </div>
                             @endcan
+
+                            @can(['delete-any-activity'])
+                            <div class="card-header">
+                            <ul class="nav nav-pills card-header-pills">
+                                <li>
+                                    <form action="{{ route('activity.delete') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="activity_id" value="{{$activity->id}}">
+
+                                        <button type="delete" disabled class="">
+                                            Delete <i class="si si-note"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                            </div>
+                            @endcan
+
                             <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                             <div class="card-body">
                                 <h4 class="mb-1 text-start">
