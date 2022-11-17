@@ -45,7 +45,7 @@
                         
                         <div class="col-sm-8 col-xl-6">
                             <div class="mb-4">
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam"  value="{{ old('name')}}" required>
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam *"  value="{{ old('name')}}" required>
                             </div>
                             
 
@@ -64,7 +64,7 @@
                                     value='{{$event->id}}'>{{$event->name}}</option>
                                 @endforeach
                                 </select>
-                                <label for="eventSelect">Evenement:</label>
+                                <label for="eventSelect">Evenement *</label>
                             </div>
 
                             <div class="mb-4">
@@ -75,10 +75,11 @@
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
-                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 row">
-                                    <img id="headerPreview" class="bg-white w-100 p-0" src="">
+                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0 row">
+                                    <img id="headerPreview" class="w-100 p-0" src="">
                                 </div>
-                                <input class="form-control form-control-alt rounded-0 rounded-bottom py-3 w-100 row" type="file" name="image"onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
+                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 row">Afbeelding</label>
+                                <input id="imageInput" class="invisible" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
