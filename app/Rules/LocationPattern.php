@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class NamePattern implements Rule
+class LocationPattern implements Rule
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class NamePattern implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z0-9_\-., ?!]+$/', $value);
+        return preg_match('/^[a-zA-Z\s]*$/', $value);
     }
 
     /**
@@ -30,6 +30,6 @@ class NamePattern implements Rule
      */
     public function message()
     {
-        return 'Invalid: attribute. only letters, numbers, spaces, and some special characters are allowed.';
+        return 'Error: Alleen letters zijn toegestaan';
     }
 }

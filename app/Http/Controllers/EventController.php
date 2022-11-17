@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Rules\NamePattern;
+use App\Rules\LocationPattern;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,13 +25,13 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
-            'location' => ['required', 'max:255', new NamePattern()],
+            'location' => ['required', 'max:80', new LocationPattern()],
 
-            'startDate' => 'required|date',
-            'endDate' => 'required|date|after:startDate',
+            'startDate' => ['required', 'date'],
+            'endDate' => ['required', 'date', 'after:startDate'],
 
-            'startEnlistment' => 'required|date|before:startDate',
-            'endEnlistment' => 'required|date|after:startEnlistment|before:startDate',
+            'startEnlistment' => ['required', 'date', 'before:startDate'],
+            'endEnlistment' => ['required', 'date', 'after:startEnlistment', 'before:startDate'],
 
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
         ]);

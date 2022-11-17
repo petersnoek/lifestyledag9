@@ -45,11 +45,11 @@
                         
                         <div class="col-sm-8 col-xl-6">
                             <div class="mb-4">
-                              <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Evenement naam" value="{{ old('name')}}" required>
+                              <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Naam" required>
                             </div>
 
                             <div class="mb-4">
-                              <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
+                              <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving" required></textarea>
                             </div>
 
                             <div class="mb-4">
@@ -58,17 +58,13 @@
 
                             <div class="input-group">
                                 <span class="input-group-text">Start datum</span>
-                                <input type="datetime-local" class="form-control"  name="startDate"/>
+                                <input type="datetime-local" class="form-control" name="startDate" required/>
                                 @if($errors->has('startDate'))
                                     <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
                                 @endif
 
-                                <span class="input-group-text" 
-                                    style="border-left: 0; border-right: 0;">
-                                    Eind datum
-                                </span>
-
-                                <input type="datetime-local" class="form-control"  name="endDate"/>
+                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind datum</span>
+                                <input type="datetime-local" class="form-control" name="endDate" required/>
                                  @if($errors->has('endDate'))
                                     <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
                                 @endif
@@ -78,17 +74,13 @@
 
                             <div class="input-group">
                                 <span class="input-group-text">Start inschrijvingen</span>
-                                <input type="datetime-local" class="form-control"  name="startEnlistment"/>
+                                <input type="datetime-local" class="form-control" name="startEnlistment" required/>
                                 @if($errors->has('startEnlistment'))
                                     <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
                                 @endif
 
-                                <span class="input-group-text" 
-                                    style="border-left: 0; border-right: 0;">
-                                    Eind inschrijvingen
-                                </span>
-
-                                <input type="datetime-local" class="form-control"  name="endEnlistment"/>
+                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind inschrijvingen</span>
+                                <input type="datetime-local" class="form-control" name="endEnlistment" required/>
                                 @if($errors->has('endEnlistment'))
                                     <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
                                 @endif
