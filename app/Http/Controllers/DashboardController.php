@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -13,9 +15,21 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $events = Event::where('frontpage', true)->get();
+        $User = User::find(Auth::User()->id);
+        if ($User->can('view-any-event')) {
+            $events = Event::orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
+        } else {
+            $events = Event::where('frontpage', true)->orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
+        }
+        $workshops = $User->activities()->get()->sortByDesc(function ($data) {
+            return $data->event()->first()->ends_at;
+        })->sortBy(function ($data) {
+            return $data['name'];
+        })->all();
+
         return response()->view('dashboard', [
-            'events' => $events
+            'events' => $events,
+            'workshops' => $workshops
         ]);
     }
 

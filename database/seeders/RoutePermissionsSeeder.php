@@ -29,7 +29,8 @@ class RoutePermissionsSeeder extends Seeder
         }
 
         $other_permissions = [
-            "edit-any-activity"
+            "edit-any-activity",
+            "view-any-event"
         ];
 
         foreach ($other_permissions as $other_permission) {

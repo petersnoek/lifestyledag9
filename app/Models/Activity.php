@@ -11,6 +11,10 @@ class Activity extends Model
 {
     use HasFactory;
 
+    public function user() {
+        return $this->belongsTo(User::class, 'owner_user_id');
+    }
+
     public function event() {
         return $this->belongsTo(Event::class);
     }
