@@ -24,7 +24,13 @@
         </ol>
       </nav>
     </div>
-    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a>
+    @can(['event.create'])
+      <a class="btn-sm btn-alt-secondary" href="{{Route('event.create')}}">Evenement aanmaken</a>
+    @endcan
+
+    @can(['activity.create'])
+      <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
+    @endcan
   </div>
 </div>
 <!-- END Hero -->

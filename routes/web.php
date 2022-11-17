@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
     });
 
+    // Route voor de activity
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
@@ -52,11 +54,18 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
     });
 
+    // Route voor het event
+    Route::group(['prefix' => '/event'], function() {
+        Route::get('/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/store', [EventController::class, 'store'])->name('event.store');
+    });
+
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
+    // Route voor dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
