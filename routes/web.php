@@ -6,9 +6,10 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
+use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -20,6 +21,7 @@ use App\Http\Controllers\EnlistmentController;
 // ------------ nieuwe route zonder inloggen aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
+
 
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
@@ -42,11 +44,12 @@ Route::group(['middleware' => ['permission']], function() {
     });
 
     Route::group(['prefix' => '/activity'], function() {
+        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
         //edit functie werkt nog niet.
-        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit')->whereNumber('activity_id');
+        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
@@ -54,24 +57,40 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('welcome');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::fallback([FallbackController::class, 'fallback2']);
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
-});
 
-Route::group(['middleware' => ['guest']], function() {
-    Route::fallback([FallbackController::class, 'fallback1']);
-    Route::get('/', function(){return redirect()->route('login');});
-});
-
-Route::group(['middleware'=>['auth', 'verified']], function(){
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function(){
         Route::get('/', function () { return view('settings'); })->name('settings');
     });
 });
+
+// Route voor fallback
+Route::group(['middleware' => ['guest']], function() {
+    Route::fallback([FallbackController::class, 'fallback1']);
+    Route::get('/', function(){return redirect()->route('login');});
+});
+
+// migrate en seed de database zonder console. na gebruik uitzetten met comments
+// Route::get('migrate', function () {
+//     Artisan::call('migrate:fresh');
+//     Artisan::call('db:seed');
+// });
+
+
+// Mail voor workshophouder inschrijvingen
+Route::get('mail/workshophouder', function () {
+    Artisan::call('info:day');
+});
+
+Route::get('console/mailstudent', function () {
+    Artisan::call('info:student');
+});
+
 
 require __DIR__. '/auth.php';

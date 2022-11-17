@@ -15,15 +15,19 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        // Permission::whereIn("name", [])->get();
+        $roleSet1 = Permission::whereIn("name", ["welcome", "dashboard"])->get();
 
-        // var_export(Permission::pluck('name')->all());
+        // $role = Role::create(['name' => 'student']);
+        // $permissions = $roleSet1->merge(Permission::whereIn("name", ["welcome", "dashboard"])->get());
+        // $permissions = $roleSet1;
+        // $role->permissions()->attach($permissions);
 
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "activity.index",
             "enlistment.store",
+            "enlistment.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -63,14 +67,14 @@ class RoleSeeder extends Seeder
 
         // $role = Role::create(['name' => 'workshophouderbeheerder']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
+        // $role->syncPermissions($permissions);
 
         // $role = Role::create(['name' => 'ontwikkelaar']);
         // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
+        // $role->syncPermissions($permissions);
 
         $role = Role::create(['name' => 'admin']);
         $permissions = Permission::pluck('id','id')->all();
-        $role->permissions()->attach($permissions);
+        $role->syncPermissions($permissions);
     }
 }
