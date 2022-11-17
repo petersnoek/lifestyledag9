@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $data = [
+        $students = [
             [
                 'name' => 'test',
                 'email' => 'test@gmail.com',
@@ -31,14 +31,32 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Student',
-                'email' => 'student@hotmail.com',
+                'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm'
             ]
         ];
 
-        foreach ($data as $key => $value) {
-            User::create($value);
+        $role = Role::where('name', 'student')->first()->id;
+
+        foreach ($students as $key => $value) {
+            $user = User::create($value);
+            $user->syncRoles($role);
+        }
+
+        $workshopholders = [
+            [
+                'name' => 'Workshophouder',
+                'email' => 'workshophouder@gmail.com',
+                'password' => '$2y$10$XVD0huqiYWSc8JrfXaWiKeatdaYlvTeSUvsv4N1N9so0Oabo97IMK',
+            ]
+        ];
+
+        $role = Role::where('name', 'workshophouder')->first()->id;
+
+        foreach ($workshopholders as $key => $value) {
+            $user = User::create($value);
+            $user->syncRoles($role);
         }
     }
 }

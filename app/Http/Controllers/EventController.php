@@ -13,18 +13,7 @@ class EventController extends Controller
         return view('dashboard', ['events' => Event::all()]);
     }
 
-    public function show(Request $request, $id) {
-        $event = Event::find($id);
-        $event_name = $event->name;
-        $activityRound = ActivityRound::where('eventround_id', $id)->get();
-        //dd($event->enlitments);
-        $activity_enlistments = Activity::where('event_id', $id)->get();
-        //dd($activity_enlistments);
-        return view('events.show', [
-            'event' => $event,
-            'event_name' => $event_name,
-            'activities' => $event->activities,
-            'activityRound' => $activityRound,
-        ]);
+    public function show(Request $request) {
+        
     }
 }

@@ -82,7 +82,7 @@
                             </ul>
                             </div>
                             @endcan
-                            <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="">
+                            <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                             <div class="card-body">
                                 <h4 class="mb-1 text-start">
                                     {{ $number++ . " " . $activity->name }}
@@ -124,17 +124,4 @@
                 @endforeach
             </div>
         </div>
-@endsection
-
-@section('js_after')
-	<script src="{{ asset('js/oneui.app.js') }}"></script>
-
-	<!-- jQuery (required for jQuery Countdown plugin) -->
-	<script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-
-	<!-- Page JS Plugins -->
-	<script src="{{ asset('js/plugins/jquery-countdown/jquery.countdown.min.js') }}"></script>
-
-	<!-- Page JS Code -->
-	<script src="{{ asset('js/pages/op_coming_soon.min.js') }}"></script>
 @endsection

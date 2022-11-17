@@ -17,9 +17,9 @@ class DashboardController extends Controller
     public function index() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {
-            $events = Event::all();
+            $events = Event::orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
         } else {
-            $events = Event::where('frontpage', true)->get();
+            $events = Event::where('frontpage', true)->orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
         }
 
         return response()->view('dashboard', [
