@@ -48,7 +48,7 @@
                 <div class="block-header block-header-default">
                     <h3 class="block-title">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
-                        <button type="submit" class="btn btn-primary">maak users</button>
+                        <button type="submit" class="btn btn-primary">Maak users</button>
                     </h3>
                 </div>
 
