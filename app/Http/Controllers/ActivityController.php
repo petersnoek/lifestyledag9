@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class ActivityController extends Controller
 {
@@ -49,7 +50,7 @@ class ActivityController extends Controller
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
         return response()->view('activities.create', [
-            'events' => Event::all(),
+            'events' => Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(),
             'rounds' => Eventround::all()
         ]);
     }
@@ -66,12 +67,12 @@ class ActivityController extends Controller
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
-            'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
+            'image' => ['image','mimes:jpeg,png,jpg'],
             'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors());
+            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 
         $event_id = $request->event_id;
@@ -93,6 +94,7 @@ class ActivityController extends Controller
         $activity->owner_user_id = Auth::user()->id;
         $activity->save();
 
+        /* create and store corresponding activity rounds */
         foreach($event->eventrounds()->get() as $eventround){
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
