@@ -81,7 +81,7 @@ class ActivityController extends Controller
         if(isset($request->image)){
             $request->image->store('activityHeaders', 'public');
         }
-        
+
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
@@ -141,7 +141,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

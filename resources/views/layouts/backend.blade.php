@@ -178,7 +178,7 @@
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
                 <p class="mt-2 mb-0 fw-medium">{{Auth::user()->name}}</p>
-                <p class="mb-0 text-muted fs-sm fw-medium">Student</p>
+                <p class="mb-0 text-muted fs-sm fw-medium">{{Auth::user()->getRoleNames()[0]}}</p>
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('settings') }}">

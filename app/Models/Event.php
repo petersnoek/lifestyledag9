@@ -43,4 +43,9 @@ class Event extends Model
         return Carbon::now()->between($enlist_starts_at, $enlist_stops_at);
     }
 
+    public function after_event_registration() {
+        $enlist_starts_at = Carbon::parse($this->enlist_starts_at);
+
+        return $enlist_starts_at->isPast();
+    }
 }

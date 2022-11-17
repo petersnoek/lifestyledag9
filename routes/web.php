@@ -48,8 +48,10 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
-        //edit functie werkt nog niet.
-        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
+        //editen en verwijderen functie werkt nog niet.
+        Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
+        Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
@@ -57,8 +59,11 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::group(['prefix' => '/dashboard'], function() {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    Route::get('/', function(){return redirect()->route('dashboard');});
     Route::fallback([FallbackController::class, 'fallback2']);
 
     Route::resource('roles', RolesController::class);
