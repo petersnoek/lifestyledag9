@@ -50,7 +50,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
-        //edit functie werkt nog niet.
+        // Edit functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
     });
 
@@ -58,6 +58,9 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => '/event'], function() {
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
+
+        Route::get('/round/{event_id}', [EventController::class, 'round'])->name('event.round');
+        Route::post('/store/round', [EventController::class, 'storeRound'])->name('event.storeRound');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
@@ -85,7 +88,7 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function(){return redirect()->route('login');});
 });
 
-// migrate en seed de database zonder console. na gebruik uitzetten met comments
+// Migrate en seed de database zonder console. na gebruik uitzetten met comments
 // Route::get('migrate', function () {
 //     Artisan::call('migrate:fresh');
 //     Artisan::call('db:seed');
@@ -97,6 +100,7 @@ Route::get('mail/workshophouder', function () {
     Artisan::call('info:day');
 });
 
+// Mail voor student inschrijvingen
 Route::get('console/mailstudent', function () {
     Artisan::call('info:student');
 });

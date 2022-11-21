@@ -13,6 +13,13 @@
                         <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small><br>
                         <small><i class="fa fa-home"></i>@if(isset($event->location)) {{$event->location}} @else {{'Location'}} @endif</small><br>
                         <small>@if(isset($event->description)) {{$event->description}} @else {{'Description'}} @endif</small><br>
+
+                        <br>
+                        @can(['event.round'])
+                            <a class="btn-sm btn-alt-secondary" href="{{ route('event.round', ['event_id' => Crypt::encrypt($event->id)]) }}">Rondes toevoegen</a>
+                        @endcan
+                        <br>  
+                        
                         @if($event->has_rounds())
                             <small></small><br>
                             <h4>Rondes:</h4><br>
@@ -98,7 +105,8 @@
                                 @if ($event->has_rounds())
                                     @if ( Auth::user()->is_enlisted_for($activity->id) && $event->registrations_possible())
                                         <span class="text-center text-success">je bent ingeschreven voor deze activiteit</span>
-                                    @elseif ($event->registrations_possible())
+                                    @elseif ($event->registrations_possible()) 
+
                                         @foreach ($event->eventrounds as $round)
                                             <form action="{{ route('enlistment.store') }}" method="POST">
                                                 @csrf
