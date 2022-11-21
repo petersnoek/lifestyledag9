@@ -67,16 +67,20 @@
                                 <label for="eventSelect">Evenement *</label>
                             </div>
 
-                            <div class="mb-4">
-                                <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants" placeholder="Max aantal studenten per ronde" value="{{ old('max_participants')}}" required>
-                            </div>
+                            @foreach($events as $event)
+                                @foreach($event->eventrounds as $eventround)
+                                    <div class="mb-4">
+                                        <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants[{{$event->id}}][{{$eventround->round}}]" placeholder="{{$eventround->start_time}} - {{$eventround->end_time}}" value="{{ old('max_participants.' . $event->id . '.' . $eventround->round)}}">
+                                    </div>
+                                @endforeach
+                            @endforeach
 
                         
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0 row">
-                                    <img id="headerPreview" class="w-100 p-0" src="">
+                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
                                 </div>
                                 <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 row">Afbeelding</label>
                                 <input id="imageInput" class="invisible" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
