@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Event;
 use App\Models\Enlistment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Activity extends Model
 {
@@ -33,6 +34,14 @@ class Activity extends Model
 
     function max_participants_round($eventround_id) {
         return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
+    }
+
+    public function is_owner()
+    {
+        if ($this->user()->first()->id == User::find(Auth::user()->id)->id) {
+            return true;
+        }
+        return false;
     }
 
     function availability($eventround_id) {
