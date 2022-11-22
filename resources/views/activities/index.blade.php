@@ -87,11 +87,12 @@
                             <div class="card-header">
                             <ul class="nav nav-pills card-header-pills">
                                 <li>
-                                    <form action="{{ route('activity.delete') }}" method="POST">
+                                    <form action="{{ route('activity.destroy') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="activity_id" value="{{$activity->id}}">
+                                        <input type="hidden" name="event_id" value="{{$event->id}}">
 
-                                        <button type="delete" disabled class="">
+                                        <button type="submit" class="">
                                             Delete <i class="si si-note"></i>
                                         </button>
                                     </form>

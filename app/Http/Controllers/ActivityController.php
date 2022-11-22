@@ -155,14 +155,22 @@ class ActivityController extends Controller
     public function destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'activity_id' => ['required', 'numeric', Rule::exists(activity::class, 'id')],
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')],
+            'event_id' => ['required', 'numeric', Rule::exists(Event::class, 'id')]
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
         }
 
+        $event_id = intval($request->event_id);
         $activity_id = intval($request->activity_id);
-        return redirect()->route('activity.index', ['activity_id' => Crypt::encrypt($activity_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
+        $activity = Activity::find($activity_id);
+
+        if ($activity->is_owner()) {
+            $activity->delete();
+            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)]);
+        }
+        return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
     }
 }
