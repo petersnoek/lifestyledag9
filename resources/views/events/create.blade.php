@@ -57,15 +57,16 @@
                             </div>
 
                             <div class="input-group">
-                                <span class="input-group-text">Start datum</span>
+                                <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
+                                <span class="input-group-text">Start</span>
                                 <input type="datetime-local" class="form-control" name="startDate" required/>
                                 @if($errors->has('startDate'))
                                     <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
                                 @endif
 
-                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind datum</span>
+                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
                                 <input type="datetime-local" class="form-control" name="endDate" required/>
-                                 @if($errors->has('endDate'))
+                                @if($errors->has('endDate'))
                                     <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
                                 @endif
                             </div>
@@ -73,13 +74,14 @@
                             <br>
 
                             <div class="input-group">
-                                <span class="input-group-text">Start inschrijvingen</span>
+                                <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
+                                <span class="input-group-text">Start</span>
                                 <input type="datetime-local" class="form-control" name="startEnlistment" required/>
                                 @if($errors->has('startEnlistment'))
                                     <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
                                 @endif
 
-                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind inschrijvingen</span>
+                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
                                 <input type="datetime-local" class="form-control" name="endEnlistment" required/>
                                 @if($errors->has('endEnlistment'))
                                     <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>

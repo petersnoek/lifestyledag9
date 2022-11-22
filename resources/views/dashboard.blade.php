@@ -25,11 +25,11 @@
       </nav>
     </div>
     @can(['event.create'])
-      <a class="btn-sm btn-alt-secondary" href="{{Route('event.create')}}">Evenement aanmaken</a>
+      <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
     @endcan
 
     @can(['activity.create'])
-      <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
+      <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
     @endcan
   </div>
 </div>

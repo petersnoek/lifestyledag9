@@ -87,8 +87,12 @@ class EventController extends Controller
 
     public function storeRound(Request $request) {
         $validator = Validator::make($request->all(), [
-            'startRound1' => ['required', 'date'],
-            'endRound1' => ['required', 'date', 'after:startRound1'],
+            'id' => ['required'],
+
+            'round' => ['required'],
+
+            'startRound' => ['required', 'date'],
+            'endRound' => ['required', 'date', 'after:startRound'],
         ]);
 
         if ($validator->fails()) {
@@ -98,11 +102,35 @@ class EventController extends Controller
         /*create new eventround object and insert data into corresponding attribute*/
         $round = new EventRound();
 
-        $round->starts_at = $request->startRound1;
-        $round->ends_at = $request->endRound1;
+        $round->event_id = $request->id;
+        $round->round = $request->round;
+
+        $round->start_time = $request->startRound;
+        $round->end_time = $request->endRound;
 
         $round->save();
 
-        return redirect()->route('activity.index');
+        return redirect()->route('dashboard');
     }
+
+    // public function storeRow(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => ['required'],
+    //         'round' => ['required'],
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->route('event.round')->withinput($request->all())->with('errors', $validator->errors());
+    //     }
+        
+    //     /*create new eventround object and insert data into corresponding attribute*/
+    //     $round = new EventRound();
+
+    //     $round->event_id = $request->id;
+    //     $round->round = $request->round;
+
+    //     $round->save();
+
+    //     return redirect()->route('dashboard');
+    // }
 }

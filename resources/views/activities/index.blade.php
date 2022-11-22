@@ -15,9 +15,13 @@
                         <small>@if(isset($event->description)) {{$event->description}} @else {{'Description'}} @endif</small><br>
 
                         <br>
-                        @can(['event.round'])
-                            <a class="btn-sm btn-alt-secondary" href="{{ route('event.round', ['event_id' => Crypt::encrypt($event->id)]) }}">Rondes toevoegen</a>
-                        @endcan
+                        
+                        {{-- @if($event->has_rounds() == null) --}}
+                            @can(['event.round'])
+                                <a class="btn btn-sm btn-alt-primary" href="{{ route('event.round', ['event_id' => Crypt::encrypt($event->id)]) }}">Rondes toevoegen</a>
+                            @endcan
+                        {{-- @endif --}}
+
                         <br>  
                         
                         @if($event->has_rounds())
