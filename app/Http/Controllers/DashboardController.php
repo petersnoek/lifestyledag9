@@ -21,6 +21,7 @@ class DashboardController extends Controller
         } else {
             $events = Event::where('frontpage', true)->orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
         }
+        
         $workshops = $User->activities()->get()->sortByDesc(function ($data) {
             return $data->event()->first()->ends_at;
         })->sortBy(function ($data) {

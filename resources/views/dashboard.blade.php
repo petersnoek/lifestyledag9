@@ -36,7 +36,7 @@
                 @foreach($events as $event)
                 <!-- Story -->
                 <div class="col-lg-4">
-                    <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('activity.index', ['event_id' => Crypt::encrypt($event->id)]) }}">
+                    <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', ['event_id' => Crypt::encrypt($event->id)]) }}">
                         <img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg')}}" alt="">
                         <div class="block-content">
                             <h4 class="mb-1">

@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
@@ -44,7 +45,6 @@ Route::group(['middleware' => ['permission']], function() {
     });
 
     Route::group(['prefix' => '/activity'], function() {
-        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
@@ -52,6 +52,10 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
+    });
+
+    Route::group(['prefix' => '/event'], function() {
+        Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
