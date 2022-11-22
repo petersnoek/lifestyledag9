@@ -16,15 +16,20 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'email_verified_at' => now(),
-            // 'username' => 'admin',
-            'password' => '$2y$10$WtIejhN/EWGTAR4bjxrSt.GzhykLHADApprKYDfOa6P8NUgA2ddIC'
-        ]);
+        $data = [
+            [
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$lnA9B4HuQvixVrktB8dLSOksmbhhCCoUuQGS7PXmORvTeM/SLxuKC'
+            ]
+        ];
 
-        $role = Role::where(['name' => 'admin'])->first();
-        $user->assignRole([$role->id]);
+        $role = Role::where(['name' => 'admin'])->first()->id;
+
+        foreach ($data as $key => $value) {
+            $user = User::create($value);
+            $user->syncRoles($role);
+        }
     }
 }

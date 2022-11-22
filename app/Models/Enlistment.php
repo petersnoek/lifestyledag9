@@ -20,8 +20,9 @@ class Enlistment extends Model
 
     public function eventrounds()
     {
-        return $this->hasOne(Eventround::class, 'id', 'round_id');
+        return $this->belongsTo(Eventround::class, 'round_id', 'id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -35,11 +36,6 @@ class Enlistment extends Model
         if ($this->user_id == Auth::user()->id) {
             return true;
         }
-
-    public function round()
-    {
-        return $this->belongsTo(Eventround::class);
-    }
         return false;
     }
 }
