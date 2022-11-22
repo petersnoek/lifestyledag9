@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="mb-4 form-floating">
-                                <select id="eventSelect" class="form-select form-control-alt" name="event_id" required>
+                                <select id="eventSelect" class="form-select form-control-alt" name="event_id" onchange="document.getElementById('testing').style.backgroundColor = 'blue'" required>
                                 <option value="">-</option>
                                 @foreach($events as $event)
                                     <option
@@ -66,16 +66,18 @@
                                 </select>
                                 <label for="eventSelect">Evenement *</label>
                             </div>
-
+                            <div id="testing" class="p-2 bg-warning"></div>
                             @foreach($events as $event)
+                                <div class="form-control form-control-lg form-control-alt p-0 mb-4 d-flex justify-content-evenly">
                                 @foreach($event->eventrounds as $eventround)
-                                    <div class="mb-4">
-                                        <input type="number" class="form-control form-control-lg form-control-alt py-3" min="0" max="1000" name="max_participants[{{$event->id}}][{{$eventround->round}}]" placeholder="{{$eventround->start_time}} - {{$eventround->end_time}}" value="{{ old('max_participants.' . $event->id . '.' . $eventround->round)}}">
+                                    <div class="form-floating w-3 ">
+                                        <input id="cap{{$event->id . '_' . $eventround->round}}" type="number" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" name="max_participants[{{$event->id}}][{{$eventround->round}}]" value="{{ old('max_participants.' . $event->id . '.' . $eventround->round)}}">
+                                        <label id="capLabel{{$event->id . '_' . $eventround->round}}" for="cap{{$event->id . '_' . $eventround->round}}" class="text-center">{{substr($eventround->start_time,0,-3) . ' - ' . substr($eventround->end_time,0,-3)}}</label>
                                     </div>
                                 @endforeach
+                                </div>
                             @endforeach
 
-                        
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
@@ -99,4 +101,10 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
+    @push('js_scripts')
+    <script>
+        var events = {!!json_encode($events->toArray())!!};
+        console.log(events);
+    </script>
+    @endpush
 @endsection
