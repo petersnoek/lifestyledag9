@@ -60,8 +60,8 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
 
         Route::get('/round/{event_id}', [EventController::class, 'round'])->name('event.round');
-        Route::post('/store/round', [EventController::class, 'storeRound'])->name('event.storeRound');
-        Route::post('/store/row', [EventController::class, 'storeRow'])->name('event.storeRow');
+        Route::post('/store/round/{event_id}', [EventController::class, 'storeRound'])->name('event.storeRound');
+        // Route::post('/store/row', [EventController::class, 'storeRow'])->name('event.storeRow');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {

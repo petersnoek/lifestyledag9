@@ -40,7 +40,7 @@
                             </div>
                         @endforeach
                     @endif
-                    <form class="d-flex justify-content-evenly" action="{{ route('event.storeRound') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <form class="d-flex justify-content-evenly" action="{{ route('event.storeRound', ['event_id' => Crypt::encrypt($event->id)]) }}" method="POST">
                         @csrf
                         <div class="col-sm-8 col-xl-6">
                             <input type="hidden" id="id" name="id" value={{$event->id}}>
@@ -48,27 +48,24 @@
                             <p><b>Evenement start op:</b> {{$event->starts_at}}</p>
                             <p><b>Evenement eindigd op:</b> {{$event->ends_at}}</p>
 
-                            {{-- <form method="post" action="{{ route('event.storeRow') }}"> --}}
-                                {{-- <input type="hidden" id="id" name="id" value={{$event->id}}> --}}
-                                <div id="container">
-                                    <button id="newsectionbtn" class="btn btn-sm btn-alt-primary">Ronde toevoegen</button>
-                                    <section id="mainsection">
-                                        <div class="input-group">
-                                            <input type="hidden" id="round" name="round" value="">
-            
-                                            <label for="startRound" id="startRound"><b>Ronde 1:</b></label> &nbsp; &nbsp;
-                                            <span class="input-group-text">Start</span>
-                                            <input type="datetime-local" class="form-control" name="startRound" required/>
-            
-                                            <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                            <input type="datetime-local" class="form-control" name="endRound" required/>
-                                        </div>
-            
-                                        <br>
-                                        
-                                    </section>
-                                </div>
-                            {{-- </form> --}}
+                            <div id="container">
+                                <button type="button" onclick="create_round_inputs()" class="btn btn-sm btn-alt-primary">Ronde toevoegen</button>
+                                <section id="mainsection">
+                                    <div class="input-group">
+                                        <input type="hidden" id="round" name="round[0]" value="1">
+        
+                                        <label for="startRound" id="round_label"><b>Ronde 1:</b></label> &nbsp; &nbsp;
+                                        <span class="input-group-text">Start</span>
+                                        <input type="time" id="startRound" class="form-control" name="startRound[0]" required/>
+        
+                                        <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                        <input type="time" id="endRound" class="form-control" name="endRound[0]" required/>
+                                    </div>
+        
+                                    <br>
+                                    
+                                </section>
+                            </div>
                         </div>
                         
                         <div class="col-sm-8 col-xl-5">
@@ -90,15 +87,32 @@
         <script>
             var clicks = 1;
 
-            document.getElementById("newsectionbtn").onclick = function() {
+            function create_round_inputs() {
                 clicks += 1;
 
                 var container = document.getElementById("container");
                 var section = document.getElementById("mainsection");
-                container.appendChild(section.cloneNode(true));
+                var clone_section = section.cloneNode(true);
 
-                document.getElementById('round').value = clicks;
-                document.getElementById('startRound').innerHTML = "<b>Ronde " + clicks + ":</b>"
+                clone_section.querySelector('#round').id = "round"+clicks;
+                clone_section.querySelector('#startRound').id = "startRound"+clicks;
+                clone_section.querySelector('#endRound').id = "endRound"+clicks;
+                clone_section.querySelector('#round_label').id = "round_label"+clicks;
+                
+                var round_input = clone_section.querySelector('#round'+clicks);
+                var startRound_input = clone_section.querySelector('#startRound'+clicks);
+                var endRound_input = clone_section.querySelector('#endRound'+clicks);
+                var round_label = clone_section.querySelector('#round_label'+clicks);
+
+                round_input.value = clicks;
+                round_input.name = "round["+(clicks-1)+"]";
+
+                round_label.innerHTML = "<b>Ronde " + clicks + ":</b>";
+
+                startRound_input.name = "startRound["+(clicks-1)+"]";
+                endRound_input.name = "endRound["+(clicks-1)+"]";
+
+                container.appendChild(clone_section);
             }
         </script>
     @endpush

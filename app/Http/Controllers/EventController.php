@@ -87,50 +87,35 @@ class EventController extends Controller
 
     public function storeRound(Request $request) {
         $validator = Validator::make($request->all(), [
-            'id' => ['required'],
-
-            'round' => ['required'],
-
-            'startRound' => ['required', 'date'],
-            'endRound' => ['required', 'date', 'after:startRound'],
+            'id' => ['required', Rule::exists(Event::class, 'id')],
+            'round' => ['required', 'array', 'min:1'],
+            'round.*' => ['required', 'numeric'],
+            'startRound' => ['required', 'array', 'min:1'],
+            'startRound.*' => ['required', 'date_format:H:i'],
+            'endRound' => ['required', 'array', 'min:1'],
+            'endRound.*' => ['required', 'date_format:H:i', 'after:startRound.*'],
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('event.round')->withinput($request->all())->with('errors', $validator->errors());
+            return var_dump($validator->errors());
+            // return redirect()->route('event.round')->withinput($request->all())->with('errors', $validator->errors());
         }
         
         /*create new eventround object and insert data into corresponding attribute*/
-        $round = new EventRound();
+        foreach ($request->round as $key => $value) {
+            $eventRound = new EventRound();
 
-        $round->event_id = $request->id;
-        $round->round = $request->round;
+            $eventRound->event_id = $request->id;
+            $eventRound->round = $value;
 
-        $round->start_time = $request->startRound;
-        $round->end_time = $request->endRound;
+            $eventRound->start_time = $request->startRound[$key];
+            $eventRound->end_time = $request->endRound[$key];
 
-        $round->save();
+            var_dump($eventRound->start_time);
+            echo("<br>");
 
-        return redirect()->route('dashboard');
+            // $eventRound->save();
+        }
+        // return redirect()->route('dashboard');
     }
-
-    // public function storeRow(Request $request){
-    //     $validator = Validator::make($request->all(), [
-    //         'id' => ['required'],
-    //         'round' => ['required'],
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return redirect()->route('event.round')->withinput($request->all())->with('errors', $validator->errors());
-    //     }
-        
-    //     /*create new eventround object and insert data into corresponding attribute*/
-    //     $round = new EventRound();
-
-    //     $round->event_id = $request->id;
-    //     $round->round = $request->round;
-
-    //     $round->save();
-
-    //     return redirect()->route('dashboard');
-    // }
 }

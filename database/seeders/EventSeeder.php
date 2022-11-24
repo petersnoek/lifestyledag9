@@ -53,6 +53,18 @@ class EventSeeder extends Seeder
             'updated_at' => $nu,
         ]);
 
+        DB::table('events')->insert([
+            'name' => 'Test',
+            'frontpage' => true,
+            'description' => '',
+            'starts_at' => Carbon::create(2022, 8, 31, 8, 30, 0)->format('Y-m-d H:i:s'),
+            'ends_at' => Carbon::create(2022, 8, 31, 15, 0, 0)->format('Y-m-d H:i:s'),
+            'enlist_starts_at' => Carbon::create(2022, 8, 30, 8, 30, 0)->format('Y-m-d H:i:s'),
+            'enlist_stops_at' => Carbon::create(2022, 8, 31, 8, 0, 0)->format('Y-m-d H:i:s'),
+            'created_at' => $nu,
+            'updated_at' => $nu,
+        ]);
+
         // DB::table('events')->insert([
         //     'id' => 3,
         //     'name' => 'Lifestyledag 2022',
