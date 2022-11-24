@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="mb-4 form-floating">
-                                <select id="eventSelect" class="form-select form-control-alt" name="event_id" onchange="document.getElementById('testing').style.backgroundColor = 'blue'" required>
+                                <select id="eventSelect" class="form-select form-control-alt" name="event_id" onchange="createCapacityTable(this.value)" required>
                                 <option value="">-</option>
                                 @foreach($events as $event)
                                     <option
@@ -66,17 +66,7 @@
                                 </select>
                                 <label for="eventSelect">Evenement *</label>
                             </div>
-                            <div id="testing" class="p-2 bg-warning"></div>
-                            @foreach($events as $event)
-                                <div class="form-control form-control-lg form-control-alt p-0 mb-4 d-flex justify-content-evenly">
-                                @foreach($event->eventrounds as $eventround)
-                                    <div class="form-floating w-3 ">
-                                        <input id="cap{{$event->id . '_' . $eventround->round}}" type="number" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" name="max_participants[{{$event->id}}][{{$eventround->round}}]" value="{{ old('max_participants.' . $event->id . '.' . $eventround->round)}}">
-                                        <label id="capLabel{{$event->id . '_' . $eventround->round}}" for="cap{{$event->id . '_' . $eventround->round}}" class="text-center">{{substr($eventround->start_time,0,-3) . ' - ' . substr($eventround->end_time,0,-3)}}</label>
-                                    </div>
-                                @endforeach
-                                </div>
-                            @endforeach
+                            <div id="capaciteitContainer"></div>
 
                         </div>
                         <div class="col-sm-8 col-xl-5">
@@ -102,9 +92,86 @@
     </div>
     <!-- END Page Content -->
     @push('js_scripts')
-    <script>
-        var events = {!!json_encode($events->toArray())!!};
-        console.log(events);
-    </script>
+        <script>
+        /*converts php $events var to js VVVVVVV*/
+            var events = {!!json_encode($events->toArray())!!}; /*dumps all data in html text, is that alright?*/
+        /*update 'visually-hidden' class on <label> when input <input> to hide it when <input> is filled*/
+            function updateLabel(inputId, labelId){
+                if(document.getElementById(inputId).value != ""){
+                        document.getElementById(labelId).classList.add('visually-hidden')
+                }
+                else{
+                    document.getElementById(labelId).classList.remove('visually-hidden')
+                }
+            }
+        /*create max capacity tables dynamicly upon selecting corrosponding event*/
+            function createCapacityTable(eventId){
+
+                container = document.getElementById('capaciteitContainer')
+                if(container.hasChildNodes()){
+                    container.removeChild(container.firstElementChild)
+                }
+                /*if function given variable isn't empty aka not an event*/
+                if(eventId > 0){
+                    events.forEach(function(event){
+                        if(event['id'] == eventId){
+                            /*create subcontainer*/
+                            subContainer = document.createElement('div')
+                            container.appendChild(subContainer)
+                            /*create collumn label*/
+                            collumnLabel = document.createElement('label')
+                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde:'
+                            subContainer.appendChild(collumnLabel)
+                            /*create collumn*/
+                            capaciteitCollumn = document.createElement('div')
+                            capaciteitCollumn.classList.add("form-control","form-control-lg", "form-control-alt", "p-0", "mb-4", "d-flex", "justify-content-evenly")
+                            subContainer.appendChild(capaciteitCollumn)
+
+                            event['eventrounds'].forEach(function(eventround){
+                                /*create input container*/
+                                inputContainer = document.createElement('div')
+                                inputContainer.classList.add("form-floating","w-100")
+                                capaciteitCollumn.appendChild(inputContainer)
+
+                                inputId = event['id'] + '_' + eventround['round']
+                                /*create input*/
+                                capaciteitInput = document.createElement('input')
+                                capaciteitInput.id = 'cap' + inputId
+                                capaciteitInput.classList.add("form-control","form-control-lg", "form-control-alt", "text-center", "border-end", "border-start", "py-3")
+                                capaciteitInput.type = "number"
+                                capaciteitInput.min = '0'
+                                capaciteitInput.max = '1000'
+                                capaciteitInput.name = 'max_participants[' + event['id'] + '][' + eventround['round'] + ']'
+                                //value old() no work, js and php don't mix well
+                                inputContainer.appendChild(capaciteitInput)
+
+                                /*create input label*/
+                                inputLabel = document.createElement('label')
+                                inputLabel.id = inputId
+                                inputLabel.htmlFor = capaciteitInput.id
+                                inputLabel.classList.add("text-center","w-100")
+                                inputLabel.innerHTML = eventround['start_time'].slice(0,-3) + ' - ' + eventround['end_time'].slice(0,-3)
+                                inputContainer.appendChild(inputLabel)
+                                capId = capaciteitInput.id
+
+                                /*add oninput listener to input*/
+                                capaciteitInput.setAttribute('oninput',`updateLabel('${'cap' + inputId}', '${inputId}')`)
+                            })
+                        }
+                    })
+                }
+            }
+
+            //@foreach($events as $event)
+            //    <div class="form-control form-control-lg form-control-alt p-0 mb-4 d-flex justify-content-evenly">
+            //    @foreach($event->eventrounds as $eventround)
+            //        <div class="form-floating w-3 ">
+            //            <input id="cap{{$event->id . '_' . $eventround->round}}" type="number" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" name="max_participants[{{$event->id}}][{{$eventround->round}}]" value="{{ old('max_participants.' . $event->id . '.' . $eventround->round)}}">
+            //            <label id="capLabel{{$event->id . '_' . $eventround->round}}" for="cap{{$event->id . '_' . $eventround->round}}" class="text-center">{{substr($eventround->start_time,0,-3) . ' - ' . substr($eventround->end_time,0,-3)}}</label>
+            //        </div>
+            //    @endforeach
+            //    </div>
+            //@endforeach
+        </script>
     @endpush
 @endsection

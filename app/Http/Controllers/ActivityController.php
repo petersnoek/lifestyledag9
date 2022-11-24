@@ -50,8 +50,7 @@ class ActivityController extends Controller
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
         return response()->view('activities.create', [
-            'events' => Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(),
-            'rounds' => Eventround::all()
+            'events' => Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->with('eventrounds')->get(),
         ]);
     }
 

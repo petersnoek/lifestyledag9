@@ -5,21 +5,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <meta name="description" content="Welkom bij Da Vinci College! Hier vind je alles over de lifestyledag.">
-    <meta name="author" content="Peter Snoek">
-    <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Welkom bij Da Vinci College! Hier vind je alles over de lifestyledag.">
+  <meta name="author" content="Peter Snoek">
+  <meta name="robots" content="noindex, nofollow">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Icons -->
-    <link rel="shortcut icon" href="/favicons/carrot-16.png">
-    <link rel="icon" type="image/png" href="/favicons/carrot-16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/favicons/carrot-32.png" sizes="32x32">
-    <link rel="apple-touch-icon" sizes="16x16" href="/favicons/carrot-16.png">
-    <link rel="apple-touch-icon" sizes="32x32" href="/favicons/carrot-32.png">
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicons/carrot-16.png">
+  <link rel="icon" type="image/png" href="/favicons/carrot-16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicons/carrot-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" sizes="16x16" href="/favicons/carrot-16.png">
+  <link rel="apple-touch-icon" sizes="32x32" href="/favicons/carrot-32.png">
 
   <!-- Fonts and Styles -->
   @yield('css_before')
@@ -268,6 +268,7 @@
   <!-- <script src="{{ mix('/js/laravel.app.js') }}"></script> -->
 
   @yield('js_after')
+  @stack('js_scripts')
 </body>
 
 </html>
