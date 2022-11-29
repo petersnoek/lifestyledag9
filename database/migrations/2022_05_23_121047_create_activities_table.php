@@ -15,17 +15,12 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('event_id')->unsigned();
-            $table->bigInteger('owner_user_id')->unsigned();
+            $table->foreignId('event_id');
+            $table->string('executed_by');
             $table->string('name');
             $table->string('description')->nullable()->default('');
-            $table->string('image')->nullable()->default(null);
-            $table->boolean('isActive')->default(false);
+            $table->string('location')->nullable()->default('');
             $table->timestamps();
-
-
-            $table->foreign('event_id')->references('id')->on('events');
-            $table->foreign('owner_user_id')->references('id')->on('users');
         });
     }
 
