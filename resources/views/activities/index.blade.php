@@ -74,7 +74,7 @@
                                         @csrf
                                         <input type="hidden" name="activity_id" value="{{$activity->id}}">
 
-                                        <button type="submit" disabled class="">
+                                        <button type="submit" class="">
                                             Edit <i class="si si-note"></i>
                                         </button>
                                     </form>
