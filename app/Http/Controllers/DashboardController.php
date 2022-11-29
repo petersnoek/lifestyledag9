@@ -17,11 +17,11 @@ class DashboardController extends Controller
     public function index() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {
-            $events = Event::orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
+            $events = Event::orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
         } else {
-            $events = Event::where('frontpage', true)->orderBy("starts_at", "asc")->orderBy('name', 'asc')->get();
+            $events = Event::where('frontpage', true)->orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
         }
-        
+
         $workshops = $User->activities()->get()->sortByDesc(function ($data) {
             return $data->event()->first()->ends_at;
         })->sortBy(function ($data) {
