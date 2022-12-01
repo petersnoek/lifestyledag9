@@ -16,11 +16,11 @@
 
                         <br>
                         
-                        {{-- @if($event->has_rounds() == null) --}}
+                        @if($event->has_rounds() == null)
                             @can(['event.round'])
                                 <a class="btn btn-sm btn-alt-primary" href="{{ route('event.round', ['event_id' => Crypt::encrypt($event->id)]) }}">Rondes toevoegen</a>
                             @endcan
-                        {{-- @endif --}}
+                        @endif
 
                         <br>  
                         

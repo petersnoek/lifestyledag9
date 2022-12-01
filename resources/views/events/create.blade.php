@@ -32,14 +32,19 @@
     <div class="content">
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
-                <div >
-                    @if (count($errors) > 0)
+                <div>
+                    <div class="mt-2">
+                        @include('layouts.partials.errorMessages')
+                    </div>
+                    {{-- @if (count($errors) > 0)
+                        {{var_dump($errors)}}
                         @foreach($errors as $error)
+                            {{var_dump($error)}}
                             <div class="mb-4 alert alert-danger">
                                 {{$error[0]}}
                             </div>
                         @endforeach
-                    @endif
+                    @endif --}}
                     <form class="d-flex justify-content-evenly" action="{{ route('event.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         
@@ -87,8 +92,8 @@
                                     <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
                                 @endif
                             </div>
-                        
                         </div>
+
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 row">

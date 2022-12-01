@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\EventRound;
 use Illuminate\Support\Facades\Crypt;
@@ -22,6 +23,7 @@ class EventController extends Controller
         return response()->view('events.create');
     }
 
+    // Functie om de data van het evenement aanmaken op te slaan in de db
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
@@ -38,16 +40,18 @@ class EventController extends Controller
         ]);
 
         if ($validator->fails()) {
+            // return var_dump($validator->errors());
             return redirect()->route('event.create')->withinput($request->all())->with('errors', $validator->errors());
         }
 
-        /* stores image in public/EventHeaders folder */
+        /* stores image in public/eventHeaders folder */
         if(isset($request->image)) {
             $request->image->store('eventHeaders', 'public');
         }
         
-        /*create new event object and insert data into corresponding attribute*/
+        /* create new event object and insert data into corresponding attribute */
         $event = new Event();
+        
         $event->name = $request->name;
         $event->description = $request->description;
         $event->location = $request->location;
@@ -67,6 +71,7 @@ class EventController extends Controller
         return redirect()->route('dashboard');
     }
 
+    // Functie om naar de event create pagina te gaan
     public function round($event_id){
         $event_id = ['event_id' => Crypt::decrypt($event_id)];
         $validator = Validator::make($event_id, [
@@ -74,7 +79,7 @@ class EventController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
+            return redirect()->route('event.create')->withinput($event_id['event_id'])->with('errors', $validator->errors());
         }
 
         $event_id = $event_id['event_id'];
@@ -85,20 +90,38 @@ class EventController extends Controller
         ]);
     }
 
+    // Functie om de data van de input velden van rondes op te slaan in de db
     public function storeRound(Request $request) {
         $validator = Validator::make($request->all(), [
             'id' => ['required', Rule::exists(Event::class, 'id')],
+        ]);
+
+        if (!$validator->fails()) {
+            $event = Event::find($request->id);
+            $time = Carbon::parse($event->starts_at)->format('H:i');
+        } else {
+            return redirect()->route('dashboard');
+        }
+        
+        $validator = Validator::make($request->all(), [
+            // 'id' => ['required', Rule::exists(Event::class, 'id')],
+
             'round' => ['required', 'array', 'min:1'],
             'round.*' => ['required', 'numeric'],
+
             'startRound' => ['required', 'array', 'min:1'],
-            'startRound.*' => ['required', 'date_format:H:i'],
+            'startRound.*' => ['required', 'date_format:H:i', 'after:$time'],
+            
             'endRound' => ['required', 'array', 'min:1'],
             'endRound.*' => ['required', 'date_format:H:i', 'after:startRound.*'],
         ]);
 
         if ($validator->fails()) {
-            return var_dump($validator->errors());
-            // return redirect()->route('event.round')->withinput($request->all())->with('errors', $validator->errors());
+            $errors = $validator->errors();
+            if (!$errors->has('id')) {
+                return redirect()->route('event.round', ['event_id' => Crypt::encrypt($request->id)])->withinput($request->all())->with('errors', $validator->errors());
+            }
+            return redirect()->route('dashboard');
         }
         
         /*create new eventround object and insert data into corresponding attribute*/
@@ -111,11 +134,8 @@ class EventController extends Controller
             $eventRound->start_time = $request->startRound[$key];
             $eventRound->end_time = $request->endRound[$key];
 
-            var_dump($eventRound->start_time);
-            echo("<br>");
-
-            // $eventRound->save();
+            $eventRound->save();
         }
-        // return redirect()->route('dashboard');
+        return redirect()->route('dashboard');
     }
 }
