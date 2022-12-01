@@ -19,49 +19,12 @@ class RoleSeeder extends Seeder
 
         // var_export(Permission::pluck('name')->all());
 
-        // $permissionnames = [
-        //     'aanmelden.end',
-        //     'aanmelden.index',
-        //     'aanmelden.show',
-        //     'contacts.index',
-        //     'dashboard',
-        //     'event.show',
-        //     'login',
-        //     'logout',
-        //     'password.confirm',
-        //     'password.email',
-        //     'password.request',
-        //     'password.reset',
-        //     'password.update',
-        //     'permissions.create',
-        //     'permissions.destroy',
-        //     'permissions.edit',
-        //     'permissions.index',
-        //     'permissions.show',
-        //     'permissions.store',
-        //     'permissions.update',
-        //     'register',
-        //     'roles.create',
-        //     'roles.destroy',
-        //     'roles.edit',
-        //     'roles.index',
-        //     'roles.show',
-        //     'roles.store',
-        //     'roles.update',
-        //     'settings',
-        //     'users.edit',
-        //     'users.index',
-        //     'users.show',
-        //     'users.update',
-        //     'verification.notice',
-        //     'verification.send',
-        //     'verification.verify',
-        // ];
-
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "event.show",
+            "enlistment.store",
+            "enlistment.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -79,11 +42,13 @@ class RoleSeeder extends Seeder
 
         $role = Role::create(['name' => 'workshophouder']);
         $permissions = Permission::whereIn("name", [
-            "aanmelden.end",
-            "aanmelden.index",
-            "aanmelden.show",
             "dashboard",
             "event.show",
+            "activity.create",
+            "activity.store",
+            "activity.edit",
+            "activity.update",
+            "activity.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -94,9 +59,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify",
-            "activity.create",
-            "activity.store"
+            "verification.verify"
         ])->get();
         $role->permissions()->attach($permissions);
 

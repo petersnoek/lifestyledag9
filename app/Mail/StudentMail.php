@@ -7,19 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable
+class StudentMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $mailInfo;
+    public $activityInfo;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailInfo)
+    public function __construct($mailInfo, $activityInfo)
     {
         $this->mailInfo = $mailInfo;
+        $this->activityInfo = $activityInfo;
     }
 
     /**
@@ -29,8 +31,8 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Aanmelden Lifestyledag')
-            ->markdown('emails.testMail')
-            ->with('mailInfo', $this->mailInfo);
+        return $this->subject('Inschrijvingen workshop')
+            ->markdown('emails.StudentMail')
+            ->with(['mailInfo' => $this->mailInfo, 'activityInfo' => $this->activityInfo]);
     }
 }

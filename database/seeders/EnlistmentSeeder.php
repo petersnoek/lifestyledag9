@@ -16,21 +16,18 @@ class EnlistmentSeeder extends Seeder
      */
     public function run()
     {
-
         $nu = Carbon::now();
 
-        DB::table('enlistments')->insert(['id' => 1, 'event_id'=>3, 'activity_id' => 5, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['id' => 2, 'event_id'=>3, 'activity_id' => 13, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
         DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 1, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 2, 'user_id' => 2, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 4, 'round_id' => 3, 'user_id' => 3, 'created_at' => $nu, 'updated_at' => $nu,]);
+
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 2, 'round_id' => 1, 'user_id' => 2, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 2, 'round_id' => 2, 'user_id' => 3, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 2, 'round_id' => 3, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
+
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 1, 'user_id' => 3, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 2, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 3, 'user_id' => 2, 'created_at' => $nu, 'updated_at' => $nu,]);   
     }
 }

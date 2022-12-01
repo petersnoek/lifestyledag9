@@ -8,6 +8,7 @@ use App\Models\Eventround;
 use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -47,33 +48,37 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-
-        /*server side validate user given data with requirements and patterns(see app\rules)  */
-        /*custom error messages might be needed..*/
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
-
+            'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
             'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getMessages());
+            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors());
         }
 
         $event_id = $request->event_id;
         $event = Event::find($event_id);
 
+        /* stores image in public/ActivityHeaders folder */
+        if(isset($request->image)){
+            $request->image->store('activityHeaders', 'public');
+        }
+
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
         $activity->description = $request->description;
+        if(isset($request->image)){
+            $activity->image = $request->image->hashName();
+        }
         $activity->event_id = $event_id;
         $activity->owner_user_id = Auth::user()->id;
         $activity->save();
 
-    /*create all the needed activity rounds and insert data into corresponding attribute*/
         foreach($event->eventrounds()->get() as $eventround){
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
@@ -102,9 +107,17 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        // $validator = Validator::make($request->all(), [
+        //     'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+        // }
+
+        // $activity_id = intval($request->activity_id);
     }
 
     /**
@@ -114,7 +127,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }
