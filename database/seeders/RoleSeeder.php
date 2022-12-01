@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
-            "activity.index",
+            "event.show",
             "enlistment.store",
             "enlistment.destroy",
             "login",
@@ -41,11 +41,13 @@ class RoleSeeder extends Seeder
 
         $role = Role::create(['name' => 'workshophouder']);
         $permissions = Permission::whereIn("name", [
-            "aanmelden.end",
-            "aanmelden.index",
-            "aanmelden.show",
             "dashboard",
-            "activity.index",
+            "event.show",
+            "activity.create",
+            "activity.store",
+            "activity.edit",
+            "activity.update",
+            "activity.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -56,9 +58,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify",
-            "activity.create",
-            "activity.store"
+            "verification.verify"
         ])->get();
         $role->permissions()->attach($permissions);
 

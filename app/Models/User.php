@@ -63,6 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Contact::class, 'id', 'last_edited_by');
     }
 
+    public function activities() {
+        return $this->hasMany(Activity::class, "owner_user_id", "id");
+    }
+
     function is_enlisted_for($activity_id) {
         $activity = Activity::findOrFail($activity_id);
         $event = Event::findOrFail($activity->event_id);
