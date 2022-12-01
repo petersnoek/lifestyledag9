@@ -63,6 +63,12 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store/round/', [EventController::class, 'storeRound'])->name('event.storeRound');
     });
 
+    // Route voor het event
+    Route::group(['prefix' => '/event'], function() {
+        Route::get('/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/store', [EventController::class, 'store'])->name('event.store');
+    });
+
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
