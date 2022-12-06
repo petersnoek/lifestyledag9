@@ -50,7 +50,7 @@ class ActivityController extends Controller
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
         return response()->view('activities.create', [
-            'events' => Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->with('eventrounds')->get(),
+            'events' => Event::with('eventrounds')->where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name',]),
         ]);
     }
 
@@ -69,7 +69,7 @@ class ActivityController extends Controller
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'],
-            'max_participants.' . $request->event_id . '.*' => ['required','numeric', 'min:0', 'max:1000'] /* it's an array now... how do I validate this */
+            'max_participants.*' => ['required','numeric', 'min:0', 'max:1000'] /* it's an array now... how do I validate this */
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +100,7 @@ class ActivityController extends Controller
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
             $activityRound->eventround_id = $eventround->id;
-            $activityRound->max_participants = $request->max_participants[$event->id][$eventround->round];
+            $activityRound->max_participants = $request->max_participants[$eventround->round];
             $activityRound->save();
         }
 
