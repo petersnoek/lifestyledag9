@@ -19,10 +19,8 @@
                 <th scope="col" width="1%">#</th>
                 <th scope="col" width="15%">Name</th>
                 <th scope="col">Email</th>
-                {{-- <th scope="col" width="10%">Username</th> --}}
                 <th scope="col" width="10%">Roles</th>
-                <th scope="col" width="1%" colspan="2"></th>
-                {{-- <th scope="col" width="1%" colspan="3"></th> --}}
+                <th scope="col" width="1%" colspan="3"></th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +29,6 @@
                         <th scope="row">{{ $user->id }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        {{-- <td>{{ $user->username }}</td> --}}
                         <td>
                             @foreach($user->roles as $role)
                                 <span class="badge bg-primary">{{ $role->name }}</span>
@@ -39,11 +36,7 @@
                         </td>
                         <td><a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm">Show</a></td>
                         <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm">Edit</a></td>
-                        {{-- <td>
-                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!}
-                        </td> --}}
+                        <td><a href="{{ route('users.block', $user->id) }}" class="btn btn-danger btn-sm">Block</a></td>
                     </tr>
                 @endforeach
             </tbody>
