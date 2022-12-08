@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 use App\Rules\ClassCodePattern;
+use App\Rules\EmailPattern;
+use App\Rules\NamePattern;
 
 class RegisteredUserController extends Controller
 {
@@ -36,16 +38,16 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'classCode' => ['nullable', 'string', new ClassCodePattern()],
+            'name' => ['required', 'string', 'max:255', new NamePattern()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new EmailPattern()], 
+            'class_code' => ['required', 'string', new ClassCodePattern()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'classCode' => $request->classCode,
+            'class_code' => $request->class_code,
             'password' => Hash::make($request->password),
         ]);
 

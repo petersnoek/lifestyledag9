@@ -8,13 +8,9 @@
                 <img class="img-avatar img-avatar-thumb" src="assets/media/avatars/avatar13.jpg" alt="">
               </div>
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
-              <h2 class="h4 fw-normal text-white-75">
-              {{Auth::user()->name}}
+
               <br>
-              {{Auth::user()->email}}
-              <br>
-              {{Auth::user()->classCode}}
-              </h2>
+          
               <a class="btn btn-alt-secondary" href="{{ route('dashboard') }}">
                 <i class="fa fa-fw fa-arrow-left text-danger"></i> Terug naar dashboard
               </a>
@@ -51,15 +47,15 @@
                   <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
                       <label class="form-label" for="name">Naam</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Vul je naam in..">
+                      <input type="text" class="form-control" id="name" name="name" value="{{Auth::user()->name}}" placeholder="Vul je naam in..">
                     </div>
                     <div class="mb-4">
-                      <label class="form-label" for="classCode">Klascode</label>
-                      <input type="text" class="form-control" id="classCode" name="classCode" placeholder="Vul je klascode in..">
+                      <label class="form-label" for="class_code">Klascode</label>
+                      <input type="text" class="form-control" id="class_code" name="class_code" value="{{Auth::user()->class_code}}" placeholder="Vul je klascode in..">
                     </div>
                     <div class="mb-4">
                       <label class="form-label" for="email">Email</label>
-                      <input type="email" class="form-control" id="email" name="email" placeholder="Vul je email in..">
+                      <input type="email" class="form-control" id="email" name="email" value="{{Auth::user()->email}}" placeholder="Vul je email in..">
                     </div>
                     <div class="mb-4">
                       <button type="submit" class="btn btn-alt-primary">

@@ -40,6 +40,9 @@
                         <!-- jQuery Validation (.js-validation-signup class is initialized in js/pages/op_auth_signup.min.js which was auto compiled from _js/pages/op_auth_signup.js) -->
                         <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
                         <div class="row g-0 justify-content-center">
+                            <div class="mt-2">
+                                @include('layouts.partials.errorMessages')
+                            </div>
                             <div class="col-sm-8 col-xl-4">
                                 <form class="js-validation-signup" action="{{ route('register') }}" method="POST">
                                     @csrf
@@ -48,10 +51,10 @@
                                         <input type="text" class="form-control form-control-lg form-control-alt py-3" id="name" name="name" placeholder="Naam" required>
                                     </div>
                                     <div class="mb-4">
-                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" placeholder="Email" required>
+                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" title="Gebruik je studenten email als je deze hebt." pattern="^[a-zA-Z0-9]+@mydavinci\.nl$" placeholder="Email: bijv. '12345678@mydavinci.nl'" required>
                                     </div>
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="classCode" name="classCode" placeholder="Klascode">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="class_code" name="class_code" placeholder="Klascode: bijv. 'MBIAO20A5'">
                                     </div>
                                     <div class="mb-4">
                                         <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord" required>
@@ -71,9 +74,17 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-lg btn-alt-success">Registreren</button>
+                                        <button type="submit" id="registerBtn" class="btn btn-lg btn-alt-success">Registreren</button> 
                                     </div>
                                 </form>
+                                {{-- @push('js_scripts')
+                                    <script>
+                                        var input = document.getElementById('email');
+                                        input.oninvalid = function(event) {
+                                            event.target.setCustomValidity('Gebruik je studenten email als je deze hebt.');
+                                        }
+                                    </script>
+                                @endpush --}}
                             </div>
                         </div>
                         <!-- END Sign Up Form -->

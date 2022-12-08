@@ -59,7 +59,7 @@ class UsersController extends Controller
     public function update2(Request $request, $id) {
         $validator = Validator::make($request->all(), [
             'name' => ['max:255', 'nullable', new NamePattern()],
-            'classCode' => ['nullable', new ClassCodePattern()]
+            'class_code' => ['nullable', new ClassCodePattern()]
         ]);
 
         if ($validator->fails()) {
@@ -68,15 +68,15 @@ class UsersController extends Controller
 
         $user = User::find($id);
         $user->name = $request->input('name');
-        $user->classCode = $request->input('classCode');
+        $user->class_code = $request->input('class_code');
         $user->email = $request->input('email');
 
         // Als een request input null is pak dan de waarde van de database
         if($request->name == null){
             $user->name = Auth::user()->name;
         }
-        if($request->classCode == null){
-            $user->classCode = Auth::user()->classCode;
+        if($request->class_code == null){
+            $user->class_code = Auth::user()->class_code;
         }
         if($request->email == null){
             $user->email = Auth::user()->email;
