@@ -122,7 +122,7 @@
                             container.appendChild(subContainer)
                             /*create collumn label*/
                             collumnLabel = document.createElement('label')
-                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde:'
+                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde*:'
                             subContainer.appendChild(collumnLabel)
                             /*create collumn*/
                             capaciteitCollumn = document.createElement('div')
@@ -164,6 +164,7 @@
             }
 
             {{-- @foreach($events as $event)
+                <label>Studenten capaciteit per ronde*:</label>
                 <div class="form-control form-control-lg form-control-alt p-0 mb-4 d-flex justify-content-evenly">
                 @foreach($event->eventrounds as $eventround)
                     <div class="form-floating w-3 ">
