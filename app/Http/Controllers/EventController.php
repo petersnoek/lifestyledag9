@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\EventRound;
@@ -66,9 +67,17 @@ class EventController extends Controller
             $event->image = $request->image->hashName();
         }
 
-        $event->save();
+        $eventData = $event;
+        Session::put('eventData', $eventData);
+        Session::save('eventData', $eventData);
+        var_dump($eventData);
 
-        return redirect()->route('dashboard');
+        // $event->save();
+
+        return response()->view('events.round', [
+            'event' => $event,
+            'eventData' => $eventData
+        ]);
     }
 
     // Functie om naar de event create pagina te gaan
@@ -98,19 +107,16 @@ class EventController extends Controller
 
         if (!$validator->fails()) {
             $event = Event::find($request->id);
-            $time = Carbon::parse($event->starts_at)->format('H:i');
         } else {
             return redirect()->route('dashboard');
         }
         
         $validator = Validator::make($request->all(), [
-            // 'id' => ['required', Rule::exists(Event::class, 'id')],
-
             'round' => ['required', 'array', 'min:1'],
             'round.*' => ['required', 'numeric'],
 
             'startRound' => ['required', 'array', 'min:1'],
-            'startRound.*' => ['required', 'date_format:H:i', 'after:$time'],
+            'startRound.*' => ['required', 'date_format:H:i'],
             
             'endRound' => ['required', 'array', 'min:1'],
             'endRound.*' => ['required', 'date_format:H:i', 'after:startRound.*'],
@@ -123,9 +129,32 @@ class EventController extends Controller
             }
             return redirect()->route('dashboard');
         }
-        
+
+        $startTimeEvent = Carbon::parse($event->starts_at);
+
+        // $eventData = $request->session()->get('eventData');
+        $eventData = Session::get('eventData');
+        var_dump($eventData);
+        // $eventData->save();
+
         /*create new eventround object and insert data into corresponding attribute*/
         foreach ($request->round as $key => $value) {
+            // Haal de starttijd van het event op en zet deze om in H:i format
+            $date = $startTimeEvent;
+            $createDate = new Carbon($date);
+            $startEvent = $createDate->format('H:i');
+
+            // Haal de starttijd van de ronde op en zet deze om in H:i format
+            $date2 = $request->startRound[$key];
+            $createDate2 = new Carbon($date2);
+            $startRound = $createDate2->format('H:i');
+
+            // Check of de starttijd van de ronde eerder is dan de startijd van het event, zoja geef een error
+            if ($startRound < $startEvent) {
+                dd($startRound . ' is eerder dan ' . $startEvent);
+                // return redirect()->route('event.round', ['event_id' => Crypt::encrypt($request->id)])->withinput($request->all())->with('errors', $validator->errors());
+            }
+            
             $eventRound = new EventRound();
 
             $eventRound->event_id = $request->id;

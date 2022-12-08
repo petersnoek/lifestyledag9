@@ -10,18 +10,11 @@
                         <h1 class="h3 fw-bold mb-2">
                             @if(isset($event->name)) {{$event->name}} @else {{'Titel'}} @endif
                         </h1>
-                        <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small><br>
+                        <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('H:i') }}</small><br>
                         <small><i class="fa fa-home"></i>@if(isset($event->location)) {{$event->location}} @else {{'Location'}} @endif</small><br>
                         <small>@if(isset($event->description)) {{$event->description}} @else {{'Description'}} @endif</small><br>
 
                         <br>
-                        
-                        @if($event->has_rounds() == null)
-                            @can(['event.round'])
-                                <a class="btn btn-sm btn-alt-primary" href="{{ route('event.round', ['event_id' => Crypt::encrypt($event->id)]) }}">Rondes toevoegen</a>
-                            @endcan
-                        @endif
-
                         <br>  
                         
                         @if($event->has_rounds())

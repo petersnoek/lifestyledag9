@@ -42,8 +42,8 @@
                             <input type="hidden" id="id" name="id" value={{$event->id}}>
                             {{-- <input type="hidden" id="starts_at" name="starts_at" value={{$event->starts_at}}> --}}
 
-                            <p><b>Evenement start op:</b> {{$event->starts_at}}</p>
-                            <p><b>Evenement eindigd op:</b> {{$event->ends_at}}</p>
+                            <p><b>Evenement start op:</b> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }}</p>
+                            <p><b>Evenement eindigd op:</b> {{ Carbon\Carbon::parse($event->ends_at)->format('d-m-Y H:i') }}</p>
 
                             <div id="container">
                                 {{-- <button type="button" onclick="create_round_inputs()" class="btn btn-sm btn-alt-primary mb-3">Ronde toevoegen</button> --}}
