@@ -91,6 +91,10 @@ Route::get('mail/workshophouder', function () {
 Route::get('console/mailstudent', function () {
     Artisan::call('info:student');
 });
+//link de opslag voor upload images REQUIRED TO EXECUTE ONCE EVERY UPLOAD TO LIVE
+Route::get('console/storagelink', function() {
+    Artisan::call('storage:link');
+});
 
 
 require __DIR__. '/auth.php';
