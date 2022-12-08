@@ -33,7 +33,7 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div>
-                    <form class="d-flex justify-content-evenly gap-3" action="{{ route('contacts.store') }}" method="POST">
+                    <form id="contacts-create-form" class="d-flex justify-content-evenly gap-3" action="{{ route('contacts.store') }}" method="POST">
                         @csrf
 
                         <div class="col-sm-6 col-xl-6">
@@ -65,7 +65,7 @@
                                 @endif
                             </div>
                             <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif required>
+                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif>
                                 <label class="form-check-label">Op de mailinglijst.</label>
                                 @if ($errors->has('on_mailinglist'))
                                     <div class="invalid-feedback">
@@ -95,7 +95,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Telefoonnummer</label>
-                                <input type="tel" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('phonenumber')) {{'is-invalid'}} @endif" name="phonenumber" placeholder="06-12345678" pattern=”[0-9]{2}-[0-9]{8}” title="A valid phone number must include 2 digits, one hyphen (-) and 8 more digits" value="{{ old('phonenumber')}}" maxlength="20">
+                                <input type="tel" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('phonenumber')) {{'is-invalid'}} @endif" name="phonenumber" placeholder="06-12345678" title="A valid phone number must include 2 digits, one hyphen (-) and 8 more digits" value="{{ old('phonenumber')}}" maxlength="20">
 
                                 @if ($errors->has('phonenumber'))
                                     <div class="invalid-feedback">
@@ -116,4 +116,10 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
+
+    @push('js_scripts')
+        <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    @endpush
+
+    {!! $validator->selector('#contacts-create-form') !!}
 @endsection

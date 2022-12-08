@@ -228,19 +228,23 @@ class ContactController extends Controller
     }
 
     // testing server side validation
-    protected $validationRules = [
-        'firstname' => ['required', new LetterPattern()],
-        'surname' => [new LetterPattern()],
-        'lastname' => ['required', new LetterPattern()],
-        'organisation' => ['required', new OrganisationNamePattern()],
-        'email' => ['required', 'email'],
-        'on_mailinglist' => ['required', 'boolean'],
-        'phonenumber' => ['required', new PhonePattern()],
-    ];
+
+    // for returning the validationRules so multiple controller functions can use it.
+    private function returnvalidationRules() {
+        return [
+            'firstname' => ['required', new LetterPattern()],
+            'surname' => [new LetterPattern()],
+            'lastname' => ['required', new LetterPattern()],
+            'organisation' => ['required', new OrganisationNamePattern()],
+            'email' => ['required', 'email'],
+            'on_mailinglist' => ['boolean'],
+            'phonenumber' => ['required', new PhonePattern()],
+        ];
+    }
 
     public function create()
     {
-        $validator = JsValidator::make($this->validationRules);
+        $validator = JsValidator::make($this->returnvalidationRules());
 
         return response()->view('contacts.create', [
             'events' => Event::all(),
@@ -250,7 +254,7 @@ class ContactController extends Controller
     }
 
     public function store(Request $request) {
-        $validator = Validator::make($request->all(), $this->validationRules);
+        $validator = Validator::make($request->all(), $this->returnvalidationRules());
 
         if ($validator->fails()) {
             return redirect()->route('contacts.create')->withinput($request->all())->with('errors', $validator->errors());
