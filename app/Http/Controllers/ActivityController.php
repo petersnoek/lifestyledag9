@@ -69,7 +69,7 @@ class ActivityController extends Controller
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'],
-            'max_participants.*' => ['required','numeric', 'min:0', 'max:1000'] /* it's an array now... how do I validate this */
+            'max_participants.*' => ['required','numeric', 'min:0', 'max:1000']
         ]);
 
         if ($validator->fails()) {
@@ -78,17 +78,14 @@ class ActivityController extends Controller
 
         $event_id = $request->event_id;
         $event = Event::find($event_id);
-
-        /* stores image in public/ActivityHeaders folder */
-        if(isset($request->image)){
-            $request->image->store('activityHeaders', 'public');
-        }
         
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
         $activity->description = $request->description;
         if(isset($request->image)){
+            /* stores image in public/ActivityHeaders folder */
+            $request->image->store('activityHeaders', 'public');
             $activity->image = $request->image->hashName();
         }
         $activity->event_id = $event_id;
