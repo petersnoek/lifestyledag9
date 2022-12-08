@@ -75,10 +75,10 @@
                                         ? 'checked'
                                         : '' }}>
                                 </td>
-                                <td class="">{{ $contact->organisatie }}</td>
-                                <td class="">{{ $contact->roepnaam }}</td>
-                                <td class="">{{ $contact->tussenvoegsel }}</td>
-                                <td class="">{{ $contact->achternaam }}</td>
+                                <td class="">{{ $contact->organisation }}</td>
+                                <td class="">{{ $contact->firstname }}</td>
+                                <td class="">{{ $contact->surname }}</td>
+                                <td class="">{{ $contact->lastname }}</td>
                                 <td class="">{{ $contact->email }}</td>
                                 <td style="width: 20%">{{ $contact->mobiel }}</td>
                             </tr>
