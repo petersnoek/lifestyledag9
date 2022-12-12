@@ -83,6 +83,30 @@
                                     <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
                                 @endif
                             </div>
+
+                            <br>
+                            <br>
+
+                            <div class="input-group">
+                                <div id="container">
+                                    <section id="mainsection">
+                                        <div class="input-group">
+                                            <input type="hidden" id="round" name="round[0]" value="1"> 
+
+                                            <label for="startRound" id="round_label"><b>Ronde 1:</b></label> &nbsp; &nbsp;
+                                            <span class="input-group-text">Start</span>
+                                            <input type="time" id="startRound" class="form-control" name="startRound[0]" required/>
+            
+                                            <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                            <input type="time" id="endRound" class="form-control" name="endRound[0]" required/> &nbsp;
+                                            <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded-circle">+</button>
+                                        </div>
+        
+                                        <br>
+                                        
+                                    </section>
+                                </div> 
+                            </div>
                         </div>
 
                         <div class="col-sm-8 col-xl-5">
@@ -106,4 +130,38 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
+    @push('js_scripts')
+        <script>
+            var clicks = 1;
+            
+            // Functie om een nieuwe rij aan te maken voor de rondes
+            function create_round_inputs() {
+                clicks += 1;
+
+                var container = document.getElementById("container");
+                var section = document.getElementById("mainsection");
+                var clone_section = section.cloneNode(true);
+
+                clone_section.querySelector('#round').id = "round"+clicks;
+                clone_section.querySelector('#startRound').id = "startRound"+clicks;
+                clone_section.querySelector('#endRound').id = "endRound"+clicks;
+                clone_section.querySelector('#round_label').id = "round_label"+clicks;
+                
+                var round_input = clone_section.querySelector('#round'+clicks);
+                var startRound_input = clone_section.querySelector('#startRound'+clicks);
+                var endRound_input = clone_section.querySelector('#endRound'+clicks);
+                var round_label = clone_section.querySelector('#round_label'+clicks);
+
+                round_input.value = clicks;
+                round_input.name = "round["+(clicks-1)+"]";
+
+                round_label.innerHTML = "<b>Ronde " + clicks + ":</b>";
+
+                startRound_input.name = "startRound["+(clicks-1)+"]";
+                endRound_input.name = "endRound["+(clicks-1)+"]";
+
+                container.appendChild(clone_section);
+            }
+        </script>
+    @endpush
 @endsection

@@ -59,7 +59,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
 
-        Route::get('/round/{event_id}', [EventController::class, 'round'])->name('event.round');
         Route::post('/store/round/', [EventController::class, 'storeRound'])->name('event.storeRound');
     });
 
