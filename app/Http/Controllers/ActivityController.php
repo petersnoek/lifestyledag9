@@ -169,7 +169,9 @@ class ActivityController extends Controller
 
         if ($activity->is_owner()) {
             $activity->delete();
-            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)]);
+            return redirect()->action(
+                [EnlistmentController::class, 'destroy'], ['enlistment' => $activity_id]
+            );
         }
         return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
     }

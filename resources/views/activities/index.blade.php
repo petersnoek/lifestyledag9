@@ -92,7 +92,7 @@
                                         <input type="hidden" name="activity_id" value="{{$activity->id}}">
                                         <input type="hidden" name="event_id" value="{{$event->id}}">
 
-                                        <button type="submit" class="">
+                                        <button type="submit" onclick="return confirm('Weet u zeker dat u deze activiteit wilt verwijderen? Waarschuwing alle ingschrijvingen worden mee verwijdert!')" class="">
                                             Delete <i class="si si-note"></i>
                                         </button>
                                     </form>
