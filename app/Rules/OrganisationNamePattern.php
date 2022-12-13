@@ -30,6 +30,6 @@ class OrganisationNamePattern implements Rule
      */
     public function message()
     {
-        return 'Invalid :attribute. only letters, numbers, spaces, and some special characters are allowed.';
+        return 'Invalid :attribute. Must start and end with a letter and can only contain letters, numbers, spaces and dashes.';
     }
 }

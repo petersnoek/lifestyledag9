@@ -46,13 +46,15 @@
                 @csrf
 
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">
+                    <h3 class="mb-0">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
-                        <button type="submit" class="btn btn-primary">maak users</button>
+                        <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
+                        <button type="submit" class="btn btn-primary">Maak users aan voor geselecteerde contacten.</button>
                     </h3>
                 </div>
 
-                <div class="block-content block-content-full">
+                {{-- padding: 1.25rem 1.25rem 1px; --}}
+                <div class="block-content block-content-full table-responsive">
                     <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
                         <thead>
                             <th scope="col" width="1%"></th>
@@ -61,7 +63,7 @@
                             <th>Roepnaam</th>
                             <th>Tussenvoegsel</th>
                             <th>Achternaam</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
+                            <th>Email</th>
                             <th>Mobiel</th>
                         </thead>
 

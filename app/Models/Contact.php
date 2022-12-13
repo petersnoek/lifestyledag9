@@ -13,10 +13,10 @@ class Contact extends Model
     }
 
     public static function nameTrimming($string) {
-        return trim(strtolower(ucfirst($string)));
+        return trim(ucfirst(strtolower($string)));
     }
 
-    public static function surNameTrimming($string) {
+    public static function SurnameTrimming($string) {
         return trim(strtolower($string));
     }
 
@@ -25,7 +25,7 @@ class Contact extends Model
     }
 
     public function trimmedSurName() {
-        return $this->surNameTrimming($this->surname);
+        return $this->SurnameTrimming($this->surname);
     }
 
     public function trimmedLastName() {

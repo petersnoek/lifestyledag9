@@ -2,25 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use JsValidator;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Contact;
 use App\Models\Eventround;
 use App\Rules\PhonePattern;
-use Illuminate\Support\Str;
+use App\Rules\SurnamePattern;
 use App\Rules\LetterPattern;
+use App\Rules\OrganisationNamePattern;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Rules\OrganisationNamePattern;
 use App\Events\WorkshopholderGenerated;
 use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    private function returnvalidationRules() {
+        return [
+            'firstname' => ['required', new LetterPattern(), 'max:255'],
+            'surname' => [new SurnamePattern(), 'max:255'],
+            'lastname' => ['required', new LetterPattern(), 'max:255'],
+            'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
+            'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class) , 'max:255'],
+            'on_mailinglist' => ['required', 'boolean'],
+            'phonenumber' => ['nullable', new PhonePattern(), 'max:12'],
+            // 'email:rfc,dns'
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -88,23 +102,9 @@ class ContactController extends Controller
             $role = Role::where('name', 'workshophouder')->first()->id;
             $user->syncRoles($role);
 
-            // $contact->user()->attach($user->id);
-            // $contact->created_by()->attach(Auth::user()->id);
-
-            // $contact->last_edited_by()->sync(Auth::user()->id);
-
-            // $contact->last_edited_by()->save(Auth::user());
-            // $user2 = User::find(Auth::user()->id);
-
-            // $contact->user()->associate($user);
-            // $contact->last_edited_by()->associate($user2);
-            // $user->contact_last_edited_by()->save(Auth::user());
-
             $contact->user_id = $user->id;
             $contact->last_edited_by = Auth::user()->id;
             $contact->save();
-            // $contact->user()->save($user->id);
-            // $contact->created_by()->save(Auth::user()->id);
 
             event(new WorkshopholderGenerated($user->email, $unhashed_random_password));
         }
@@ -124,13 +124,13 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //     return response()->view('contacts.create', [
-    //         'events' => Event::all(),
-    //         'rounds' => Eventround::all()
-    //     ]);
-    // }
+    public function create()
+    {
+        return response()->view('contacts.create', [
+            'events' => Event::all(),
+            'rounds' => Eventround::all()
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -138,49 +138,25 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     // firstname
-    //     // surname
-    //     // lastname
-    //     // on_mailinglist
-    //     // organisation
-    //     // email
-    //     // phonenumber
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), $this->returnvalidationRules());
 
-    //     // larvel, make a validator for firstname, surname, lastname, on_mailinglist, organisation, email and phonenumber
-    //     // larvel, make a validator for firstname
-    //     $validator = Validator::make($request->all(), [
-    //         'firstname' => ['required'],
-    //         'surname' => [],
-    //         'lastname' => ['required'],
-    //         'organisation' => ['required'],
-    //         'email' => ['required', 'email'],
-    //         'on_mailinglist' => ['required'],
-    //         'phonenumber' => ['required', new PhonePattern(), 'digits_between:10,11'],
-    //     ]);
+        if ($validator->fails()) {
+            return redirect()->route('contacts.create')->withinput($request->all())->with('errors', $validator->errors());
+        }
 
-    //     // $validator = Validator::make($request->all(), [
-    //     //     'name' => ['required', 'max:255', new NamePattern()],
-    //     //     'description' => [new DescriptionPattern()],
-    //     //     'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
-    //     //     'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
-    //     //     'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
-    //     // ]);
+        $contact = new Contact();
+        $contact->firstname = Contact::nameTrimming($request->firstname);
+        $contact->surname = Contact::SurnameTrimming($request->surname);
+        $contact->lastname = Contact::nameTrimming($request->lastname);
+        $contact->organisation = trim($request->organisation);
+        $contact->email = trim($request->email);
+        $contact->on_mailinglist = $request->on_mailinglist;
+        $contact->mobiel = $request->phonenumber;
+        $contact->save();
 
-    //     if ($validator->fails()) {
-    //         return redirect()->route('contacts.create')->withinput($request->all())->with('errors', $validator->errors());
-    //     }
-
-    //     // create new activity object and insert data into corresponding attribute
-    //     $contact = new Contact();
-    //     // $contact->name = $request->name;
-    //     // $contact->description = $request->description;
-    //     $contact->owner_user_id = Auth::user()->id;
-    //     // $contact->save();
-
-    //     return redirect()->route('contacts.index');
-    // }
+        return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangemaakt.');
+    }
 
     /**
      * Display the specified resource.
@@ -225,53 +201,5 @@ class ContactController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    // testing server side validation
-
-    // for returning the validationRules so multiple controller functions can use it.
-    private function returnvalidationRules() {
-        return [
-            'firstname' => ['required', new LetterPattern()],
-            'surname' => [new LetterPattern()],
-            'lastname' => ['required', new LetterPattern()],
-            'organisation' => ['required', new OrganisationNamePattern()],
-            'email' => ['required', 'email'],
-            'on_mailinglist' => ['boolean'],
-            'phonenumber' => ['required', new PhonePattern()],
-        ];
-    }
-
-    public function create()
-    {
-        $validator = JsValidator::make($this->returnvalidationRules());
-
-        return response()->view('contacts.create', [
-            'events' => Event::all(),
-            'rounds' => Eventround::all(),
-            'validator' => $validator
-        ]);
-    }
-
-    public function store(Request $request) {
-        $validator = Validator::make($request->all(), $this->returnvalidationRules());
-
-        if ($validator->fails()) {
-            return redirect()->route('contacts.create')->withinput($request->all())->with('errors', $validator->errors());
-        }
-
-        trim(strtolower(ucfirst($request->firstname)));
-
-        $contact = new Contact();
-        $contact->firstname = Contact::nameTrimming($request->firstname);
-        $contact->surname = Contact::surNameTrimming($request->surname);
-        $contact->lastname = Contact::nameTrimming($request->lastname);
-        $contact->organisation = $request->organisation;
-        $contact->email = $request->email;
-        $contact->on_mailinglist = $request->on_mailinglist;
-        $contact->phonenumber = $request->phonenumber;
-        $contact->save();
-
-        return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangemaakt.');
     }
 }

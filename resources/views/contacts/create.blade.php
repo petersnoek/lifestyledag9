@@ -39,7 +39,7 @@
                         <div class="col-sm-6 col-xl-6">
                             <div class="mb-4">
                                 <label class="form-check-label">Voornaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" maxlength="255" value="{{ old('firstname')}}" required>
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" value="{{ old('firstname')}}" maxlength="255" required>
                                 @if ($errors->has('firstname'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('firstname') }}
@@ -65,7 +65,8 @@
                                 @endif
                             </div>
                             <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif>
+                                <input type="hidden" name="on_mailinglist" value="0"/>
+                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif value="1">
                                 <label class="form-check-label">Op de mailinglijst.</label>
                                 @if ($errors->has('on_mailinglist'))
                                     <div class="invalid-feedback">
@@ -116,10 +117,4 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
-
-    @push('js_scripts')
-        <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    @endpush
-
-    {!! $validator->selector('#contacts-create-form') !!}
 @endsection

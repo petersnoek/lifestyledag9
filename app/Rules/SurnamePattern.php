@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class LetterPattern implements Rule
+class SurnamePattern implements Rule
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class LetterPattern implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z]+$/', $value);
+        return preg_match('/^[a-z ]*$/', $value);
     }
 
     /**
@@ -30,6 +30,6 @@ class LetterPattern implements Rule
      */
     public function message()
     {
-        return 'Invalid :attribute. only letters are allowed.';
+        return 'Invalid :attribute. only lowercase and spaces are allowed.';
     }
 }

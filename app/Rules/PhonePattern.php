@@ -18,6 +18,6 @@ class PhonePattern implements Rule
 
     public function message()
     {
-        return 'Alleen cijfers, spaties, min en plus tekens en ';
+        return 'The :attribute you entered is not valid. Please enter a valid Dutch phone number in the format 06-12345678.';
     }
 }
