@@ -88,7 +88,7 @@ class UsersController extends Controller
     }
 
     public function block(){
-        
+        /* change role to blocked and delete all users enlistment and or activities*/
     }
 
     public function destroy(User $user) {
