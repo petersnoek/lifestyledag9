@@ -41,7 +41,6 @@
                             <div class="mb-4">
                                 <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam *"  value="{{ old('name')}}" required>
                             </div>
-                            {{-- {{ddd($errors)}} --}}
                             @if (count($errors) > 0)
                                 @if (array_key_exists("name",$errors))
                                     @foreach($errors['name'] as $error)
@@ -89,7 +88,7 @@
                             <div id="capaciteitContainer"></div>
                             @if(old('event_id'))
                                 <script> createCapacityTable({{old('event_id')}}) </script>
-                                
+
                                 @if (count($errors) > 0)
                                     @foreach($events as $event)
                                         @if($event->id == old('event_id'))
