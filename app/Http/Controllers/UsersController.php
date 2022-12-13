@@ -59,7 +59,7 @@ class UsersController extends Controller
     public function update2(Request $request, $id) {
         $validator = Validator::make($request->all(), [
             'name' => ['max:255', 'nullable', new NamePattern()],
-            'class_code' => ['nullable', new ClassCodePattern()]
+            'class_code' => [new ClassCodePattern()]
         ]);
 
         if ($validator->fails()) {

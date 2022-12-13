@@ -47,7 +47,7 @@
                   <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
                       <label class="form-label" for="name">Naam</label>
-                      <input type="text" class="form-control" id="name" name="name" value="{{Auth::user()->name}}" placeholder="Vul je naam in..">
+                      <input type="text" class="form-control" id="name" name="name" value="{{Auth::user()->first_name}}" placeholder="Vul je naam in..">
                     </div>
                     <div class="mb-4">
                       <label class="form-label" for="class_code">Klascode</label>

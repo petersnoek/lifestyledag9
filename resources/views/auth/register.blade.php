@@ -41,27 +41,61 @@
                         <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
                         <div class="row g-0 justify-content-center">
                             <div class="mt-2">
-                                @include('layouts.partials.errorMessages')
+                                {{-- @include('layouts.partials.errorMessages') --}}
                             </div>
                             <div class="col-sm-8 col-xl-4">
                                 <form class="js-validation-signup" action="{{ route('register') }}" method="POST">
                                     @csrf
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="name" name="name" placeholder="Naam" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" name="firstName" placeholder="Voornaam" required>
                                     </div>
+                                    @if($errors->has('firstName'))
+                                        <div class="alert alert-danger">{{ $errors->first('firstName') }}</div>
+                                    @endif
+
+                                    <div class="mb-4">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="insertion" name="insertion" placeholder="Tussenvoegsel">
+                                    </div>
+                                    @if($errors->has('insertion'))
+                                        <div class="alert alert-danger">{{ $errors->first('insertion') }}</div>
+                                    @endif
+
+                                    <div class="mb-4">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" name="lastName" placeholder="Achternaam" required>
+                                    </div>
+                                    @if($errors->has('lastName'))
+                                        <div class="alert alert-danger">{{ $errors->first('lastName') }}</div>
+                                    @endif
+
                                     <div class="mb-4">
                                         <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" title="Gebruik je studenten email als je deze hebt." pattern="^[a-zA-Z0-9]+@mydavinci\.nl$" placeholder="Email: bijv. '12345678@mydavinci.nl'" required>
                                     </div>
+                                    @if($errors->has('email'))
+                                        <div class="alert alert-danger">{{ $errors->first('email') }}</div>
+                                    @endif
+
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="class_code" name="class_code" placeholder="Klascode: bijv. 'MBIAO20A5'">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="class_code" name="class_code" placeholder="Klascode: bijv. 'MBIAO20A5'" required>
                                     </div>
+                                    @if($errors->has('class_code'))
+                                        <div class="alert alert-danger">{{ $errors->first('class_code') }}</div>
+                                    @endif
+
                                     <div class="mb-4">
                                         <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord" required>
                                     </div>
+                                    @if($errors->has('password'))
+                                        <div class="alert alert-danger">{{ $errors->first('password') }}</div>
+                                    @endif
+
                                     <div class="mb-4">
                                         <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig wachtwoord" required>
                                     </div>
+                                    @if($errors->has('password_confirmation'))
+                                        <div class="alert alert-danger">{{ $errors->first('password_confirmation') }}</div>
+                                    @endif
+
                                     <div class="mb-4">
                                         <div class="d-md-flex align-items-md-center justify-content-md-between">
                                             <div class="form-check">
@@ -77,14 +111,18 @@
                                         <button type="submit" id="registerBtn" class="btn btn-lg btn-alt-success">Registreren</button> 
                                     </div>
                                 </form>
-                                {{-- @push('js_scripts')
+                                @push('js_scripts')
                                     <script>
                                         var input = document.getElementById('email');
                                         input.oninvalid = function(event) {
                                             event.target.setCustomValidity('Gebruik je studenten email als je deze hebt.');
                                         }
+
+                                        if(registerBtn.onclick == true && event.target.setCustomValidity('Gebruik je studenten email als je deze hebt.') == true){ // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
+                                            input.removeAttribute(pattern);
+                                        }
                                     </script>
-                                @endpush --}}
+                                @endpush
                             </div>
                         </div>
                         <!-- END Sign Up Form -->

@@ -17,6 +17,6 @@ class EmailPattern implements Rule
 
   public function message()
   {
-    return 'Error: email mag alleen uit letters en nummer bestaan.';
+    return 'Error: Email mag alleen uit letters en nummers bestaan.';
   }
 }

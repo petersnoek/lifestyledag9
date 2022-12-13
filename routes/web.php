@@ -106,5 +106,4 @@ Route::get('console/mailstudent', function() {
     Artisan::call('info:student');
 });
 
-
 require __DIR__. '/auth.php';

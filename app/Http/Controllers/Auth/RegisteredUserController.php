@@ -38,14 +38,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', new NamePattern()],
+            'firstName' => ['required', 'string', 'max:255', new NamePattern()],
+            'insertion' => ['string', 'max:255', new NamePattern()],
+            'lastName' => ['required', 'string', 'max:255', new NamePattern()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new EmailPattern()], 
             'class_code' => ['required', 'string', new ClassCodePattern()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+
+        ],
+        [
+         'password.min'=> 'Je wachtwoord moet uit minimaal 8 tekens bestaan.', // custom message
+        ]
+        );
 
         $user = User::create([
-            'name' => $request->name,
+            'firstName' => $request->firstName,
+            'insertion' => $request->insertion,
+            'lastName' => $request->lastName,
             'email' => $request->email,
             'class_code' => $request->class_code,
             'password' => Hash::make($request->password),
