@@ -84,10 +84,7 @@ class EventController extends Controller
             $eventRound->end_time = $request->endRound[$key];
 
             $eventRound->save();
-            
-            var_dump($request->startRound[$key]);
-            var_dump($eventRound->start_time);
         }
-        // return redirect()->route('dashboard');
+        return redirect()->route('dashboard');
     }
 }
