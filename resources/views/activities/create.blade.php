@@ -33,13 +33,7 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div >
-                    @if (count($errors) > 0)
-                        @foreach($errors as $error)
-                            <div class="mb-4 alert alert-danger">
-                                {{$error[0]}}
-                            </div>
-                        @endforeach
-                    @endif
+                
                     <form class="d-flex justify-content-evenly" action="{{ route('activity.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         
@@ -47,12 +41,29 @@
                             <div class="mb-4">
                                 <input type="text" class="form-control form-control-lg form-control-alt py-3" name="name" placeholder="Activiteit naam *"  value="{{ old('name')}}" required>
                             </div>
-                            
+                            {{-- {{ddd($errors)}} --}}
+                            @if (count($errors) > 0)
+                                @if (array_key_exists("name",$errors))
+                                    @foreach($errors['name'] as $error)
+                                        <div class="mb-4 alert alert-danger">
+                                            {{$error}}
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @endif
 
                             <div class="mb-4">
                                 <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
                             </div>
-
+                            @if (count($errors) > 0)
+                                @if (array_key_exists("description",$errors))
+                                    @foreach($errors['description'] as $error)
+                                        <div class="mb-4 alert alert-danger">
+                                            {{$error}}
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @endif
                             <div class="mb-4 form-floating">
                                 <select id="eventSelect" class="form-select form-control-alt" name="event_id" onchange="createCapacityTable(this.value)" required>
                                 <option value="">-</option>
@@ -66,19 +77,54 @@
                                 </select>
                                 <label for="eventSelect">Evenement *</label>
                             </div>
+                            @if (count($errors) > 0)
+                                @if (array_key_exists("event_id",$errors))
+                                    @foreach($errors['event_id'] as $error)
+                                        <div class="mb-4 alert alert-danger">
+                                            {{$error}}
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @endif
                             <div id="capaciteitContainer"></div>
                             @if(old('event_id'))
                                 <script> createCapacityTable({{old('event_id')}}) </script>
+                                
+                                @if (count($errors) > 0)
+                                    @foreach($events as $event)
+                                        @if($event->id == old('event_id'))
+                                            @for($x = 1; $x < (count($event->eventrounds)+1); $x++)
+                                                @php $key = 'max_participants.' . $x; @endphp
+                                                @if (array_key_exists($key,$errors))
+                                                    @foreach($errors[$key] as $error)
+                                                        <div class="mb-4 alert alert-danger">
+                                                            {{$error}}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            @endfor
+                                        @endif
+                                    @endforeach
+                                @endif
                             @endif
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
-                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0 row">
+                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
                                     <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
                                 </div>
-                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 row">Afbeelding</label>
-                                <input id="imageInput" class="invisible" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
+                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100">Afbeelding</label>
+                                <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
                             </div>
+                            @if (count($errors) > 0)
+                                @if (array_key_exists("image",$errors))
+                                    @foreach($errors['image'] as $error)
+                                        <div class="mb-4 alert alert-danger">
+                                            {{$error}}
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @endif
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
                                 Maak Activiteit
@@ -139,7 +185,7 @@
                                 capaciteitInput = document.createElement('input')
                                 capaciteitInput.id = 'cap_' + eventround['round']
                                 capaciteitInput.classList.add("form-control","form-control-lg", "form-control-alt", "text-center", "border-end", "border-start", "py-3")
-                                capaciteitInput.type = "number"
+                                capaciteitInput.type = "text"
                                 capaciteitInput.min = '0'
                                 capaciteitInput.max = '1000'
                                 capaciteitInput.name = 'max_participants[' + eventround['round'] + ']'
