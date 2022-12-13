@@ -101,7 +101,7 @@ class ActivityController extends Controller
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangemaakt.'));;
     }
 
     /**
