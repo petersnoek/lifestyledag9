@@ -39,6 +39,6 @@ class DescriptionPattern implements Rule
      */
     public function message()
     {
-        return 'Invalid :attribute. only letters, numbers, spaces, and some special characters are allowed.';
+        return 'Error: Ongeldige invoer bij "beschrijving".';
     }
 }

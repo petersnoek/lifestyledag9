@@ -44,13 +44,13 @@
                       <img class="img-fluid" src="@if(isset($event->image)) {{asset('storage/eventHeaders/'.$event->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                         <div class="block-content">
                             <h4 class="mb-1">
-                                {{ $event->name }}
+                              {{ $event->name }}
                             </h4>
                             <p class="fs-sm fw-medium mb-2">
-                                {{ $event->starts_at  }} - {{ $event->starts_at  }}
+                              {{ $event->starts_at }} - {{ $event->ends_at }}
                             </p>
                             <p class="fs-sm text-muted">
-                                {{ $event->description }}
+                              {{ $event->description }}
                             </p>
                         </div>
                     </a>

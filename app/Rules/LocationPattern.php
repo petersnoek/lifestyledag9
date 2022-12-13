@@ -30,6 +30,6 @@ class LocationPattern implements Rule
      */
     public function message()
     {
-        return 'Error: Alleen letters zijn toegestaan';
+        return 'Error: Ongeldige invoer bij "locatie". Alleen letters zijn toegestaan';
     }
 }
