@@ -87,6 +87,10 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
+    public function block(){
+        
+    }
+
     public function destroy(User $user) {
         $user->delete();
 
