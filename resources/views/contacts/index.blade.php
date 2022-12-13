@@ -53,9 +53,8 @@
                     </h3>
                 </div>
 
-                {{-- padding: 1.25rem 1.25rem 1px; --}}
-                <div class="block-content block-content-full table-responsive">
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
+                <div class="block-content block-content-full table-responsive px-3 py-3">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm mb-0">
                         <thead>
                             <th scope="col" width="1%"></th>
                             {{-- <th scope="col" width="1%"><input type="checkbox" name="all_contacts"></th> --}}
