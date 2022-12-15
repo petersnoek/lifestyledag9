@@ -118,7 +118,7 @@
                                         @endforeach
                                     @endif
 
-                                    <script> createCapacityTable({{old('event_id')}}@if(count($oldValues) > 0), true @endif @if(count($capErrors) > 0), true @endif)</script>
+                                    <script> createCapacityTable({{old('event_id')}}@if(count($oldValues) > 0),true @endif @if(count($capErrors) > 0),true @endif)</script>
                                     
                                 @endif
                             </div>
@@ -133,7 +133,7 @@
                             </div>
                             @if (count($errors) > 0 && array_key_exists("image",$errors))
                                 @foreach($errors['image'] as $error)
-                                    <div class="mb-4 alert alert-danger">
+                                    <div class="invalid-feedback">
                                         {{$error}}
                                     </div>
                                 @endforeach
@@ -154,6 +154,7 @@
     <!-- END Page Content -->
     @push('js_scripts')
         <script>
+        alert('hallo')
         /*converts php $events var to js*/
             var events = {!!json_encode($events->toArray())!!}; /*dumps all data in html text, is that alright?*/
             @if(isset($oldValues))
