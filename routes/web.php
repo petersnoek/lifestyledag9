@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Artisan;
 // 3. check of de route beschikbaar is zonder in te loggen
 
 // Route voor evenementen
+Route::group(['middleware'=>['auth', 'verified']], function() {
 Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function() {
@@ -83,7 +84,7 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function() {return redirect()->route('login');});
 });
 
-Route::group(['middleware'=>['auth', 'verified']], function() {
+
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function() {
         Route::get('/', function () { return view('settings'); })->name('settings');
