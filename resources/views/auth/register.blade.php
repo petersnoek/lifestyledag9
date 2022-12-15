@@ -4,15 +4,14 @@
 @section('content')
 @push('js_scripts')
     <script>
-        alert('hello')
-        var count = 0;
+        count = 0;
         // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
         function mailError() {
             console.log('email functie')
             if(count == 1){
                 document.getElementById('email').pattern ='[a-z0-9.%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
             }
-            count = count++
+            count++;
         }
     </script>
     
@@ -85,7 +84,7 @@
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" title="Gebruik je studenten email als je deze hebt." pattern="^[a-zA-Z0-9]+@mydavinci\.nl$" placeholder="Email: bijv. '12345678@mydavinci.nl'" required>
+                                        <input id='email' type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" title="Gebruik je studenten email als je deze hebt." pattern="^[a-zA-Z0-9]+@mydavinci\.nl$" placeholder="Email: bijv. '12345678@mydavinci.nl'" required>
                                     </div>
                                     @if($errors->has('email'))
                                         <div class="alert alert-danger">{{ $errors->first('email') }}</div>
