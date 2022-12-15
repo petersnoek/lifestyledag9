@@ -37,10 +37,10 @@ class EventController extends Controller
             'round.*' => ['required', 'numeric'],
 
             'startRound' => ['required', 'array', 'min:1'],
-            'startRound.*' => ['required', 'date_format:H:i', 'after:startDate', 'before:endDate'],
+            'startRound.*' => ['required', 'after:startDate', 'before:endDate'],
             
             'endRound' => ['required', 'array', 'min:1'],
-            'endRound.*' => ['required', 'date_format:H:i', 'after:startRound.*', 'before:endDate'],
+            'endRound.*' => ['required', 'after:startRound.*', 'before:endDate'],
             
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
         ]);
@@ -84,6 +84,7 @@ class EventController extends Controller
             $eventRound->end_time = $request->endRound[$key];
 
             $eventRound->save();
+            
         }
         return redirect()->route('dashboard');
     }

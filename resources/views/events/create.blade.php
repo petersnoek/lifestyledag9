@@ -48,7 +48,7 @@
                             @endif
 
                             <div class="mb-4">
-                              <textarea type="text" class="form-control form-control-lg form-control-alt py-3" value="{{ old('description')}}" name="description" placeholder="Beschrijving *" required></textarea>
+                              <textarea type="text" class="form-control form-control-lg form-control-alt py-3" name="description" placeholder="Beschrijving *" required>{{{ old('description') }}}</textarea>
                             </div>
                             @if($errors->has('description'))
                                 <div class="alert alert-danger">{{ $errors->first('description') }}</div>
@@ -61,36 +61,44 @@
                                 <div class="alert alert-danger">{{ $errors->first('location') }}</div>
                             @endif
 
-                            <div class="input-group">
-                                <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
-                                <span class="input-group-text">Start</span>
-                                <input type="datetime-local" class="form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
-                                @if($errors->has('startDate'))
-                                    <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
-                                @endif
+                            <div class="input-group row" style="display:block; align:center;">
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
+                                    <span class="input-group-text">Start</span>
+                                    <input type="datetime-local" class="form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
+                                    @if($errors->has('startDate'))
+                                        <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
+                                    @endif
+                                </div>
 
-                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                <input type="datetime-local" class="form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
-                                @if($errors->has('endDate'))
-                                    <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
-                                @endif
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                    <input type="datetime-local" class="form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
+                                    @if($errors->has('endDate'))
+                                        <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
+                                    @endif
+                                </div>
                             </div>
 
                             <br>
 
-                            <div class="input-group">
-                                <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
-                                <span class="input-group-text">Start</span>
-                                <input type="datetime-local" class="form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
-                                @if($errors->has('startEnlistment'))
-                                    <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
-                                @endif
+                            <div class="input-group row" style="display:block; align:center;">
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
+                                    <span class="input-group-text">Start</span>
+                                    <input type="datetime-local" class="form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
+                                    @if($errors->has('startEnlistment'))
+                                        <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
+                                    @endif
+                                </div>
 
-                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                <input type="datetime-local" class="form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
-                                @if($errors->has('endEnlistment'))
-                                    <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
-                                @endif
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                    <input type="datetime-local" class="form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
+                                    @if($errors->has('endEnlistment'))
+                                        <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
+                                    @endif
+                                </div>
                             </div>
 
                             <br>
@@ -98,6 +106,7 @@
 
                             <div class="input-group">
                                 <div id="container">
+                                    <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded-circle">+</button>
                                     <section id="mainsection">
                                         <div class="input-group">
                                             <input type="hidden" id="round" name="round[0]" value="1"> 
@@ -105,16 +114,15 @@
                                             <label for="startRound" id="round_label"><b>Ronde 1:</b></label> &nbsp; &nbsp;
                                             <span class="input-group-text">Start</span>
                                             <input type="time" id="startRound" class="form-control" name="startRound[0]" title="Start ronde" required/>
-                                            @if($errors->has('startRound.0'))
-                                                <div class="alert alert-danger">{{ $errors->first('startRound.0') }}</div>
+                                            @if($errors->has('startRound.*'))
+                                                <div class="alert alert-danger">{{ $errors->first('startRound.*') }}</div>
                                             @endif
             
                                             <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
                                             <input type="time" id="endRound" class="form-control" name="endRound[0]" title="Eind ronde" required/> &nbsp;
-                                            @if($errors->has('endRound.0'))
-                                                <div class="alert alert-danger">{{ $errors->first('endRound.0') }}</div>
+                                            @if($errors->has('endRound.*'))
+                                                <div class="alert alert-danger">{{ $errors->first('endRound.*') }}</div>
                                             @endif
-                                            <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded-circle">+</button>
                                         </div>
         
                                         <br>
