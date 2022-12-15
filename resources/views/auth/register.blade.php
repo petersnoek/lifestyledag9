@@ -1,6 +1,22 @@
 @extends('layouts.simple')
 
+
 @section('content')
+@push('js_scripts')
+    <script>
+        alert('hello')
+        var count = 0;
+        // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
+        function mailError() {
+            console.log('email functie')
+            if(count == 1){
+                document.getElementById('email').pattern ='[a-z0-9.%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
+            }
+            count = count++
+        }
+    </script>
+    
+@endpush
     <!-- Page Content -->
     <div class="bg-image" style="background-image: url('media/photos/photo14@2x.jpg');">
         <div class="row g-0 bg-primary-dark-op">
@@ -108,7 +124,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" id="registerBtn" class="btn btn-lg btn-alt-success">Registreren</button> 
+                                        <button type="submit" class="btn btn-lg btn-alt-success" onclick="mailError()">Registreren</button>
                                     </div>
                                 </form>
                                 @push('js_scripts')
@@ -165,6 +181,7 @@
     </div>
     <!-- END Page Content -->
 @endsection
+
 
 @section('js_after')
     <!-- jQuery (required for jQuery Validation plugin) -->
