@@ -64,6 +64,7 @@
                             <th>Achternaam</th>
                             <th>Email</th>
                             <th>Mobiel</th>
+                            <th>Acties</th>
                         </thead>
 
                         @foreach($contacts as $contact)
@@ -76,12 +77,13 @@
                                         ? 'checked'
                                         : '' }}>
                                 </td>
-                                <td class="">{{ $contact->organisation }}</td>
-                                <td class="">{{ $contact->firstname }}</td>
-                                <td class="">{{ $contact->surname }}</td>
-                                <td class="">{{ $contact->lastname }}</td>
-                                <td class="">{{ $contact->email }}</td>
-                                <td style="width: 20%">{{ $contact->mobiel }}</td>
+                                <td>{{ $contact->organisation }}</td>
+                                <td>{{ $contact->firstname }}</td>
+                                <td>{{ $contact->surname }}</td>
+                                <td>{{ $contact->lastname }}</td>
+                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->mobiel }}</td>
+                                <td><a href="{{ route('contacts.edit', ['event_id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
                             </tr>
                         @endforeach
                     </table>

@@ -22,19 +22,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
-    private function returnvalidationRules() {
-        return [
-            'firstname' => ['required', new LetterPattern(), 'max:255'],
-            'surname' => [new SurnamePattern(), 'max:255'],
-            'lastname' => ['required', new LetterPattern(), 'max:255'],
-            'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
-            'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class) , 'max:255'],
-            'on_mailinglist' => ['required', 'boolean'],
-            'phonenumber' => ['nullable', new PhonePattern(), 'max:12'],
-            // 'email:rfc,dns'
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -139,7 +126,15 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $validator = Validator::make($request->all(), $this->returnvalidationRules());
+        $validator = Validator::make($request->all(), [
+            'firstname' => ['required', new LetterPattern(), 'max:255'],
+            'surname' => [new SurnamePattern(), 'max:255'],
+            'lastname' => ['required', new LetterPattern(), 'max:255'],
+            'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
+            'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class) , 'max:255'],
+            'on_mailinglist' => ['required', 'boolean'],
+            'phonenumber' => ['nullable', new PhonePattern(), 'max:12'],
+        ]);
 
         if ($validator->fails()) {
             return redirect()->route('contacts.create')->withinput($request->all())->with('errors', $validator->errors());
@@ -166,7 +161,7 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -177,7 +172,18 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $event_id = ['event_id' => Crypt::decrypt($event_id)];
+        // $validator = Validator::make($event_id, [
+        //     'event_id' => ['required', Rule::exists(Event::class, 'id')]
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
+        // }
+
+        // return response()->view('contacts.edit', [
+
+        // ]);
     }
 
     /**
@@ -189,7 +195,32 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => ['bail', 'required', 'integer', 'min:1', Rule::exists(contact::class, 'id')],
+            'firstname' => ['required', new LetterPattern(), 'max:255'],
+            'surname' => [new SurnamePattern(), 'max:255'],
+            'lastname' => ['required', new LetterPattern(), 'max:255'],
+            'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
+            'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class)->ignore($request->id), 'max:255'],
+            'on_mailinglist' => ['required', 'boolean'],
+            'phonenumber' => ['nullable', new PhonePattern(), 'max:12'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('contacts.edit')->withinput($request->all())->with('errors', $validator->errors());
+        }
+
+        $contact = Contact::find($request->id);
+        $contact->firstname = Contact::nameTrimming($request->firstname);
+        $contact->surname = Contact::SurnameTrimming($request->surname);
+        $contact->lastname = Contact::nameTrimming($request->lastname);
+        $contact->organisation = trim($request->organisation);
+        $contact->email = trim($request->email);
+        $contact->on_mailinglist = $request->on_mailinglist;
+        $contact->mobiel = $request->phonenumber;
+        // $contact->save();
+
+        return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangepast.');
     }
 
     /**
