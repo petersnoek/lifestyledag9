@@ -154,7 +154,6 @@
     <!-- END Page Content -->
     @push('js_scripts')
         <script>
-        alert('hallo')
         /*converts php $events var to js*/
             var events = {!!json_encode($events->toArray())!!}; /*dumps all data in html text, is that alright?*/
             @if(isset($oldValues))
