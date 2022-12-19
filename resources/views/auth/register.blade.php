@@ -4,12 +4,12 @@
 @section('content')
 @push('js_scripts')
     <script>
-        alert('hello')
+        // alert('hello')
         var count = 0;
         // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
         function mailError() {
-            console.log('email functie')
-            if(count == 1){
+            if(count = 1){
+                console.log('email functie')
                 document.getElementById('email').pattern ='[a-z0-9.%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
             }
             count = count++
@@ -127,18 +127,6 @@
                                         <button type="submit" class="btn btn-lg btn-alt-success" onclick="mailError()">Registreren</button>
                                     </div>
                                 </form>
-                                @push('js_scripts')
-                                    <script>
-                                        var input = document.getElementById('email');
-                                        input.oninvalid = function(event) {
-                                            event.target.setCustomValidity('Gebruik je studenten email als je deze hebt.');
-                                        }
-
-                                        if(registerBtn.onclick == true && event.target.setCustomValidity('Gebruik je studenten email als je deze hebt.') == true){ // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
-                                            input.removeAttribute(pattern);
-                                        }
-                                    </script>
-                                @endpush
                             </div>
                         </div>
                         <!-- END Sign Up Form -->
