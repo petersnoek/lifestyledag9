@@ -32,6 +32,9 @@
     <!-- END Hero -->
 	 <!-- Page Content -->
     <div class="content content-boxed">
+        <div class="mt-2">
+            @include('layouts.partials.messages')
+        </div>
             <div class="row">
                 @foreach($events as $event)
                 <!-- Story -->
