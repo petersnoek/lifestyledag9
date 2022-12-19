@@ -9,10 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\EventController;
->>>>>>> dev
 use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
@@ -32,15 +29,13 @@ use Illuminate\Support\Facades\Artisan;
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
-<<<<<<< HEAD
-// Route voor rollensysteem
-=======
-// Route voor evenementen
->>>>>>> dev
 Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+        Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
+        Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
@@ -61,13 +56,11 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
-<<<<<<< HEAD
-=======
+
     });
 
     Route::group(['prefix' => '/event'], function() {
         Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
->>>>>>> dev
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
@@ -79,11 +72,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     });
 
-<<<<<<< HEAD
-    Route::get('/', function(){return redirect()->route('dashboard');});
-=======
     Route::get('/', function() {return redirect()->route('dashboard');});
->>>>>>> dev
     Route::fallback([FallbackController::class, 'fallback2']);
 
     // Route voor rollensysteem
