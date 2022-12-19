@@ -42,7 +42,7 @@ class RolesController extends Controller
     public function create()
     {
         $permissions = Permission::get();
-        return view('roles.create', compact('permissions'));
+        return response()->view('roles.create', compact('permissions'));
     }
 
     /**
@@ -61,8 +61,7 @@ class RolesController extends Controller
         $role = Role::create(['name' => $request->get('name')]);
         $role->syncPermissions($request->get('permission'));
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+        return redirect()->route('roles.index')->with('success','Role created successfully');
     }
 
     /**
@@ -76,7 +75,7 @@ class RolesController extends Controller
         // $role = $role;
         $rolePermissions = $role->permissions;
 
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return response()->view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -91,7 +90,7 @@ class RolesController extends Controller
         $rolePermissions = $role->permissions->pluck('name')->toArray();
         $permissions = Permission::get();
 
-        return view('roles.edit', compact('role', 'rolePermissions', 'permissions'));
+        return response()->view('roles.edit', compact('role', 'rolePermissions', 'permissions'));
     }
 
     /**
@@ -112,8 +111,7 @@ class RolesController extends Controller
 
         $role->syncPermissions($request->get('permission'));
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        return redirect()->route('roles.index')->with('success','Role updated successfully');
     }
 
     /**
@@ -126,7 +124,6 @@ class RolesController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+        return redirect()->route('roles.index')->with('success','Role deleted successfully');
     }
 }

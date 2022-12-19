@@ -21,7 +21,7 @@
                         @endforeach
                         @endif
                     </div>
-                    <div class="flex-grow-1">
+                    <div class="flex-grow-1 ms-lg-2 mt-lg-0 mt-2">
                         <h1 class="h3 fw-bold mb-2">
                             Inschrijvingen
                         </h1>
@@ -33,18 +33,20 @@
                                     <input type="hidden" name="event_id" value="{{$event->id}}">
 
                                     <small><span class="badge bg-primary rounded-pill"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}
-                                        <button type="submit" class="">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
+                                        @can(['enlistment.destroy'])
+                                            <button type="submit" class="">
+                                                <i class="fa fa-times text-danger"></i>
+                                            </button>
+                                        @endcan
                                     </small>
-                                </form><br>
+                                </form>
                             @endforeach
                         @elseif (!$event->registrations_possible())
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
                                 <small class="text-muted"><span class="badge rounded-pill bg-muted"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small><br>
                             @endforeach
                             <br><br>
-                            <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigt.</small></b>
+                            <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigd.</small></b>
                         @else
                             <small>Om je te kunnen inschrijven voor activiteiten moet je eerst inloggen.</small>
                         @endif
@@ -92,30 +94,32 @@
                                         &#64;{{ ltrim($activity->executed_by, '&#64;') }}
                                     </p>
                                 @endif
-                                <p class="fs-sm text-muted text-start">
+                                <p class="fs-sm text-muted text-start @can(['enlistment.store']) mb-2 @else mb-0 @endcan">
                                     {{ $activity->description }}
                                 </p>
-                                @if ($event->has_rounds())
-                                    @if ( Auth::user()->is_enlisted_for($activity->id) && $event->registrations_possible())
-                                        <span class="text-center text-success">je bent ingeschreven voor deze activiteit</span>
-                                    @elseif ($event->registrations_possible())
-                                        @foreach ($event->eventrounds as $round)
-                                            <form action="{{ route('enlistment.store') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="event_id" value="{{$event->id}}">
-                                                <input type="hidden" name="activity_id" value="{{$activity->id}}">
-                                                <input type="hidden" name="round_id" value="{{$round->id}}">
+                                @can(['enlistment.store'])
+                                    @if ($event->has_rounds())
+                                        @if ( Auth::user()->is_enlisted_for($activity->id) && $event->registrations_possible())
+                                            <span class="text-center text-success">je bent ingeschreven voor deze activiteit</span>
+                                        @elseif ($event->registrations_possible())
+                                            @foreach ($event->eventrounds as $round)
+                                                <form action="{{ route('enlistment.store') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="event_id" value="{{$event->id}}">
+                                                    <input type="hidden" name="activity_id" value="{{$activity->id}}">
+                                                    <input type="hidden" name="round_id" value="{{$round->id}}">
 
-                                                <button type="submit" @if (!$activity->availability($round->id)) {{'disabled'}} @endif class="w-100">
-                                                    Ronde {{ $round->round }}:
-                                                    {{ $activity->availability_message($round->id) }}
-                                                </button>
-                                            </form>
-                                        @endforeach
-                                    @else
-                                        <span class="text-center text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigt.</span>
+                                                    <button type="submit" @if (!$activity->availability($round->id)) {{'disabled'}} @endif class="w-100 btn-sm">
+                                                        Ronde {{ $round->round }}:
+                                                        {{ $activity->availability_message($round->id) }}
+                                                    </button>
+                                                </form>
+                                            @endforeach
+                                        @else
+                                            <span class="text-center text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigd.</span>
+                                        @endif
                                     @endif
-                                @endif
+                                @endcan
                             </div>
                         </div>
                         </a>

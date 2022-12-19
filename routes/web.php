@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
@@ -28,14 +29,18 @@ use Illuminate\Support\Facades\Artisan;
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
-// Route voor rollensysteem
+// Route voor evenementen
 Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
-    Route::group(['prefix'=> '/contacts'], function(){
+    Route::group(['prefix'=> '/contacts'], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+        Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
+        Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
+    // Route voor userbeheer
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
@@ -43,13 +48,19 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
     });
 
+    // Route voor activiteiten
     Route::group(['prefix' => '/activity'], function() {
-        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
-        //edit functie werkt nog niet.
-        Route::post('/edit/', [ActivityController::class, 'edit'])->name('activity.edit');
+        //editen en verwijderen functie werkt nog niet.
+        Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
+        Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
+    });
+
+    Route::group(['prefix' => '/event'], function() {
+        Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
     });
 
     Route::group(['prefix' => '/enlistment'], function() {
@@ -57,38 +68,44 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
 
-    Route::get('/', [DashboardController::class, 'index'])->name('welcome');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::group(['prefix' => '/dashboard'], function() {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    Route::get('/', function() {return redirect()->route('dashboard');});
     Route::fallback([FallbackController::class, 'fallback2']);
 
+    // Route voor rollensysteem
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
-
-    // Route voor settingspagina
-    Route::group(['prefix'=> '/settings'], function(){
-        Route::get('/', function () { return view('settings'); })->name('settings');
-    });
 });
 
-// Route voor fallback
+// Route voor guests
 Route::group(['middleware' => ['guest']], function() {
     Route::fallback([FallbackController::class, 'fallback1']);
-    Route::get('/', function(){return redirect()->route('login');});
+    Route::get('/', function() {return redirect()->route('login');});
 });
 
-// migrate en seed de database zonder console. na gebruik uitzetten met comments
-// Route::get('migrate', function () {
-//     Artisan::call('migrate:fresh');
-//     Artisan::call('db:seed');
-// });
+Route::group(['middleware'=>['auth', 'verified']], function() {
+    // Route voor settingspagina
+    Route::group(['prefix'=> '/settings'], function() {
+        Route::get('/', function () { return view('settings'); })->name('settings');
+        Route::get('/update/{id}', [UsersController::class, 'update2'])->name('users.update2')->whereNumber('user');
+    });
 
+    // migrate en seed de database zonder console. na gebruik uitzetten met comments
+    // Route::get('migrate', function () {
+    //     Artisan::call('migrate:fresh');
+    //     Artisan::call('db:seed');
+    // });
+});
 
 // Mail voor workshophouder inschrijvingen
-Route::get('mail/workshophouder', function () {
+Route::get('mail/workshophouder', function() {
     Artisan::call('info:day');
 });
 
-Route::get('console/mailstudent', function () {
+Route::get('console/mailstudent', function() {
     Artisan::call('info:student');
 });
 

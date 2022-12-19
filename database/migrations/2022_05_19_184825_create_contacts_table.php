@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('roepnaam');
-            $table->string('tussenvoegsel')->default('');
-            $table->string('achternaam');
+            $table->string('firstname');
+            $table->string('surname')->default('');
+            $table->string('lastname');
             $table->string('email');
-            $table->boolean('op_mailinglijst')->default(false);
+            $table->boolean('on_mailinglist')->default(false);
             $table->string('mobiel')->nullable()->default(null);
-            $table->string('organisatie')->nullable()->default(null);
+            $table->string('organisation')->nullable()->default(null);
             $table->bigInteger('user_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('last_edited_by')->unsigned()->nullable()->default(null);

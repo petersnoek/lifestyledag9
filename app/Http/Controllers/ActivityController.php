@@ -22,23 +22,9 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($event_id)
+    public function index()
     {
-        $event_id = ['event_id' => Crypt::decrypt($event_id)];
-        $validator = Validator::make($event_id, [
-            'event_id' => ['required', Rule::exists(Event::class, 'id')]
-        ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
-        }
-
-        $event_id = $event_id['event_id'];
-        $event = Event::find($event_id);
-
-        return response()->view('activities.index', [
-            'event' => $event
-        ]);
     }
 
     /**
@@ -83,7 +69,7 @@ class ActivityController extends Controller
         if(isset($request->image)){
             $request->image->store('activityHeaders', 'public');
         }
-        
+
         /*create new activity object and insert data into corresponding attribute*/
         $activity = new Activity();
         $activity->name = $request->name;
@@ -144,7 +130,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }
