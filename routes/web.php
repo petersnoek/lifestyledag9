@@ -34,6 +34,9 @@ Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+        Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
+        Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
