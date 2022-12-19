@@ -28,6 +28,12 @@ class DashboardController extends Controller
             return $data['name'];
         })->all();
 
+        $workshops = $User->activities()->get()->sortByDesc(function ($data) {
+            return $data->event()->first()->ends_at;
+        })->sortBy(function ($data) {
+            return $data['name'];
+        })->all();
+
         return response()->view('dashboard', [
             'events' => $events,
             'workshops' => $workshops
