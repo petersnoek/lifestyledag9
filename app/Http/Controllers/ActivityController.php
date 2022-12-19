@@ -166,9 +166,13 @@ class ActivityController extends Controller
         $event_id = intval($request->event_id);
         $activity_id = intval($request->activity_id);
         $activity = Activity::find($activity_id);
+        $activity_round = ActivityRound::all()->where("activity_id", $activity_id);
 
         if ($activity->is_owner()) {
             $activity->delete();
+            foreach ($activity_round as $activity) {
+                $activity->delete($activity_id);
+            }
             return redirect()->action(
                 [EnlistmentController::class, 'destroy'], ['enlistment' => $activity_id]
             );
