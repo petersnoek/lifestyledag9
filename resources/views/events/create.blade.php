@@ -71,6 +71,8 @@
                                     @endif
                                 </div>
 
+                                <br>
+
                                 <div class=".col-md-6" style="width: 220px;">
                                     <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
                                     <input type="datetime-local" class="form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
@@ -91,6 +93,8 @@
                                         <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
                                     @endif
                                 </div>
+
+                                <br>
 
                                 <div class=".col-md-6" style="width: 220px;">
                                     <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
