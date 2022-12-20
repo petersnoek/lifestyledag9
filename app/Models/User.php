@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Enlistment;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'classCode'
     ];
 
     /**
@@ -42,4 +44,40 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function enlistments(){
+        return $this->hasMany(Enlistment::class);
+    }
+
+    public function contact()
+    {
+        return $this->hasOne(Contact::class, 'id', 'user_id');
+    }
+
+    public function contact_created_by()
+    {
+        return $this->hasMany(Contact::class, 'id', 'created_by');
+    }
+
+    public function contact_last_edited_by()
+    {
+        return $this->hasMany(Contact::class, 'id', 'last_edited_by');
+    }
+
+    public function activities() {
+        return $this->hasMany(Activity::class, "owner_user_id", "id");
+    }
+
+    function is_enlisted_for($activity_id) {
+        $activity = Activity::findOrFail($activity_id);
+        $event = Event::findOrFail($activity->event_id);
+
+        return $event = Enlistment::where([['event_id', $event->id], ['activity_id', $activity->id], ['user_id', $this->id]])->exists();
+    }
+
+    function enlistments_for_event($event_id) {
+        $event = Event::findOrFail($event_id);
+
+        return $this->hasMany(Enlistment::class)->where('event_id', $event->id)->orderBy('round_id', 'asc')->get();
+    }
 }

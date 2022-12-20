@@ -33,40 +33,60 @@
 
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
-            <!--
-            <div class="block-header block-header-default">
-                <h3 class="block-title">
-                    Dynamic Table <small>Export Buttons</small>
-                </h3>
+            <div class="mt-2">
+                @include('layouts.partials.messages')
             </div>
-            -->
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
-                    <thead>
-                    <tr>
-                        <th>Organisatie</th>
-                        <th>Roepnaam</th>
-                        <th>Tussenvoegsel</th>
-                        <th>Achternaam</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                        <th>Activiteiten</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($contacts as $contact)
-                        <tr>
-                            <td class="">{{ $contact->organisatie }}</td>
-                            <td class="">{{ $contact->roepnaam }}</td>
-                            <td class="">{{ $contact->tussenvoegsel }}</td>
-                            <td class="">{{ $contact->achternaam }}</td>
-                            <td class="">{{ $contact->email }}</td>
-                            <td style="width: 20%">{{ $contact->activiteit_titel }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+
+            <div class="mt-2">
+                @include('layouts.partials.errorMessages')
             </div>
+
+            <form method="POST" action="{{ route('contacts.generate-users') }}">
+                @method('patch')
+                @csrf
+
+                <div class="block-header block-header-default">
+                    <h3 class="mb-0">
+                        {{-- Dynamic Table <small>Export Buttons</small> --}}
+                        <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
+                        <button type="submit" class="btn btn-primary">Maak users aan voor geselecteerde contacten.</button>
+                    </h3>
+                </div>
+
+                <div class="block-content block-content-full table-responsive px-3 py-3">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm mb-0">
+                        <thead>
+                            <th scope="col" width="1%"></th>
+                            {{-- <th scope="col" width="1%"><input type="checkbox" name="all_contacts"></th> --}}
+                            <th>Organisatie</th>
+                            <th>Roepnaam</th>
+                            <th>Tussenvoegsel</th>
+                            <th>Achternaam</th>
+                            <th>Email</th>
+                            <th>Mobiel</th>
+                        </thead>
+
+                        @foreach($contacts as $contact)
+                            <tr>
+                                <td>
+                                    <input type="checkbox"
+                                    name="contacts[{{ $contact->id }}]"
+                                    value="{{ $contact->id }}"
+                                    {{ in_array($contact->name, $selectedContacts)
+                                        ? 'checked'
+                                        : '' }}>
+                                </td>
+                                <td class="">{{ $contact->organisation }}</td>
+                                <td class="">{{ $contact->firstname }}</td>
+                                <td class="">{{ $contact->surname }}</td>
+                                <td class="">{{ $contact->lastname }}</td>
+                                <td class="">{{ $contact->email }}</td>
+                                <td style="width: 20%">{{ $contact->mobiel }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </form>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
     </div>

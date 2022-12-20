@@ -5,21 +5,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <meta name="description" content="Welkom bij Da Vinci College! Hier vind je alles over de lifestyledag.">
-    <meta name="author" content="Peter Snoek">
-    <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Welkom bij Da Vinci College! Hier vind je alles over de lifestyledag.">
+  <meta name="author" content="Peter Snoek">
+  <meta name="robots" content="noindex, nofollow">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Icons -->
-    <link rel="shortcut icon" href="/favicons/carrot-16.png">
-    <link rel="icon" type="image/png" href="/favicons/carrot-16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/favicons/carrot-32.png" sizes="32x32">
-    <link rel="apple-touch-icon" sizes="16x16" href="/favicons/carrot-16.png">
-    <link rel="apple-touch-icon" sizes="32x32" href="/favicons/carrot-32.png">
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicons/carrot-16.png">
+  <link rel="icon" type="image/png" href="/favicons/carrot-16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicons/carrot-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" sizes="16x16" href="/favicons/carrot-16.png">
+  <link rel="apple-touch-icon" sizes="32x32" href="/favicons/carrot-32.png">
 
   <!-- Fonts and Styles -->
   @yield('css_before')
@@ -32,6 +32,7 @@
   <script>
     window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
   </script>
+  @stack('js_scripts')
 </head>
 
 <body>
@@ -72,25 +73,29 @@
         <!-- Side Navigation -->
         <div class="content-side">
             <ul class="nav-main">
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="{{ route('contacts.index') }}">
-                        <i class="nav-main-link-icon si si-cursor"></i>
-                        <span class="nav-main-link-name">Contactpersonen</span>
-                    </a>
-                </li>
+                @can(['dashboard'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="{{ route('dashboard') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Dashboard</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('aanmelden.show') ? ' active' : '' }}" href="{{ route('aanmelden.show') }}">
-                        <i class="nav-main-link-icon si si-cursor"></i>
-                        <span class="nav-main-link-name">Aanmeldingen</span>
-                    </a>
-                </li>
+                @can(['contacts.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('contacts.index') ? ' active' : '' }}" href="{{ route('contacts.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Contactpersonen</span>
+                        </a>
+                    </li>
+                @endcan
 
                 @can(['roles.index'])
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">roles</span>
+                            <span class="nav-main-link-name">Roles</span>
                         </a>
                     </li>
                 @endcan
@@ -99,7 +104,16 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('permissions.index') ? ' active' : '' }}" href="{{ route('permissions.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">permissions</span>
+                            <span class="nav-main-link-name">Permissions</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can(['users.index'])
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('users.index') ? ' active' : '' }}" href="{{ route('users.index') }}">
+                            <i class="nav-main-link-icon si si-cursor"></i>
+                            <span class="nav-main-link-name">Users</span>
                         </a>
                     </li>
                 @endcan
@@ -165,7 +179,7 @@
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
                 <p class="mt-2 mb-0 fw-medium">{{Auth::user()->name}}</p>
-                <p class="mb-0 text-muted fs-sm fw-medium">Student</p>
+                <p class="mb-0 text-muted fs-sm fw-medium">{{Auth::user()->getRoleNames()[0]}}</p>
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('settings') }}">
