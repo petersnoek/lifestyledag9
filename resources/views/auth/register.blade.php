@@ -1,20 +1,20 @@
 @extends('layouts.simple')
 
-
 @section('content')
 @push('js_scripts')
     <script>
-        count = 0;
+        var count = 0;
+
         // als email pop up 1x is weergeven verwijder dan de pattern met @mydavinci.nl
         function mailError() {
-            if(count = 1){
-                console.log('email functie')
-                document.getElementById('email').pattern ='[a-z0-9.%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
+            count += 1;
+            console.log(count);
+            if(count == 2){
+                console.log(count);
+                document.getElementById('email').pattern ='[a-z0-9.%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
             }
-            count++;
         }
     </script>
-    
 @endpush
     <!-- Page Content -->
     <div class="bg-image" style="background-image: url('media/photos/photo14@2x.jpg');">
@@ -63,49 +63,49 @@
                                     @csrf
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" name="firstName" placeholder="Voornaam" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" value="{{ old('firstName')}}" name="first_name" placeholder="Voornaam *" required>
                                     </div>
                                     @if($errors->has('firstName'))
                                         <div class="alert alert-danger">{{ $errors->first('firstName') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="insertion" name="insertion" placeholder="Tussenvoegsel">
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="insertion" value="{{ old('insertion')}}" name="insertion" placeholder="Tussenvoegsel">
                                     </div>
                                     @if($errors->has('insertion'))
                                         <div class="alert alert-danger">{{ $errors->first('insertion') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" name="lastName" placeholder="Achternaam" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" value="{{ old('lastName')}}" name="last_name" placeholder="Achternaam *" required>
                                     </div>
                                     @if($errors->has('lastName'))
                                         <div class="alert alert-danger">{{ $errors->first('lastName') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input id='email' type="email" class="form-control form-control-lg form-control-alt py-3" id="email" name="email" title="Gebruik je studenten email als je deze hebt." pattern="^[a-zA-Z0-9]+@mydavinci\.nl$" placeholder="Email: bijv. '12345678@mydavinci.nl'" required>
+                                        <input type="email" class="form-control form-control-lg form-control-alt py-3" id="email" value="{{ old('email')}}" name="email" title="Gebruik je studenten email als je deze hebt. (bijv. '12345678@mydavinci.nl')" pattern="^[a-zA-Z0-9]+@mydavinci\.nl$"   placeholder="Email: bijv. '12345678@mydavinci.nl' *" required>
                                     </div>
                                     @if($errors->has('email'))
                                         <div class="alert alert-danger">{{ $errors->first('email') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="class_code" name="class_code" placeholder="Klascode: bijv. 'MBIAO20A5'" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="class_code" value="{{ old('class_code')}}" name="class_code" placeholder="Klascode: bijv. 'MBIAO20A5' *" required>
                                     </div>
                                     @if($errors->has('class_code'))
                                         <div class="alert alert-danger">{{ $errors->first('class_code') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord" required>
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password" name="password" placeholder="Wachtwoord *" required>
                                     </div>
                                     @if($errors->has('password'))
                                         <div class="alert alert-danger">{{ $errors->first('password') }}</div>
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig wachtwoord" required>
+                                        <input type="password" class="form-control form-control-lg form-control-alt py-3" id="password_confirmation" name="password_confirmation" placeholder="Bevestig wachtwoord *" required>
                                     </div>
                                     @if($errors->has('password_confirmation'))
                                         <div class="alert alert-danger">{{ $errors->first('password_confirmation') }}</div>
@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-lg btn-alt-success" onclick="mailError()">Registreren</button>
+                                        <button type="submit" onclick="mailError();" id="registerBtn" class="btn btn-lg btn-alt-success">Registreren</button> 
                                     </div>
                                 </form>
                             </div>
@@ -142,7 +142,7 @@
                 <div class="modal-content">
                     <div class="block block-rounded block-transparent mb-0">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">Terms &amp; Conditions</h3>
+                            <h3 class="block-title">Algemene voorwaarden</h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                                     <i class="fa fa-fw fa-times"></i>
@@ -156,10 +156,6 @@
                             <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
                             <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
                         </div>
-                        <div class="block-content block-content-full text-end bg-body">
-                            <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">I Agree</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -172,7 +168,7 @@
 
 @section('js_after')
     <!-- jQuery (required for jQuery Validation plugin) -->
-    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/jquery.min.js"></s>
 
     <!-- Page JS Plugins -->
     <script src="js/plugins/jquery-validation/jquery.validate.min.js"></script>

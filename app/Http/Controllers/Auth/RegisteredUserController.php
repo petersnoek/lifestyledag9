@@ -14,6 +14,7 @@ use Spatie\Permission\Models\Role;
 use App\Rules\ClassCodePattern;
 use App\Rules\EmailPattern;
 use App\Rules\NamePattern;
+use App\Rules\InsertionPattern;
 
 class RegisteredUserController extends Controller
 {
@@ -38,13 +39,12 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstName' => ['required', 'string', 'max:255', new NamePattern()],
-            'insertion' => ['string', 'max:255', new NamePattern()],
-            'lastName' => ['required', 'string', 'max:255', new NamePattern()],
+            'first_name' => ['required', 'string', 'max:255', new NamePattern()],
+            'insertion' => ['string', 'nullable', 'max:255', new InsertionPattern()],
+            'last_name' => ['required', 'string', 'max:255', new NamePattern()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new EmailPattern()], 
             'class_code' => ['required', 'string', new ClassCodePattern()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-
         ],
         [
          'password.min'=> 'Je wachtwoord moet uit minimaal 8 tekens bestaan.', // custom message
@@ -52,9 +52,9 @@ class RegisteredUserController extends Controller
         );
 
         $user = User::create([
-            'firstName' => $request->firstName,
+            'first_name' => $request->first_name,
             'insertion' => $request->insertion,
-            'lastName' => $request->lastName,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'class_code' => $request->class_code,
             'password' => Hash::make($request->password),
@@ -67,6 +67,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if(isset($_POST['signup-terms'])){
+            return redirect(RouteServiceProvider::HOME);
+        }
     }
 }
