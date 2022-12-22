@@ -103,7 +103,7 @@ class ContactController extends Controller
                 'failedUsers'=> $failedUsers
             ]);
         } else {
-            return redirect()->route('contacts.index')->withSuccess(__('Alle workshophouders aangemaakt.'));
+            return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.generate_users'));
         }
     }
 
@@ -151,7 +151,7 @@ class ContactController extends Controller
         $contact->mobiel = $request->phonenumber;
         $contact->save();
 
-        return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangemaakt.');
+        return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.store'));
     }
 
     /**
@@ -229,7 +229,7 @@ class ContactController extends Controller
         $contact->mobiel = $request->phonenumber;
         $contact->save();
 
-        return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangepast.');
+        return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.update'));
     }
 
     /**
