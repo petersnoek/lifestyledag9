@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use App\Events\WorkshopholderGenerated;
 use Illuminate\Support\Facades\Validator;
@@ -172,18 +173,21 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        // $event_id = ['event_id' => Crypt::decrypt($event_id)];
-        // $validator = Validator::make($event_id, [
-        //     'event_id' => ['required', Rule::exists(Event::class, 'id')]
-        // ]);
+        $id = ['id' => Crypt::decrypt($id)];
+        $validator = Validator::make($id, [
+            'id' => ['required', Rule::exists(Contact::class, 'id')]
+        ]);
+        $id = $id['id'];
 
-        // if ($validator->fails()) {
-        //     return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
-        // }
+        if ($validator->fails()) {
+            return redirect()->route('contacts.index')->withinput($id)->with('errors', $validator->errors());
+        }
 
-        // return response()->view('contacts.edit', [
+        $contact = Contact::find($id);
 
-        // ]);
+        return response()->view('contacts.edit', [
+            'contact' => $contact
+        ]);
     }
 
     /**
@@ -193,7 +197,7 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => ['bail', 'required', 'integer', 'min:1', Rule::exists(contact::class, 'id')],
@@ -207,7 +211,12 @@ class ContactController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('contacts.edit')->withinput($request->all())->with('errors', $validator->errors());
+            $errors = $validator->errors();
+            if ($errors->has('id')) {
+                $id = intval($request->id);
+                return redirect()->route('contacts.index')->with('errors', ['Error met data contact persoon.']);
+            }
+            return redirect()->route('contacts.edit', ['id' => Crypt::encrypt($request->id)])->withinput($request->all())->with('errors', $validator->errors());
         }
 
         $contact = Contact::find($request->id);
@@ -218,7 +227,7 @@ class ContactController extends Controller
         $contact->email = trim($request->email);
         $contact->on_mailinglist = $request->on_mailinglist;
         $contact->mobiel = $request->phonenumber;
-        // $contact->save();
+        $contact->save();
 
         return redirect()->route('contacts.index')->withSuccess('Contactpersoon is aangepast.');
     }

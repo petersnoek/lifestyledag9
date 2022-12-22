@@ -83,7 +83,7 @@
                                 <td>{{ $contact->lastname }}</td>
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->mobiel }}</td>
-                                <td><a href="{{ route('contacts.edit', ['event_id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
+                                <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
                             </tr>
                         @endforeach
                     </table>

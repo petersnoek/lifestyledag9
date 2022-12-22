@@ -36,13 +36,16 @@
                     <form id="contacts-create-form" class="d-flex justify-content-evenly gap-3" action="{{ route('contacts.update') }}" method="POST">
                         @csrf
 
-                        {{-- <input type="hidden" name="id" value="{{$contact->id}}"/> --}}
-                        <input type="hidden" name="id" value="500"/>
+                        <input type="hidden" name="id" value="@if(isset($contact->id)){{$contact->id}}@else{{old('id')}}@endif"/>
+                        {{-- <input type="hidden" name="id" value="500"/> --}}
+
+                        {{-- @if(old('id') === null){{$contact->id}}@else{{old('id')}}@endif
+                        @if(old('id') === null){{2}}@else{{3}}@endif --}}
 
                         <div class="col-sm-6 col-xl-6">
                             <div class="mb-4">
                                 <label class="form-check-label">Voornaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" value="{{ old('firstname')}}" maxlength="255" required>
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" value="@if(isset($contact->firstname)){{$contact->firstname}}@else{{old('firstname')}}@endif" maxlength="255" required>
                                 @if ($errors->has('firstname'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('firstname') }}
@@ -51,7 +54,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Tussenvoegsel</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('surname')) {{'is-invalid'}} @endif" name="surname" placeholder="Tussenvoegsel" value="{{ old('surname')}}" maxlength="255">
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('surname')) {{'is-invalid'}} @endif" name="surname" placeholder="Tussenvoegsel" value="@if(isset($contact->surname)){{$contact->surname}}@else{{old('surname')}}@endif" maxlength="255">
                                 @if ($errors->has('surname'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('surname') }}
@@ -60,7 +63,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Achternaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('lastname')) {{'is-invalid'}} @endif" name="lastname" placeholder="Achternaam"  value="{{ old('lastname')}}" maxlength="255" required>
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('lastname')) {{'is-invalid'}} @endif" name="lastname" placeholder="Achternaam"  value="@if(isset($contact->lastname)){{$contact->lastname}}@else{{old('lastname')}}@endif" maxlength="255" required>
                                 @if ($errors->has('lastname'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('lastname') }}
@@ -69,7 +72,7 @@
                             </div>
                             <div class="form-check form-switch">
                                 <input type="hidden" name="on_mailinglist" value="0"/>
-                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif value="1">
+                                <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if((isset($contact->on_mailinglist) && $contact->on_mailinglist) || (old('on_mailinglist') !== null && old('on_mailinglist'))){{"checked"}}@endif value="1">
                                 <label class="form-check-label">Op de mailinglijst.</label>
                                 @if ($errors->has('on_mailinglist'))
                                     <div class="invalid-feedback">
@@ -81,7 +84,7 @@
                         <div class="col-sm-6 col-xl-6">
                             <div class="mb-4">
                                 <label class="form-check-label">Organisatie *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('organisation')) {{'is-invalid'}} @endif" name="organisation" placeholder="Organisatie"  value="{{ old('organisation')}}" maxlength="255" required>
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('organisation')) {{'is-invalid'}} @endif" name="organisation" placeholder="Organisatie"  value="@if(isset($contact->organisation)){{$contact->organisation}}@else{{old('organisation')}}@endif" maxlength="255" required>
                                 @if ($errors->has('organisation'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('organisation') }}
@@ -90,7 +93,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Email *</label>
-                                <input type="email" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('email')) {{'is-invalid'}} @endif" name="email" placeholder="Email" value="{{ old('email')}}" maxlength="255" required>
+                                <input type="email" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('email')) {{'is-invalid'}} @endif" name="email" placeholder="Email" value="@if(isset($contact->email)){{$contact->email}}@else{{old('email')}}@endif" maxlength="255" required>
                                 @if ($errors->has('email'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('email') }}
@@ -99,7 +102,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Telefoonnummer</label>
-                                <input type="tel" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('phonenumber')) {{'is-invalid'}} @endif" name="phonenumber" placeholder="06-12345678" title="A valid phone number must include 2 digits, one hyphen (-) and 8 more digits" value="{{ old('phonenumber')}}" maxlength="20">
+                                <input type="tel" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('phonenumber')) {{'is-invalid'}} @endif" name="phonenumber" placeholder="06-12345678" title="A valid phone number must include 2 digits, one hyphen (-) and 8 more digits" value="@if(isset($contact->phonenumber)){{$contact->phonenumber}}@else{{old('phonenumber')}}@endif" maxlength="20">
 
                                 @if ($errors->has('phonenumber'))
                                     <div class="invalid-feedback">
