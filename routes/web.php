@@ -35,6 +35,8 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
         Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
         Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+        Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
+        Route::post('/update', [ContactController::class, 'update'])->name('contacts.update');
 
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
