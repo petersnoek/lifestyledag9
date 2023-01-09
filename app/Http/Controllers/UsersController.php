@@ -34,12 +34,6 @@ class UsersController extends Controller
             ->withSuccess(__('User created successfully.'));
     }
 
-    public function show(User $user) {
-        return response()->view('users.show', [
-            'user' => $user
-        ]);
-    }
-
     public function edit(User $user) {
         return response()->view('users.edit', [
             'user' => $user,
@@ -48,7 +42,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function update(User $user) {
+    public function update(User $user) { /* doesn't work */
         $user->update();
 
         return redirect()->route('users.index')
@@ -87,8 +81,20 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
-    public function block(){
+    public function blockConfirm(User $user){
         /* change role to blocked and delete all users enlistment and or activities*/
+        return response()->view('users.blockConfirm', [
+            'user' => $user
+        ]);
+    }
+
+    public function block(User $user) {
+        /* TODO: make sure it's a student account and also delete any enlistments */
+        $role = Role::where('name', 'geblokeerd')->first()->id;
+        $user->syncRoles($role);
+
+        return redirect()->route('users.index')
+            ->withSuccess(__('User blocked successfully.'));
     }
 
     public function destroy(User $user) {

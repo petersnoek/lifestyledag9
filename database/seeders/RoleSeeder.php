@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
 
         // var_export(Permission::pluck('name')->all());
 
-        $role = Role::create(['name' => 'student']);
+        $role = Role::create(['name' => 'student','color' => '#4cbcdd']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "event.show",
@@ -40,7 +40,7 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
-        $role = Role::create(['name' => 'workshophouder']);
+        $role = Role::create(['name' => 'workshophouder', 'color' => '#ddb44c']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "event.show",
@@ -63,16 +63,11 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
-        // $role = Role::create(['name' => 'workshophouderbeheerder']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        // $role = Role::create(['name' => 'ontwikkelaar']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'admin', 'color' => '#4c78dd']);
         $permissions = Permission::pluck('id','id')->all();
         $role->permissions()->attach($permissions);
+
+
+        Role::create(['name' => 'geblokeerd', 'color' => '#dd4c4c']);
     }
 }

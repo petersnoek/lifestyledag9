@@ -16,27 +16,33 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" width="1%">#</th>
-                <th scope="col" width="15%">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col" width="10%">Roles</th>
-                <th scope="col" width="1%" colspan="3"></th>
+                <th scope="col" width="16%">Name</th>
+                <th scope="col" width="20%">Email</th>
+                <th scope="col" width="10%">Role</th>
+                <th scope="col" width="1%" colspan="1"></th>
+                <th scope="col" width="1%" colspan="1"></th>
             </tr>
             </thead>
             <tbody>
                 @foreach($users as $user)
                     <tr>
-                        <th scope="row">{{ $user->id }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            @foreach($user->roles as $role)
-                                <span class="badge bg-primary">{{ $role->name }}</span>
+                            @foreach($user->roles as $role) {{-- waarom is dit een loop? --}}
+                                <span style="background-color: {{$role->color}}" class="badge">{{ $role->name }}</span>
                             @endforeach
                         </td>
-                        <td><a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm">Show</a></td>
-                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm">Edit</a></td>
-                        <td><a href="{{ route('users.block', $user->id) }}" class="btn btn-danger btn-sm">Block</a></td>
+                        <td>
+                            @if($user->roles[0]->name != 'geblokeerd')
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm disabled">Edit</a>
+                            @endif
+                        </td>
+                        <td>
+                            @if($user->roles[0]->name == 'student')
+                                <a href="{{ route('users.blockConfirm', $user->id) }}" class="btn btn-danger btn-sm">Block</a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
