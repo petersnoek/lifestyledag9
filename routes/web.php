@@ -109,5 +109,10 @@ Route::get('console/mailstudent', function() {
     Artisan::call('info:student');
 });
 
+// link afbeeldingen opslag BELANGRIJK NA ELKE UPLOAD
+Route::get('console/storagelink', function () {
+    Artisan::call('storage:link');
+});
+
 
 require __DIR__. '/auth.php';
