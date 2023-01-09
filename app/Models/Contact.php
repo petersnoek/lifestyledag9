@@ -9,14 +9,14 @@ class Contact extends Model
 {
     use HasFactory;
     public function displayName() {
-        return $this->firstname . (strlen($this->surname)>0 ? " " . $this->surname : "") . " " . $this->lastname;
+        return $this->firstname . (strlen($this->insertion)>0 ? " " . $this->insertion : "") . " " . $this->lastname;
     }
 
     public static function nameTrimming($string) {
         return trim(ucfirst(strtolower($string)));
     }
 
-    public static function SurnameTrimming($string) {
+    public static function InsertionTrimming($string) {
         return trim(strtolower($string));
     }
 
@@ -25,7 +25,7 @@ class Contact extends Model
     }
 
     public function trimmedSurName() {
-        return $this->SurnameTrimming($this->surname);
+        return $this->InsertionTrimming($this->insertion);
     }
 
     public function trimmedLastName() {

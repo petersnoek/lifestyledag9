@@ -50,10 +50,10 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Tussenvoegsel</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('surname')) {{'is-invalid'}} @endif" name="surname" placeholder="Tussenvoegsel" value="@if(old('surname') === null){{$contact->surname}}@else{{old('surname')}}@endif" maxlength="255">
-                                @if ($errors->has('surname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('insertion')) {{'is-invalid'}} @endif" name="insertion" placeholder="Tussenvoegsel" value="@if(old('insertion') === null){{$contact->insertion}}@else{{old('insertion')}}@endif" maxlength="255">
+                                @if ($errors->has('insertion'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('surname') }}
+                                        {{ $errors->first('insertion') }}
                                     </div>
                                 @endif
                             </div>
