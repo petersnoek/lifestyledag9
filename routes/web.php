@@ -40,7 +40,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/update', [ContactController::class, 'update'])->name('contacts.update');
         Route::post('/destroy', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
-        Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
+        Route::post('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
     Route::group(['prefix' => '/users'], function() {

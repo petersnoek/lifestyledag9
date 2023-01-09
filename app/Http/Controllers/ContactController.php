@@ -238,21 +238,19 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $id = ['id' => Crypt::decrypt($id)];
-        $validator = Validator::make($id, [
-            'id' => ['required', 'numeric', Rule::exists(Contact::class, 'id')]
+        $validator = Validator::make($request->all(), [
+            'contact_id' => ['required', 'numeric', 'min:1', Rule::exists(contact::class, 'id')],
         ], [
-            'enlistment_id.exists' => 'De inschrijving bestaat niet of is al verwijderd.',
+            'contact_id.exists' => 'De contactpersoon bestaat niet of is al verwijderd.',
         ]);
-        $id = $id['id'];
 
         if ($validator->fails()) {
             return redirect()->route('contacts.index')->with('errors', $validator->errors());
         }
 
-        $contact = Contact::find(intval($id));
+        $contact = Contact::find(intval($request->contact_id));
         $contact->delete();
 
         return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.destroy'));

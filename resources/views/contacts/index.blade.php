@@ -41,15 +41,11 @@
                 @include('layouts.partials.errorMessages')
             </div>
 
-            <form method="POST" action="{{ route('contacts.generate-users') }}">
-                @method('patch')
-                @csrf
-
                 <div class="block-header block-header-default">
                     <h3 class="mb-0">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
                         <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
-                        <button type="submit" class="btn btn-primary">Maak workshophouders</button>
+                        <button type="submit" onclick="document.getElementById('contacts-generate-users-form').submit(); return;" class="btn btn-primary">Maak workshophouders</button>
                     </h3>
                 </div>
 
@@ -65,21 +61,26 @@
                             <th>Email</th>
                             <th>Mobiel</th>
                             <th>User</th>
-                            @can(['contacts.edit'])
+                            @can(['contacts.destroy'])
+                                <th>Acties</th>
+                            @elsecan(['contacts.edit', 'contacts.update'])
                                 <th>Acties</th>
                             @endcan
                         </thead>
 
                         @foreach($contacts as $contact)
                             <tr>
-                                <td>
-                                    <input type="checkbox"
-                                    name="contacts[{{ $contact->id }}]"
-                                    value="{{ $contact->id }}"
-                                    {{ in_array($contact->name, $selectedContacts)
-                                        ? 'checked'
-                                        : '' }}>
-                                </td>
+                                <form id="contacts-generate-users-form"  method="POST" action="{{ route('contacts.generate-users') }}">
+                                    @csrf
+                                    <td>
+                                        <input type="checkbox"
+                                        name="contacts[{{ $contact->id }}]"
+                                        value="{{ $contact->id }}"
+                                        {{ in_array($contact->name, $selectedContacts)
+                                            ? 'checked'
+                                            : '' }}>
+                                    </td>
+                                </form>
                                 <td>{{ $contact->organisation }}</td>
                                 <td>{{ $contact->firstname }}</td>
                                 <td>{{ $contact->insertion }}</td>
@@ -89,25 +90,26 @@
                                 <td>
                                     <input type="checkbox" disabled @if($contact->user()->first() !== null){{"checked"}}@endif>
                                 </td>
-                                @can(['contacts.edit'])
-                                    <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
+                                <td>
+                                @can(['contacts.edit', 'contacts.update'])
+                                    <a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a>
                                 @endcan
                                 @can(['contacts.destroy'])
-                                    <td><form action="{{ route('contacts.destroy') }}" method="POST">
+                                    <form action="{{ route('contacts.destroy') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="activity_id" value="{{$activity->id}}">
+                                        <input type="hidden" name="contact_id" value="{{$contact->id}}">
 
-                                        <button type="submit" disabled class="btn btn-xs btn-default" data-toggle="tooltip" title="Verwijder activiteit">
-                                            delete <i class="fa fa-times"></i>
+                                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Verwijder activiteit">
+                                            verwijder
                                         </button>
-                                    </form></td>
-                                    <td><a href="{{ route('contacts.destroy', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-danger">verwijder</a></td>
+                                    </form>
+                                        {{-- <a href="{{ route('contacts.destroy', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-danger">verwijder</a> --}}
                                 @endcan
+                                </td>
                             </tr>
                         @endforeach
                     </table>
                 </div>
-            </form>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
     </div>
