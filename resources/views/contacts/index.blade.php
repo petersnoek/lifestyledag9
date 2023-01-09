@@ -82,15 +82,26 @@
                                 </td>
                                 <td>{{ $contact->organisation }}</td>
                                 <td>{{ $contact->firstname }}</td>
-                                <td>{{ $contact->surname }}</td>
+                                <td>{{ $contact->insertion }}</td>
                                 <td>{{ $contact->lastname }}</td>
                                 <td>{{ $contact->email }}</td>
-                                <td>{{ $contact->mobiel }}</td>
+                                <td>{{ $contact->mobile }}</td>
                                 <td>
                                     <input type="checkbox" disabled @if($contact->user()->first() !== null){{"checked"}}@endif>
                                 </td>
                                 @can(['contacts.edit'])
                                     <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
+                                @endcan
+                                @can(['contacts.destroy'])
+                                    <td><form action="{{ route('contacts.destroy') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="activity_id" value="{{$activity->id}}">
+
+                                        <button type="submit" disabled class="btn btn-xs btn-default" data-toggle="tooltip" title="Verwijder activiteit">
+                                            delete <i class="fa fa-times"></i>
+                                        </button>
+                                    </form></td>
+                                    <td><a href="{{ route('contacts.destroy', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-danger">verwijder</a></td>
                                 @endcan
                             </tr>
                         @endforeach
