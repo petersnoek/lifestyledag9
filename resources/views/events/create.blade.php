@@ -60,48 +60,49 @@
                             @if($errors->has('location'))
                                 <div class="alert alert-danger">{{ $errors->first('location') }}</div>
                             @endif
+                            <div class="row">
+                                <div class="input-group col" style="display:block; align:center;">
+                                    <div class=".col-md-6" style="width: 220px;">
+                                        <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
+                                        <span class="input-group-text">Start</span>
+                                        <input type="datetime-local" class="form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
+                                        @if($errors->has('startDate'))
+                                            <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
+                                        @endif
+                                    </div>
 
-                            <div class="input-group row" style="display:block; align:center;">
-                                <div class=".col-md-6" style="width: 220px;">
-                                    <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
-                                    <span class="input-group-text">Start</span>
-                                    <input type="datetime-local" class="form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
-                                    @if($errors->has('startDate'))
-                                        <div class="alert alert-danger">{{ $errors->first('startDate') }}</div>
-                                    @endif
+                                    <br>
+
+                                    <div class=".col-md-6" style="width: 220px;">
+                                        <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                        <input type="datetime-local" class="form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
+                                        @if($errors->has('endDate'))
+                                            <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <br>
 
-                                <div class=".col-md-6" style="width: 220px;">
-                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                    <input type="datetime-local" class="form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
-                                    @if($errors->has('endDate'))
-                                        <div class="alert alert-danger">{{ $errors->first('endDate') }}</div>
-                                    @endif
-                                </div>
-                            </div>
+                                <div class="input-group col" style="display:block; align:center;">
+                                    <div class=".col-md-6" style="width: 220px;">
+                                        <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
+                                        <span class="input-group-text">Start</span>
+                                        <input type="datetime-local" class="form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
+                                        @if($errors->has('startEnlistment'))
+                                            <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
+                                        @endif
+                                    </div>
 
-                            <br>
+                                    <br>
 
-                            <div class="input-group row" style="display:block; align:center;">
-                                <div class=".col-md-6" style="width: 220px;">
-                                    <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
-                                    <span class="input-group-text">Start</span>
-                                    <input type="datetime-local" class="form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
-                                    @if($errors->has('startEnlistment'))
-                                        <div class="alert alert-danger">{{ $errors->first('startEnlistment') }}</div>
-                                    @endif
-                                </div>
-
-                                <br>
-
-                                <div class=".col-md-6" style="width: 220px;">
-                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                    <input type="datetime-local" class="form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
-                                    @if($errors->has('endEnlistment'))
-                                        <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
-                                    @endif
+                                    <div class=".col-md-6" style="width: 220px;">
+                                        <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                        <input type="datetime-local" class="form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
+                                        @if($errors->has('endEnlistment'))
+                                            <div class="alert alert-danger">{{ $errors->first('endEnlistment') }}</div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
@@ -117,16 +118,34 @@
 
                                             <label for="startRound" id="round_label"><b>Ronde 1:</b></label> &nbsp; &nbsp;
                                             <span class="input-group-text">Start</span>
-                                            <input type="time" id="startRound" class="form-control" name="startRound[0]" title="Start ronde" required/>
-                                            @if($errors->has('startRound.*'))
-                                                <div class="alert alert-danger">{{ $errors->first('startRound.*') }}</div>
+                                            <input @if (count($errors) > 0 && array_key_exists("startRound.*",$errors)) {{'is-invalid'}} @endif type="time" id="startRound" class="form-control" name="startRound[0]" title="Start ronde" required/>
+
+                                            @if (count($errors) > 0 && array_key_exists("startRound.*",$errors))
+                                                @foreach($errors['startRound.*'] as $error)
+                                                    <div class="invalid-feedback">
+                                                        {{$error}}
+                                                    </div>
+                                                @endforeach
                                             @endif
+
+                                            {{-- @if($errors->has('startRound.*'))
+                                                <div class="alert alert-danger">{{ $errors->first('startRound.*') }}</div>
+                                            @endif --}}
             
                                             <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                            <input type="time" id="endRound" class="form-control" name="endRound[0]" title="Eind ronde" required/> &nbsp;
-                                            @if($errors->has('endRound.*'))
-                                                <div class="alert alert-danger">{{ $errors->first('endRound.*') }}</div>
+                                            <input @if (count($errors) > 0 && array_key_exists("endRound.*",$errors)) {{'is-invalid'}} @endif type="time" id="endRound" class="form-control" name="endRound[0]" title="Eind ronde" required/> &nbsp;
+
+                                            @if (count($errors) > 0 && array_key_exists("endRound.*",$errors))
+                                                @foreach($errors['endRound.*'] as $error)
+                                                    <div class="invalid-feedback">
+                                                        {{$error}}
+                                                    </div>
+                                                @endforeach
                                             @endif
+
+                                            {{-- @if($errors->has('endRound.*'))
+                                                <div class="alert alert-danger">{{ $errors->first('endRound.*') }}</div>
+                                            @endif --}}
                                         </div>
         
                                         <br>
@@ -165,10 +184,12 @@
             function create_round_inputs() {
                 clicks += 1;
 
+                // Haal alle elementen op
                 var container = document.getElementById("container");
                 var section = document.getElementById("mainsection");
                 var clone_section = section.cloneNode(true);
 
+                // Clone de elementen
                 clone_section.querySelector('#round').id = "round"+clicks;
                 clone_section.querySelector('#startRound').id = "startRound"+clicks;
                 clone_section.querySelector('#endRound').id = "endRound"+clicks;
@@ -179,6 +200,7 @@
                 var endRound_input = clone_section.querySelector('#endRound'+clicks);
                 var round_label = clone_section.querySelector('#round_label'+clicks);
 
+                // Pas het nummer aan naar het aantal rondes
                 round_input.value = clicks;
                 round_input.name = "round[" + (clicks - 1) + "]";
 

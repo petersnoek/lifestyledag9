@@ -37,6 +37,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
+    // Route voor userbeheer
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
@@ -50,7 +51,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
-        // Edit functie werkt nog niet.
+        // Edit functie werkt nog niet
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
     });
 
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });
 
+    // Route voor inschrijvingen
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
@@ -90,7 +92,6 @@ Route::group(['middleware' => ['guest']], function() {
 //     Artisan::call('migrate:fresh');
 //     Artisan::call('db:seed');
 // });
-
 
 // Mail voor workshophouder inschrijvingen
 Route::get('mail/workshophouder', function () {
