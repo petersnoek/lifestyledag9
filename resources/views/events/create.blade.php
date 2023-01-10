@@ -42,13 +42,13 @@
                         <div class="col-sm-8 col-xl-6">
                             <div class="mb-4">
                               <input class="@if (count($errors) > 0 && array_key_exists("name",$errors)) {{"is-invalid"}}@endif form-control form-control-lg form-control-alt py-3" type="text" value="{{ old('name')}}" name="name" placeholder="Naam *" required>
-                              @if (count($errors) > 0 && array_key_exists("name",$errors))
-                                @foreach($errors['name'] as $error)
-                                    <div class="invalid-feedback">
-                                        {{$error}}
-                                    </div>
-                                @endforeach
-                            @endif 
+                                @if (count($errors) > 0 && array_key_exists("name",$errors))
+                                    @foreach($errors['name'] as $error)
+                                        <div class="invalid-feedback">
+                                            {{$error}}
+                                        </div>
+                                    @endforeach
+                                @endif 
                             </div>
                         
 
@@ -62,7 +62,7 @@
                                     @endforeach
                                 @endif 
                             </div>
-                   
+
 
                             <div class="mb-4">
                               <input class="@if (count($errors) > 0 && array_key_exists("location",$errors)) {{"is-invalid"}}@endif form-control form-control-lg form-control-alt py-3" type="text" value="{{ old('location')}}" name="location" placeholder="Locatie *" required>
@@ -74,67 +74,59 @@
                                     @endforeach
                                 @endif 
                             </div>
-                  
-                            
-                            <div class="row">
-                                <div class="input-group col" style="display:block; align:center;">
-                                    <div class=".col-md-6" style="width: 220px;">
-                                        <label for="startEnlistment"><b>Evenement:</b></label> &nbsp;  &nbsp;
-                                        <span class="input-group-text">Start evenement</span>
-                                        <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("statDate",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
-                                        @if (count($errors) > 0 && array_key_exists("startDate",$errors))
-                                            @foreach($errors['startDate'] as $error)
-                                                <div class="invalid-feedback">
-                                                    {{$error}}
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
 
-                                    <br>
-
-                                    <div class=".col-md-6" style="width: 220px;">
-                                        <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind evenement</span>
-                                        <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("endDate",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
-                                        @if (count($errors) > 0 && array_key_exists("endDate",$errors))
-                                            @foreach($errors['endDate'] as $error)
-                                                <div class="invalid-feedback">
-                                                    {{$error}}
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                            <label for="startEnlistment"><b>Evenement:</b></label>
+                            <div class="row justify-content-center">
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text">Start evenement</span>
+                                    <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("statDate",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
+                                    @if (count($errors) > 0 && array_key_exists("startDate",$errors))
+                                        @foreach($errors['startDate'] as $error)
+                                            <div class="invalid-feedback">
+                                                {{$error}}
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
 
-                                <br>
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind evenement</span>
+                                    <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("endDate",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endDate')}}" name="endDate" title="Eind evenement" required/>
+                                    @if (count($errors) > 0 && array_key_exists("endDate",$errors))
+                                        @foreach($errors['endDate'] as $error)
+                                            <div class="invalid-feedback">
+                                                {{$error}}
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <br>
 
-                                <div class="input-group col" style="display:block; align:center;">
-                                    <div class=".col-md-6" style="width: 220px;">
-                                        <label for="startEnlistment"><b>Inschrijven:</b></label> &nbsp;  &nbsp;
-                                        <span class="input-group-text">Start inschrijven</span>
-                                        <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("startEnlistment",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
-                                        @if (count($errors) > 0 && array_key_exists("startEnlistment",$errors))
-                                            @foreach($errors['startEnlistment'] as $error)
-                                                <div class="invalid-feedback">
-                                                    {{$error}}
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                            <label for="startEnlistment"><b>Inschrijven:</b></label>
+                            <div class="row justify-content-center">
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text">Start inschrijven</span>
+                                    <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("startEnlistment",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
+                                    @if (count($errors) > 0 && array_key_exists("startEnlistment",$errors))
+                                        @foreach($errors['startEnlistment'] as $error)
+                                            <div class="invalid-feedback">
+                                                {{$error}}
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
 
-                                    <br>
-
-                                    <div class=".col-md-6" style="width: 220px;">
-                                        <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind inschrijven</span>
-                                        <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("endEnlistment",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
-                                        @if (count($errors) > 0 && array_key_exists("endEnlistment",$errors))
-                                            @foreach($errors['endEnlistment'] as $error)
-                                                <div class="invalid-feedback">
-                                                    {{$error}}
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                                <div class=".col-md-6" style="width: 220px;">
+                                    <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind inschrijven</span>
+                                    <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("endEnlistment",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endEnlistment')}}" name="endEnlistment" title="Eind inschrijven" required/>
+                                    @if (count($errors) > 0 && array_key_exists("endEnlistment",$errors))
+                                        @foreach($errors['endEnlistment'] as $error)
+                                            <div class="invalid-feedback">
+                                                {{$error}}
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
 
@@ -143,7 +135,6 @@
 
                             <div class="input-group">
                                 <div id="container">
-                                    <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded-circle">+</button>
                                     <section id="mainsection">
                                         <div class="input-group">
                                             <input type="hidden" id="round" name="round[0]" value="1"> 
@@ -175,19 +166,30 @@
                                         
                                     </section>
                                 </div> 
+                                <div class="w-100 d-flex justify-content-center">
+                                    <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded">+ Ronde Toevoegen</button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
-                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 row">
-                                  <img id="headerPreview" class="bg-white w-100 p-0" src="">
+                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
+                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
                                 </div>
-                                <input class="form-control form-control-alt rounded-0 rounded-bottom py-3 w-100 row" type="file" name="image"onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
+                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 @if (count($errors) > 0 && array_key_exists("image",$errors)) {{'is-invalid'}} @endif">Afbeelding</label>
+                                <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
                             </div>
+                            @if (count($errors) > 0 && array_key_exists("image",$errors))
+                                @foreach($errors['image'] as $error)
+                                    <div class="invalid-feedback">
+                                        {{$error}}
+                                    </div>
+                                @endforeach
+                            @endif
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
-                                Maak evenement
+                                    Maak Evenement
                                 </button>
                             </div>
                         </div>
