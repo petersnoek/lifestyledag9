@@ -23,6 +23,6 @@ class ContactSeeder extends Seeder
             $admin_user_id = $admin_user->id;
         }
 
-        Contact::create(['firstname' => 'Test', 'surname' => '', 'lastname' => 'Contact', 'email' => '99061684@mydavinci.nl', 'on_mailinglist' => true, 'created_by' => $admin_user_id]);
+        Contact::create(['organisation' => 'Test', 'firstname' => 'Test', 'surname' => '', 'lastname' => 'Contact', 'email' => '99061684@mydavinci.nl', 'on_mailinglist' => true, 'created_by' => $admin_user_id]);
     }
 }

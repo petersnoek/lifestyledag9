@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->boolean('on_mailinglist')->default(false);
             $table->string('mobiel')->nullable()->default(null);
-            $table->string('organisation')->nullable()->default(null);
+            $table->string('organisation');
             $table->bigInteger('user_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('last_edited_by')->unsigned()->nullable()->default(null);
