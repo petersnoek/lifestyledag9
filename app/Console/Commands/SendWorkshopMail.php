@@ -19,8 +19,8 @@ class SendWorkshopMail extends Command
         // Haal de huidige datum op
         $currentDate = Carbon::now();
         $dateNow = $currentDate->format('Y-m-d H:i:s');
-        // $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get();
-        $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
+        $activiteiten = Event::where("enlist_stops_at", $dateNow)->first()->activities()->get();
+        // $activiteiten = Event::where("enlist_stops_at", "2022-08-31 08:00:00")->first()->activities()->get();
 
         // Loop door de activiteiten heen en pak alle data hiervan
         if(isset($activiteiten) && $activiteiten !== false || $activiteiten !== null){

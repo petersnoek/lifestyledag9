@@ -18,12 +18,12 @@ class Kernel extends ConsoleKernel
     {
         // Haal de huidige datum op en zet deze in een query
         $currentDate = Carbon::now();
-        // $dateNow = $currentDate->format('Y-m-d H:i:s');
-        // $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
+        $dateNow = $currentDate->format('Y-m-d H:i:s');
+        $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
 
         // Vaste waardes om te testen
-        $currentDate = "2022-08-31 08:00:00";
-        $endDate = Event::where('enlist_stops_at', "2022-08-31 08:00:00")->select('enlist_stops_at')->first();
+        // $currentDate = "2022-08-31 08:00:00";
+        // $endDate = Event::where('enlist_stops_at', "2022-08-31 08:00:00")->select('enlist_stops_at')->first();
 
         if (isset($endDate)) {
             // Als de huidige datum gelijk is aan de datum in de db wordt de schedule uitgevoerd
