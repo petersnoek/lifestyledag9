@@ -28,6 +28,6 @@ class EnlistmentSeeder extends Seeder
 
         DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 1, 'user_id' => 3, 'created_at' => $nu, 'updated_at' => $nu,]);
         DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 2, 'user_id' => 1, 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 3, 'user_id' => 2, 'created_at' => $nu, 'updated_at' => $nu,]);   
+        DB::table('enlistments')->insert(['event_id'=>3, 'activity_id' => 3, 'round_id' => 3, 'user_id' => 2, 'created_at' => $nu, 'updated_at' => $nu,]);
     }
 }

@@ -10,7 +10,8 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        Commands\SendStudentmail::class,
+        Commands\SendWorkshopMail::class,
+        Commands\SendStudentmail::class
     ];
 
     protected function schedule(Schedule $schedule)

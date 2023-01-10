@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Artisan;
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
 
-
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
 // 2. log in met een account en check of de route beschikbaar is
@@ -47,6 +46,8 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
+
+        Route::get('/resentAttachment', [UsersController::class, 'resentAttachment'])->name('users.resentAttachment');
     });
 
     // Route voor activiteiten
@@ -101,15 +102,5 @@ Route::group(['middleware'=>['auth', 'verified']], function() {
     //     Artisan::call('db:seed');
     // });
 });
-
-// Mail voor workshophouder inschrijvingen
-Route::get('mail/workshophouder', function() {
-    Artisan::call('info:day');
-});
-
-Route::get('console/mailstudent', function() {
-    Artisan::call('info:student');
-});
-
 
 require __DIR__. '/auth.php';
