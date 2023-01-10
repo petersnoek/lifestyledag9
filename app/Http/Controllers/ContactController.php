@@ -242,6 +242,7 @@ class ContactController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'contact_id' => ['required', 'numeric', 'min:1', Rule::exists(contact::class, 'id')],
+            'submit' => ['required', 'integer', Rule::in(['1', '2'])],
         ], [
             'contact_id.exists' => 'De contactpersoon bestaat niet of is al verwijderd.',
         ]);
@@ -252,6 +253,18 @@ class ContactController extends Controller
 
         $contact = Contact::find(intval($request->contact_id));
         $contact->delete();
+
+        // $user = $contact->user()->first();
+        // if ($request->submit === 1) {
+        //     $contact->delete();
+        // } else if ($request->submit === 2) {
+        //     if ($user !== null && $user->can('user.block')) {
+        //         $user->block();
+        //         $contact->delete();
+        //     } else {
+        //         return redirect()->route('contacts.index')->with('errors', "Contact heeft geen gebruiker of je hebt geen toestemming om gebruikers te blokkeren.");
+        //     }
+        // }
 
         return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.destroy'));
     }
