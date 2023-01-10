@@ -46,7 +46,7 @@ class UsersController extends Controller
         $user->update();
 
         return redirect()->route('users.index')
-            ->withSuccess(__('User updated successfully.'));
+            ->withErrors(__('functionaliteit nog niet geimplementeerd'));
     }
 
     // Update gegevens van de student
@@ -83,18 +83,45 @@ class UsersController extends Controller
 
     public function blockConfirm(User $user){
         /* change role to blocked and delete all users enlistment and or activities*/
-        return response()->view('users.blockConfirm', [
-            'user' => $user
-        ]);
+        if($user->roles[0]->name != 'student'){
+            return redirect()->route('users.index')
+            ->withErrors(__('Gebruiker heeft niet de rol \'student\', actie geanuleerd'));
+        }
+        else{
+            return response()->view('users.block', [
+                'user' => $user
+            ]);
+        }
     }
 
-    public function block(User $user) {
+    public function block(Request $request) {
         /* TODO: make sure it's a student account and also delete any enlistments */
-        $role = Role::where('name', 'geblokeerd')->first()->id;
-        $user->syncRoles($role);
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'numeric']
+        ]);
 
-        return redirect()->route('users.index')
-            ->withSuccess(__('User blocked successfully.'));
+        if ($validator->fails()) {
+            return redirect()->route('users.index')
+            ->withErrors(__('Onbekend User Account'));       
+        }
+
+        $user = User::find($request->user_id);
+
+        if($user->roles[0]->name == 'student'){
+            $role = Role::where('name', 'geblokeerd')->first()->id;
+            $user->syncRoles($role);
+
+            return redirect()->route('users.index')
+            ->withSuccess(__('Gebruiker succesvol geblokeerd'));
+        }
+        else{
+            return redirect()->route('users.index')
+            ->withErrors(__('Gebruiker heeft niet de rol \'student\', actie geanuleerd'));
+        }
+        
+    }
+
+    public function test1(Request $request) {
     }
 
     public function destroy(User $user) {

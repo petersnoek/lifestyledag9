@@ -43,8 +43,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
         Route::get('/{user}/blockConfirm', [UsersController::class, 'blockConfirm'])->name('users.blockConfirm')->whereNumber('user');
-        Route::get('/{user}/block', [UsersController::class, 'block'])->name('users.block')->whereNumber('user');
-
+        Route::post('/block', [UsersController::class, 'block'])->name('users.block');
     });
 
     // Route voor activiteiten

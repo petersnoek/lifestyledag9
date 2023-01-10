@@ -13,10 +13,16 @@
                             <li>Alle bijbehorende inschrijvingen worden verwijderd</li>
                         </ul>
                     </div>
-                    <div class="mt-4">
-                        <a href="{{ route('users.block', $user->id) }}" class="btn btn-warning">Blokeer</a>
+                    {{-- <form action="{{ route('users.block', $user->id) }}" method="post" class="mt-4">
+                        <button type="submit" class="btn btn-warning">Blokeer</button>
                         <a href="{{ route('users.index') }}" class="btn btn-info">Annuleer</a>
-                    </div>
+                    </form> --}}
+                    <form action="{{ route('users.block') }}" method="post" class="mt-4">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{$user->id}}">
+                        <button type="submit" class="btn btn-warning">Blokeer</button>
+                        <a href="{{ route('users.index') }}" class="btn btn-info">Annuleer</a>
+                    </form>
                 </div>
             </div>
             

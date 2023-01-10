@@ -11,6 +11,7 @@
 
         <div class="mt-2">
             @include('layouts.partials.messages')
+            @include('layouts.partials.errorMessages')
         </div>
 
         <table class="table table-striped">
