@@ -46,7 +46,7 @@ class EventController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('event.create')->withinput($request->all())->with('errors', $validator->errors());
+            return redirect()->route('event.create')->withinput($request->all())->with('errors', $validator->errors()->getMessages());
         }
 
         /* stores image in public/eventHeaders folder */
