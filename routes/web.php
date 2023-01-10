@@ -109,7 +109,7 @@ Route::get('console/mailstudent', function() {
     Artisan::call('info:student');
 });
 
-// link afbeeldingen opslag BELANGRIJK NA ELKE UPLOAD
+// link afbeeldingen opslag ÉÉNMALIG BIJ ELKE LIVESERVER UPLOAD
 Route::get('console/storagelink', function () {
     Artisan::call('storage:link');
 });
