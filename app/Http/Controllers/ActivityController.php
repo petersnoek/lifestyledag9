@@ -159,17 +159,12 @@ class ActivityController extends Controller
         $image = $activity->image;
         $activity_round = ActivityRound::all()->where("activity_id", $activity_id);
 
-        if ($activity->is_owner()) {
-            $activity->delete();
-            Storage::disk('public')->delete("activityHeaders/" . $image);  
-            foreach ($activity_round as $activity) {
-                $activity->delete($activity_id);
-            }
-            return redirect()->route('event.show', ['event_id' => Crypt::encrypt($event_id)]);
-            // return redirect()->action(
-            //     [EnlistmentController::class, 'destroy'], ['enlistment' => $activity_id]
-            // );
+        
+        $activity->delete();
+        Storage::disk('public')->delete("activityHeaders/" . $image);  
+        foreach ($activity_round as $activity) {
+            $activity->delete($activity_id);
         }
-        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($event_id)])->with('errors', ['Jij bent niet toegestaan om deze inschrijving te verwijderen.']);
-    }
+        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($event_id)]);
+            }
 }
