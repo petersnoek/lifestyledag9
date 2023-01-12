@@ -59,7 +59,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "activity.destroy"
+            "activity.destroy",
             "activity.store",
             "activity.create",
             "verification.verify",
