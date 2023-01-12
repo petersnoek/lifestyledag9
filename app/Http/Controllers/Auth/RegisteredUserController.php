@@ -70,5 +70,7 @@ class RegisteredUserController extends Controller
         if(isset($_POST['signup-terms'])){
             return redirect(RouteServiceProvider::HOME);
         }
+
+        return redirect()->route('verification.notice');
     }
 }

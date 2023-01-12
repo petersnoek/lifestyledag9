@@ -22,7 +22,7 @@ class Enlistment extends Model
     {
         return $this->belongsTo(Eventround::class, 'round_id', 'id');
     }
-
+    
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -31,6 +31,7 @@ class Enlistment extends Model
     public function event(){
         return $this->belongsTo(Event::class);
     }
+
     public function is_owner()
     {
         if ($this->user_id == Auth::user()->id) {
