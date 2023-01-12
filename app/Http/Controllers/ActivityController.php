@@ -8,10 +8,11 @@ use App\Models\Eventround;
 use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
@@ -166,10 +167,12 @@ class ActivityController extends Controller
         $event_id = intval($request->event_id);
         $activity_id = intval($request->activity_id);
         $activity = Activity::find($activity_id);
+        $image = $activity->image;
         $activity_round = ActivityRound::all()->where("activity_id", $activity_id);
 
         if ($activity->is_owner()) {
             $activity->delete();
+            Storage::disk('public')->delete("activityHeaders/" . $image);  
             foreach ($activity_round as $activity) {
                 $activity->delete($activity_id);
             }
