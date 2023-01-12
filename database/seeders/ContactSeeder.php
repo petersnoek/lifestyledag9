@@ -18,7 +18,7 @@ class ContactSeeder extends Seeder
     public function run()
     {
         $admin_user_id = null;
-        $admin_user = User::where("email", "admin@gmail.com")->where("name", "admin")->first();
+        $admin_user = User::where("email", "admin@gmail.com")->where("first_name", "admin")->first();
         if ($admin_user !== null) {
             $admin_user_id = $admin_user->id;
         }

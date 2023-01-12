@@ -8,7 +8,6 @@ class NamePattern implements Rule
 {
     public function __construct()
     {
-  
     }
     public function passes($attribute, $value)
     {
@@ -17,6 +16,6 @@ class NamePattern implements Rule
 
     public function message()
     {
-        return 'Error: Alleen letters zijn toegestaan.';
+        return 'Error: Alleen letters zijn toegestaan bij je naam.';
     }
 }
