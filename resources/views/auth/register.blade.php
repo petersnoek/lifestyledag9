@@ -65,8 +65,8 @@
                                     <div class="mb-4">
                                         <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" value="{{ old('first_name')}}" name="first_name" placeholder="Voornaam *" required>
                                     </div>
-                                    @if($errors->has('firstName'))
-                                        <div class="alert alert-danger">{{ $errors->first('firstName') }}</div>
+                                    @if($errors->has('first_name'))
+                                        <div class="alert alert-danger">{{ $errors->first('first_name') }}</div>
                                     @endif
 
                                     <div class="mb-4">
@@ -79,8 +79,8 @@
                                     <div class="mb-4">
                                         <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" value="{{ old('last_name')}}" name="last_name" placeholder="Achternaam *" required>
                                     </div>
-                                    @if($errors->has('lastName'))
-                                        <div class="alert alert-danger">{{ $errors->first('lastName') }}</div>
+                                    @if($errors->has('last_name'))
+                                        <div class="alert alert-danger">{{ $errors->first('last_name') }}</div>
                                     @endif
 
                                     <div class="mb-4">

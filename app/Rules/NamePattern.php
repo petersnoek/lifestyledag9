@@ -8,7 +8,6 @@ class NamePattern implements Rule
 {
     public function __construct()
     {
-  
     }
     public function passes($attribute, $value)
     {
