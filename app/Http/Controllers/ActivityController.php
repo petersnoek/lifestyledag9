@@ -56,10 +56,11 @@ class ActivityController extends Controller
             'description' => [new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
-            'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
+            'max_participants.*' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
         if ($validator->fails()) {
+            
             return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 
