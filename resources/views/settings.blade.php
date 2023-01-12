@@ -46,8 +46,16 @@
                   </div>
                   <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
-                      <label class="form-label" for="name">Naam</label>
-                      <input type="text" class="form-control" id="name" name="name" value="{{Auth::user()->first_name}}" placeholder="Vul je naam in..">
+                      <label class="form-label" for="firstname">Naam</label>
+                      <input type="text" class="form-control" id="firstname" name="first_name" value="{{Auth::user()->first_name}}" placeholder="Naam">
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label" for="insertion">Tussenvoegsel</label>
+                      <input type="text" class="form-control" id="insertion" name="insertion" value="{{Auth::user()->insertion}}" placeholder="Tussenvoegsel">
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label" for="lastname">Achternaam</label>
+                      <input type="text" class="form-control" id="lastname" name="last_name" value="{{Auth::user()->last_name}}" placeholder="Achternaam">
                     </div>
                     <div class="mb-4">
                       <label class="form-label" for="class_code">Klascode</label>
@@ -69,45 +77,6 @@
           </div>
           <!-- END User Profile -->
 
-          <!-- Change Password -->
-          <div class="block block-rounded">
-            <div class="block-header block-header-default">
-              <h3 class="block-title">Verander Wachtwoord</h3>
-            </div>
-            <div class="block-content">
-              <form action="be_pages_projects_edit.html" method="POST" onsubmit="return false;">
-                <div class="row push">
-                  <div class="col-lg-4">
-                    <p class="fs-sm text-muted">
-                    </p>
-                  </div>
-                  <div class="col-lg-8 col-xl-5">
-                    <div class="mb-4">
-                      <label class="form-label" for="one-profile-edit-password">Huidig Wachtwoord</label>
-                      <input type="password" class="form-control" id="one-profile-edit-password" name="one-profile-edit-password">
-                    </div>
-                    <div class="row mb-4">
-                      <div class="col-12">
-                        <label class="form-label" for="one-profile-edit-password-new">Nieuw Wachtwoord</label>
-                        <input type="password" class="form-control" id="one-profile-edit-password-new" name="one-profile-edit-password-new">
-                      </div>
-                    </div>
-                    <div class="row mb-4">
-                      <div class="col-12">
-                        <label class="form-label" for="one-profile-edit-password-new-confirm">Bevestig Nieuw Wachtwoord</label>
-                        <input type="password" class="form-control" id="one-profile-edit-password-new-confirm" name="one-profile-edit-password-new-confirm">
-                      </div>
-                    </div>
-                    <div class="mb-4">
-                      <button type="submit" class="btn btn-alt-primary">
-                        Update wachtwoord
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
           <!-- END Connections -->
         </div>
         <!-- END Page Content -->

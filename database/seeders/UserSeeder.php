@@ -30,16 +30,9 @@ class UserSeeder extends Seeder
             [
                 'first_name' => 'Pieter',
                 'last_name' => 'pieter',
-                'email' => '99047256@mydavinci.nl',
-                'email_verified_at' => now(),
-                'password' => '$2y$10$qgwRljCpvoHAPFGqB6sOgelHP1Qz9Ela0SH2MNW50SKczWbPYF78W',
-            ],
-            [
-                'first_name' => 'Student',
-                'last_name' => 'student',
                 'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
-                'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm'
+                'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm',
             ]
         ];
 
@@ -56,6 +49,13 @@ class UserSeeder extends Seeder
                 'last_name' => 'workshophouder',
                 'email' => 'workshophouder@gmail.com',
                 'password' => '$2y$10$XVD0huqiYWSc8JrfXaWiKeatdaYlvTeSUvsv4N1N9so0Oabo97IMK',
+            ],
+            [
+                'first_name' => 'Pieter',
+                'last_name' => 'workshophouder',
+                'email' => '99047256@mydavinci.nl',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$qgwRljCpvoHAPFGqB6sOgelHP1Qz9Ela0SH2MNW50SKczWbPYF78W',
             ]
         ];
 
