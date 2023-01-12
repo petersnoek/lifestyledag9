@@ -36,14 +36,13 @@ class Activity extends Model
         return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
     }
 
-    }
-
-        return false;
-        }
-            return true;
-    {
-    public function is_owner()
+    public function is_owner(){
         if ($this->user()->first()->id == User::find(Auth::user()->id)->id) {
+            return false;
+        }
+        return true;
+    }
+    
     //checkt of enlistement met dezelfde ronde al bestaat
     function enlistment_for_round_exists($eventround_id) {
         return Enlistment::where('user_id', Auth::user()->id)->where('round_id', $eventround_id)->exists();
