@@ -10,13 +10,14 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        Commands\SendStudentmail::class,
+        Commands\SendWorkshopMail::class,
+        Commands\SendStudentmail::class
     ];
 
     protected function schedule(Schedule $schedule)
     {
         // Haal de huidige datum op en zet deze in een query
-        $currentDate = Carbon::now();
+        // $currentDate = Carbon::now();
         // $dateNow = $currentDate->format('Y-m-d H:i:s');
         // $endDate = Event::where('enlist_stops_at', $dateNow)->select('enlist_stops_at');
 
