@@ -15,7 +15,7 @@ use App\Rules\ClassCodePattern;
 class UsersController extends Controller
 {
     public function index() {
-        $users = User::orderBy('name')->paginate(10);
+        $users = User::orderBy('first_name')->paginate(10);
 
         return response()->view('users.index', compact('users'));
     }

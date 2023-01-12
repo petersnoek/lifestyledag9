@@ -82,7 +82,9 @@ class ContactController extends Controller
             $hashed_random_password = Hash::make($unhashed_random_password);
 
             $user = User::create([
-                'name' => $contact->displayName(),
+                'first_name' => $contact->firstname,
+                'insertion' => $contact->surname,
+                'last_name' => $contact->lastname,
                 'email' => $contact->email,
                 'password' => $hashed_random_password,
             ]);
