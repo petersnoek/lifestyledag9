@@ -103,4 +103,10 @@ Route::group(['middleware'=>['auth', 'verified']], function() {
     // });
 });
 
+
+// link afbeeldingen opslag ÉÉNMALIG BIJ ELKE LIVESERVER UPLOAD
+Route::get('console/storagelink', function () {
+    Artisan::call('storage:link');
+});
+
 require __DIR__. '/auth.php';
