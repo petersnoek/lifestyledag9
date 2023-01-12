@@ -49,7 +49,7 @@
                     <h3 class="mb-0">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
                         <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
-                        <button type="submit" class="btn btn-primary">Maak users aan voor geselecteerde contacten.</button>
+                        <button type="submit" class="btn btn-primary">Maak workshophouders</button>
                     </h3>
                 </div>
 
@@ -64,6 +64,10 @@
                             <th>Achternaam</th>
                             <th>Email</th>
                             <th>Mobiel</th>
+                            <th>User</th>
+                            @can(['contacts.edit'])
+                                <th>Acties</th>
+                            @endcan
                         </thead>
 
                         @foreach($contacts as $contact)
@@ -76,12 +80,18 @@
                                         ? 'checked'
                                         : '' }}>
                                 </td>
-                                <td class="">{{ $contact->organisation }}</td>
-                                <td class="">{{ $contact->firstname }}</td>
-                                <td class="">{{ $contact->surname }}</td>
-                                <td class="">{{ $contact->lastname }}</td>
-                                <td class="">{{ $contact->email }}</td>
-                                <td style="width: 20%">{{ $contact->mobiel }}</td>
+                                <td>{{ $contact->organisation }}</td>
+                                <td>{{ $contact->firstname }}</td>
+                                <td>{{ $contact->surname }}</td>
+                                <td>{{ $contact->lastname }}</td>
+                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->mobiel }}</td>
+                                <td>
+                                    <input type="checkbox" disabled @if($contact->user()->first() !== null){{"checked"}}@endif>
+                                </td>
+                                @can(['contacts.edit'])
+                                    <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
+                                @endcan
                             </tr>
                         @endforeach
                     </table>

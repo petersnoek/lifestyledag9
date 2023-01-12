@@ -32,27 +32,15 @@ class Contact extends Model
         return $this->nameTrimming($this->lastname);
     }
 
-    // public function user() {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
-
-    // public function created_by() {
-    //     return $this->belongsToMany(User::class, 'created_by', 'id');
-    // }
-
-    // public function last_edited_by() {
-    //     return $this->belongsToMany(User::class, 'last_edited_by', 'id');
-    // }
-
     public function user() {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function created_by() {
-        return $this->belongsToMany(User::class, 'id', 'created_by');
+        return $this->belongsToMany(User::class, 'created_by', 'id');
     }
 
     public function last_edited_by() {
-        return $this->belongsToMany(User::class, 'id', 'last_edited_by');
+        return $this->belongsToMany(User::class, 'last_edited_by', 'id');
     }
 }

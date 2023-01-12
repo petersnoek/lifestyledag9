@@ -4,19 +4,19 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ClassCodePattern implements Rule
+class InsertionPattern implements Rule
 {
   public function __construct()
   {
-  }
 
+  }
   public function passes($attribute, $value)
   {
-    return preg_match("/^[a-zA-Z0-9]+$/", $value);
+    return preg_match('/^[a-zA-Z\s]*$/', $value);
   }
 
   public function message()
   {
-    return 'Error: Klascode mag alleen uit letters en nummers bestaan.';
+    return 'Error: Alleen letters en spaties zijn toegestaan bij je tussenvoegsel.';
   }
 }

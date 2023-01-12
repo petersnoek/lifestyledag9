@@ -6,7 +6,9 @@
         <h1>Users</h1>
         <div class="lead">
             Manage your users here.
-            {{-- <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right">Add new user</a> --}}
+            <br>
+
+            <td><a href="{{ route('users.resentAttachment') }}" class="btn btn-info btn-sm" title='Stuur een mail naar de studenten/workshophouders met de inschrijvingen van de activiteiten'>Mail versturen</a></td>
         </div>
 
         <div class="mt-2">
@@ -29,7 +31,7 @@
                 @foreach($users as $user)
                     <tr>
                         <th scope="row">{{ $user->id }}</th>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->first_name }}</td>
                         <td>{{ $user->email }}</td>
                         {{-- <td>{{ $user->username }}</td> --}}
                         <td>
