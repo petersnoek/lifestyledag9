@@ -63,7 +63,7 @@
                                     @csrf
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" value="{{ old('firstName')}}" name="first_name" placeholder="Voornaam *" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="firstName" value="{{ old('first_name')}}" name="first_name" placeholder="Voornaam *" required>
                                     </div>
                                     @if($errors->has('firstName'))
                                         <div class="alert alert-danger">{{ $errors->first('firstName') }}</div>
@@ -77,7 +77,7 @@
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" value="{{ old('lastName')}}" name="last_name" placeholder="Achternaam *" required>
+                                        <input type="text" class="form-control form-control-lg form-control-alt py-3" id="lastName" value="{{ old('last_name')}}" name="last_name" placeholder="Achternaam *" required>
                                     </div>
                                     @if($errors->has('lastName'))
                                         <div class="alert alert-danger">{{ $errors->first('lastName') }}</div>
