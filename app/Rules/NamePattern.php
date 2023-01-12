@@ -12,7 +12,7 @@ class NamePattern implements Rule
     }
     public function passes($attribute, $value)
     {
-        return preg_match('/^[A-Za-z]+$/', $value);
+        return preg_match('/^[a-zA-Z0-9_\-., ?!&""\'()]+$/', $value);
     }
 
     public function message()
