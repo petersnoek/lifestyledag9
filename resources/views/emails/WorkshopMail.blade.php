@@ -24,7 +24,7 @@ Het inschrijven is gesloten, hier is een lijst met alle aanmeldingen van uw work
 <td>{{$eventround->round}}</td>
 <td>{{$eventround->start_time}}</td>
 <td>{{$eventround->end_time}}</td>
-<td>{{$student->name}}</td>
+<td>{{$student->first_name}}</td>
 </tr>
 @endforeach
 
