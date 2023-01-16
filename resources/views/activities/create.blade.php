@@ -33,14 +33,12 @@
         <div class="block block-rounded px-5 py-3">
             <div class="block-content block-content-full">
                 <div >
-                
                     <form class="d-flex justify-content-evenly" action="{{ route('activity.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
-                        
                         <div class="col-sm-8 col-xl-6">
                             <div class="mb-4">
                                 <input type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("name",$errors)) {{'is-invalid'}} @endif" name="name" placeholder="Activiteit naam *"  value="{{ old('name')}}" required>
-                            
+                                
                                 @if (count($errors) > 0 && array_key_exists("name",$errors))
                                     @foreach($errors['name'] as $error)
                                         <div class="invalid-feedback">
@@ -52,7 +50,7 @@
 
                             <div class="mb-4">
                                 <textarea type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
-                                
+
                                 @if (count($errors) > 0 && array_key_exists("description",$errors))
                                     @foreach($errors['description'] as $error)
                                         <div class="invalid-feedback">
@@ -61,14 +59,14 @@
                                     @endforeach
                                 @endif
                             </div>
-                            
+
                             <div class="mb-4 form-floating">
                                 <select id="eventSelect" class="form-select form-control-alt @if (count($errors) > 0 && array_key_exists("event_id",$errors)) {{'is-invalid'}} @endif" name="event_id" onchange="createCapacityTable(this.value)" required>
                                 <option value="">-</option>
                                 @foreach($events as $event)
                                     <option
                                         @if (old('event_id') == $event->id)
-                                            {{'selected'}} 
+                                            {{'selected'}}
                                         @endif
                                     value='{{$event->id}}'>{{$event->name}}</option>
                                 @endforeach
@@ -83,27 +81,27 @@
                                     @endforeach
                                 @endif
                             </div>
-                            
+
                             <div id="capaciteitContainer"></div>
                             <div id="capaciteitErrors">
                                 <div class="is-invalid"></div>
                                 @if(old('event_id'))
-                                    @php 
-                                        $oldKeys = []; 
+                                    @php
+                                        $oldKeys = [];
                                         $oldValues = [];
                                     @endphp
                                     @foreach($events as $event)
                                         @if($event->id == old('event_id'))
                                             @for($x = 1; $x < (count($event->eventrounds)+1); $x++)
-                                                @php 
-                                                    $key = 'max_participants.' . $x; 
+                                                @php
+                                                    $key = 'max_participants.' . $x;
                                                     array_push($oldKeys,$key);
                                                     array_push($oldValues, old($key));
                                                 @endphp
                                             @endfor
                                         @endif
-                                    @endforeach 
-                                    
+                                    @endforeach
+
                                     @if (count($errors) > 0)
                                         @php $capErrors = []; @endphp
                                         @foreach($oldKeys as $key)
@@ -119,7 +117,7 @@
                                     @endif
 
                                     <script> createCapacityTable({{old('event_id')}}@if(count($oldValues) > 0),true @endif @if(count($capErrors) > 0),true @endif)</script>
-                                    
+
                                 @endif
                             </div>
                         </div>
@@ -216,7 +214,7 @@
                                     capaciteitInput.value = oldValues[eventround['round']-1]
                                 }
                                 if(hasErrors == true && capErrors[('max_participants.'+(eventround['round']))] != null){
-                                    
+
                                     console.log('round: ' + eventround['round'] + ' with value: ' + oldValues[eventround['round']-1])
                                     capaciteitInput.classList.add('is-invalid');
                                 }
@@ -232,7 +230,7 @@
 
                                 /*add oninput listener to input*/
                                 capaciteitInput.setAttribute('oninput',`updateLabel('${'cap_' + eventround['round']}', '${'capLabel_' + eventround['round']}')`)
-                                
+
                                 if(oldInputs == true){
                                     updateLabel(capaciteitInput.id, inputLabel.id)
                                 }

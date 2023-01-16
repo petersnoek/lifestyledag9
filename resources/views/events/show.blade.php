@@ -68,22 +68,25 @@
                     <div class="col-lg-4">
                         <a class="block-rounded block-link-pop block overflow-hidden" href="#">
                         <div class="card text-center">
-                            @can(['edit-any-activity'])
-                            <div class="card-header">
-                            <ul class="nav nav-pills card-header-pills">
-                                <li>
-                                    <form action="{{ route('activity.edit') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="activity_id" value="{{$activity->id}}">
+                            @if (!$event->after_event_registration())
+                                @can(['edit-any-activity'])
+                                <div class="card-header">
+                                <ul class="nav nav-pills card-header-pills">
+                                    <li>
+                                        <a class="" href="{{ route('activity.edit', ['activity_id' => Crypt::encrypt($activity->id)]) }}">edit <i class="si si-note"></i></a>
+                                        {{-- <form action="{{ route('activity.edit') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="activity_id" value="{{$activity->id}}">
 
-                                        <button type="submit" disabled class="">
-                                            edit <i class="si si-note"></i>
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                            </div>
-                            @endcan
+                                            <button type="submit" class="">
+                                                edit <i class="si si-note"></i>
+                                            </button>
+                                        </form> --}}
+                                    </li>
+                                </ul>
+                                </div>
+                                @endcan
+                            @endif
                             <img class="img-fluid" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                             <div class="card-body">
                                 <h4 class="mb-1 text-start">
@@ -116,7 +119,7 @@
                                                 </form>
                                             @endforeach
                                         @else
-                                            <span class="text-center text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigd.</span>
+                                            <span class="text-center text-info">{{$event->registrations_possible_message()}}</span>
                                         @endif
                                     @endif
                                 @endcan

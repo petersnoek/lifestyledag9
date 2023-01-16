@@ -36,6 +36,11 @@ class Activity extends Model
         return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
     }
 
+    public function delete_rounds()
+    {
+        $this->rounds()->delete();
+    }
+
     //checkt of enlistement met dezelfde ronde al bestaat
     function enlistment_for_round_exists($eventround_id) {
         return Enlistment::where('user_id', Auth::user()->id)->where('round_id', $eventround_id)->exists();

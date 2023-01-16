@@ -9,6 +9,7 @@ use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +36,10 @@ class ActivityController extends Controller
     public function create()
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
+        $events = Event::with('eventrounds')->where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name']);
+
         return response()->view('activities.create', [
-            'events' => Event::with('eventrounds')->where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name',]),
+            'events' => $events
         ]);
     }
 
@@ -59,6 +62,11 @@ class ActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
+            if ($errors->has('id')) {
+                $id = intval($request->id);
+                return redirect()->route('dashboard')->with('errors', ['Error met data contact persoon.']);
+            }
             return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 
@@ -86,7 +94,7 @@ class ActivityController extends Controller
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangemaakt.'));;
+        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangemaakt.'));
     }
 
     /**
@@ -106,17 +114,29 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($activity_id)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
-        // ]);
+        $activity_id = ['activity_id' => Crypt::decrypt($activity_id)];
+        $validator = Validator::make($activity_id, [
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')]
+        ]);
+        $activity_id = intval($activity_id['activity_id']);
 
-        // if ($validator->fails()) {
-        //     return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
-        // }
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+        }
 
-        // $activity_id = intval($request->activity_id);
+        $activity = Activity::find($activity_id);
+        $events = Event::with('eventrounds')->where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name']);
+        $oldKeys = [];
+        $oldValues = [];
+
+        return response()->view('activities.edit', [
+            'activity' => $activity,
+            'events' => $events,
+            'oldKeys' => $oldKeys,
+            'oldValues' => $oldValues,
+        ]);
     }
 
     /**
@@ -128,7 +148,54 @@ class ActivityController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'min:0', Rule::exists(Activity::class, 'id')],
+            'name' => ['required', 'max:255', new NamePattern()],
+            'description' => [new DescriptionPattern()],
+            'event_id' => ['required', 'min:0', Rule::exists(Event::class, 'id')],
+            'image' => ['image','mimes:jpeg,png,jpg'],
+            'max_participants' => ['required', 'array', 'min:1'],
+            'max_participants.*' => ['required','integer', 'min:0', 'max:1000']
+        ], [
+            'event_id.exists' => 'De event bestaat niet.',
+            'event_id.required' => 'Er moet een event gekozen zijn.',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            if ($errors->has('id')) {
+                $id = intval($request->id);
+                return redirect()->route('dashboard')->with('errors', ['Error met data contact persoon.']);
+            }
+            return redirect()->route('activity.edit', ['activity_id' => Crypt::encrypt($request->activity_id)])->withinput($request->all())->with('errors', $validator->errors());
+        }
+
+
+        $event_id = $request->event_id;
+        $event = Event::find($event_id);
+
+        $activity = Activity::find($request->activity_id);
+        $activity->name = $request->name;
+        $activity->description = $request->description;
+        if(isset($request->image)){
+            /* stores image in public/ActivityHeaders folder */
+            $request->image->store('activityHeaders', 'public');
+            $activity->image = $request->image->hashName();
+        }
+        $activity->event_id = $event_id;
+        $activity->delete_rounds();
+        $activity->save();
+
+        /* create and store corresponding activity rounds */
+        foreach($event->eventrounds()->get() as $eventround){
+            $activityRound = new ActivityRound();
+            $activityRound->activity_id = $activity->id;
+            $activityRound->eventround_id = $eventround->id;
+            $activityRound->max_participants = $request->max_participants[$eventround->round];
+            $activityRound->save();
+        }
+
+        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangepast.'));
     }
 
     /**

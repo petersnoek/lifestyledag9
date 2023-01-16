@@ -102,14 +102,15 @@
                                 <div class="btn-group">
                                     @if (!$activity->event->after_event_registration())
                                         @can(['activity.edit', 'activity.update'])
-                                        <form action="{{ route('activity.edit') }}" method="POST">
+                                        <a class="" href="{{ route('activity.edit', ['activity_id' => Crypt::encrypt($activity->id)]) }}">edit <i class="si si-note"></i></a>
+                                        {{-- <form action="{{ route('activity.edit') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="activity_id" value="{{$activity->id}}">
 
                                             <button type="submit" disabled class="btn btn-xs btn-default" data-toggle="tooltip" title="Bewerk activiteit">
                                                 edit <i class="fa fa-pencil"></i>
                                             </button>
-                                        </form>
+                                        </form> --}}
                                         @endcan
                                         @can(['activity.destroy'])
                                         <form action="{{ route('activity.destroy') }}" method="POST">

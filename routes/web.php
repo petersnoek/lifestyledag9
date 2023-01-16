@@ -53,9 +53,8 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
-
-        //editen en verwijderen functie werkt nog niet.
-        Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+        Route::get('/{activity_id}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+        // Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
 

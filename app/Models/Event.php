@@ -45,6 +45,19 @@ class Event extends Model
         return Carbon::now()->between($enlist_starts_at, $enlist_stops_at);
     }
 
+    public function registrations_possible_message() {
+        $enlist_starts_at = Carbon::parse($this->enlist_starts_at);
+        $enlist_stops_at = Carbon::parse($this->enlist_stops_at);
+
+        if ($enlist_stops_at->isPast()) {
+            return "Registraties voor dit event zijn al geëindigd.";
+        } else if (!$enlist_starts_at->isPast()) {
+            return "Registraties voor dit event zijn nog niet begonnen.";
+        } else {
+            return "Registraties voor dit event zijn begonnen.";
+        }
+    }
+
     //checkt of registreren al is begonnen of geweest.
     public function after_event_registration() {
         $enlist_starts_at = Carbon::parse($this->enlist_starts_at);

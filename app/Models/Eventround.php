@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Enlistment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Eventround extends Model
 {
     use HasFactory;
+
+    public function startAndEndTime()
+    {
+        $format = 'H:i';
+        $start_time = Carbon::parse($this->start_time)->format($format);
+        $end_time = Carbon::parse($this->end_time)->format($format);
+
+        return $start_time . ' - ' . $end_time;
+    }
 
     public function event()
     {
