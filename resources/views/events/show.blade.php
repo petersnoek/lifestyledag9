@@ -66,7 +66,6 @@
                         @endif
                     </div>
                 </div>
-                {{-- <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a> --}}
             </div>
         </div>
 
