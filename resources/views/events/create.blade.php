@@ -63,7 +63,6 @@
                                 @endif 
                             </div>
 
-
                             <div class="mb-4">
                               <input class="@if (count($errors) > 0 && array_key_exists("location",$errors)) {{"is-invalid"}}@endif form-control form-control-lg form-control-alt py-3" type="text" value="{{ old('location')}}" name="location" placeholder="Locatie *" required>
                                 @if (count($errors) > 0 && array_key_exists("location",$errors))
@@ -75,8 +74,61 @@
                                 @endif 
                             </div>
 
+                            <div class="input-group">
+                                <div id="container">
+                                    <section id="mainsection">
+                                        <?php for ($i=1; $i <= 5; $i++) { ?>
+                                        <div class="input-group">
+                                            <input type="hidden" id="round" name="round[{{$i}}]" value="{{$i}}"> 
+
+                                            <label for="startRound" id="round_label"><b>Ronde {{$i}} :</b></label> &nbsp; &nbsp;
+                                            <span class="input-group-text">Start</span>
+                                            <input type="time" id="startRound" class="@if (count($errors) > 0 && array_key_exists("startRound.*",$errors)) {{"is-invalid"}}@endif form-control"  value="{{ old('startRound.*')}}" name="startRound[{{$i}}]" title="Start ronde" required/>
+                                         
+                                            @if (count($errors) > 0 && array_key_exists("startRound.{{$i}}",$errors))
+                                                @foreach($errors['startRound.{{$i}}'] as $error)
+                                                    <div class="invalid-feedback">
+                                                        {{$error}}
+                                                    </div>
+                                                @endforeach
+                                            @endif
+            
+                                            <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                            <input type="time" id="endRound" class="@if (count($errors) > 0 && array_key_exists("endRound.*",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endRound.*')}}" name="endRound[{{$i}}]" title="Eind ronde" required/> &nbsp;
+                                            @if (count($errors) > 0 && array_key_exists("endRound.{{$i}}",$errors))
+                                                @foreach($errors['endRound.{{$i}}'] as $error)
+                                                    <div class="invalid-feedback">
+                                                        {{$error}}
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        
+                                        </div>
+                                        <br>
+                                    </section>
+                                    <?php } ?>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 col-xl-5">
+                            <div class="mb-4 ">
+                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
+                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
+                                </div>
+                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 @if (count($errors) > 0 && array_key_exists("image",$errors)) {{'is-invalid'}} @endif">Afbeelding</label>
+                                <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
+                            </div>
+                            @if (count($errors) > 0 && array_key_exists("image",$errors))
+                                @foreach($errors['image'] as $error)
+                                    <div class="invalid-feedback">
+                                        {{$error}}
+                                    </div>
+                                @endforeach
+                            @endif
+
                             <label for="startEnlistment"><b>Evenement:</b></label>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center" style="flex-wrap: nowrap;">
                                 <div class=".col-md-6" style="width: 220px;">
                                     <span class="input-group-text">Start evenement</span>
                                     <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("statDate",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startDate')}}" name="startDate" title="Start evenement" required/>
@@ -104,7 +156,7 @@
                             <br>
 
                             <label for="startEnlistment"><b>Inschrijven:</b></label>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center" style="flex-wrap: nowrap;">
                                 <div class=".col-md-6" style="width: 220px;">
                                     <span class="input-group-text">Start inschrijven</span>
                                     <input type="datetime-local" class="@if (count($errors) > 0 && array_key_exists("startEnlistment",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('startEnlistment')}}" name="startEnlistment" title="Start inschrijven" required/>
@@ -131,62 +183,7 @@
                             </div>
 
                             <br>
-                            <br>
 
-                            <div class="input-group">
-                                <div id="container">
-                                    <section id="mainsection">
-                                        <div class="input-group">
-                                            <input type="hidden" id="round" name="round[0]" value="1"> 
-
-                                            <label for="startRound" id="round_label"><b>Ronde 1:</b></label> &nbsp; &nbsp;
-                                            <span class="input-group-text">Start</span>
-                                            <input type="time" id="startRound" class="@if (count($errors) > 0 && array_key_exists("startRound.*",$errors)) {{"is-invalid"}}@endif form-control" name="startRound[0]" title="Start ronde" required/>
-                                            @if (count($errors) > 0 && array_key_exists("startRound.*",$errors))
-                                                @foreach($errors['startRound.*'] as $error)
-                                                    <div class="invalid-feedback">
-                                                        {{$error}}
-                                                    </div>
-                                                @endforeach
-                                            @endif
-            
-                                            <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                            <input type="time" id="endRound" class="@if (count($errors) > 0 && array_key_exists("endRound.*",$errors)) {{"is-invalid"}}@endif form-control" name="endRound[0]" title="Eind ronde" required/> &nbsp;
-                                            @if (count($errors) > 0 && array_key_exists("endRound.*",$errors))
-                                                @foreach($errors['endRound.*'] as $error)
-                                                    <div class="invalid-feedback">
-                                                        {{$error}}
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        
-                                        </div>
-        
-                                        <br>
-                                        
-                                    </section>
-                                </div> 
-                                <div class="w-100 d-flex justify-content-center">
-                                    <button type="button" onclick="create_round_inputs()" id="addButton" title="Ronde toevoegen" class="btn btn-alt-primary rounded">+ Ronde Toevoegen</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-8 col-xl-5">
-                            <div class="mb-4 ">
-                                <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
-                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
-                                </div>
-                                <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 @if (count($errors) > 0 && array_key_exists("image",$errors)) {{'is-invalid'}} @endif">Afbeelding</label>
-                                <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
-                            </div>
-                            @if (count($errors) > 0 && array_key_exists("image",$errors))
-                                @foreach($errors['image'] as $error)
-                                    <div class="invalid-feedback">
-                                        {{$error}}
-                                    </div>
-                                @endforeach
-                            @endif
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
                                     Maak Evenement
@@ -201,7 +198,7 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
-    @push('js_scripts')
+    {{-- @push('js_scripts')
         <script>
             var clicks = 1;
             
@@ -237,5 +234,5 @@
                 container.appendChild(clone_section);
             }
         </script>
-    @endpush
+    @endpush --}}
 @endsection
