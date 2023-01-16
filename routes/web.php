@@ -46,7 +46,6 @@ Route::group(['middleware' => ['permission']], function() {
     // Route voor userbeheer
     Route::group(['prefix' => '/users'], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
-        Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
 

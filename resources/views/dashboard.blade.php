@@ -13,16 +13,6 @@
             Welkom op de website van Lifestyledag, {{Auth::user()->first_name}}.
             </h2>
         </div>
-        <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-alt">
-            <li class="breadcrumb-item">
-                <a class="link-fx" href="javascript:void(0)">App</a>
-            </li>
-            <li class="breadcrumb-item" aria-current="page">
-                Dashboard
-            </li>
-            </ol>
-        </nav>
         </div>
         @can(['activity.create'])
             <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
@@ -46,7 +36,7 @@
                                 {{ $event->name }}
                             </h4>
                             <p class="fs-sm fw-medium mb-2">
-                                {{ $event->starts_at  }} - {{ $event->starts_at  }}
+                                {{ $event->starts_at  }} - {{ $event->ends_at  }}
                             </p>
                             <p class="fs-sm text-muted">
                                 {{ $event->description }}
@@ -82,19 +72,17 @@
                         <table class="table table-bordered table-striped js-dataTable-full">
                             <thead>
                             <tr>
-                                <th class="text-center">#</th>
                                 {{-- <th>Afbeelding</th> --}}
                                 <th>Evenement</th>
                                 <th>Activiteit</th>
                                 <th>Gewijzigd</th>
-                                <th class="text-center" style="width: 5%;">Acties</th>
+                                <th class="text-center" style="width: 5%;">Actie</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             @foreach($workshops as $activity)
                             <tr>
-                                <td class="text-center">{{ $activity->id }}</td>
                                 {{-- <td class="text-left"><img src="/{{ $activity->banner_image }}" style="height:20px;"></td> --}}
                                 <td class="text-left">{{ $activity->event->name }}</td>
                                 <td class="text-left">{{ $activity->name }}</td>

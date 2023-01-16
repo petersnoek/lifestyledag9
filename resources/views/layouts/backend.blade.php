@@ -95,7 +95,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('roles.index') ? ' active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">Roles</span>
+                            <span class="nav-main-link-name">Rollenbeheer</span>
                         </a>
                     </li>
                 @endcan
@@ -104,7 +104,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('permissions.index') ? ' active' : '' }}" href="{{ route('permissions.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">Permissions</span>
+                            <span class="nav-main-link-name">Permissies</span>
                         </a>
                     </li>
                 @endcan
@@ -113,7 +113,7 @@
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('users.index') ? ' active' : '' }}" href="{{ route('users.index') }}">
                             <i class="nav-main-link-icon si si-cursor"></i>
-                            <span class="nav-main-link-name">Users</span>
+                            <span class="nav-main-link-name">Gebruikers</span>
                         </a>
                     </li>
                 @endcan
@@ -152,17 +152,7 @@
           </button>
           <!-- END Open Search Section -->
 
-          <!-- Search Form (visible on larger screens) -->
-          <form class="d-none d-md-inline-block" action="{{ route('dashboard') }}" method="POST">
-            @csrf
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control form-control-alt" placeholder="Search.." id="page-header-search-input2" name="page-header-search-input2">
-              <span class="input-group-text border-0">
-                <i class="fa fa-fw fa-search"></i>
-              </span>
-            </div>
-          </form>
-          <!-- END Search Form -->
+          
         </div>
         <!-- END Left Section -->
 
@@ -183,13 +173,13 @@
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('settings') }}">
-                  <span class="fs-sm fw-medium">Settings</span>
+                  <span class="fs-sm fw-medium">Instellingen</span>
                 </a>
               </div>
               <div role="separator" class="dropdown-divider m-0"></div>
               <div class="p-2">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item d-flex align-items-center justify-content-between">
-                  <span class="fs-sm fw-medium">Log Out</span>
+                  <span class="fs-sm fw-medium">Uitloggen</span>
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

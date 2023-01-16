@@ -3,10 +3,10 @@
 @section('content')
 
     <div class="bg-light p-4 rounded">
-        <h1>Roles</h1>
+        <h1>Rollen</h1>
         <div class="lead">
-            Manage your roles here.
-            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Add role</a>
+            Beheer hier de rollen.
+            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Rol toevoegen</a>
         </div>
 
         <div class="mt-2">
@@ -18,15 +18,14 @@
             <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
                 <thead>
                 <tr>
-                    <th width="1%">No</th>
-                    <th>Name</th>
-                    <th width="3%" colspan="3">Action</th>
+                    <th>Naam</th>
+                    <th width="3%" colspan="3">Actie</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach ($roles as $key => $role)
                     <tr>
-                        <td>{{ $role->id }}</td>
+                      
                         <td>{{ $role->name }}</td>
                         <td><a class="btn btn-info btn-sm" href="{{ route('roles.show', $role->id) }}">Show</a></td>
                         <td><a class="btn btn-primary btn-sm" href="{{ route('roles.edit', $role->id) }}">Edit</a></td>
@@ -34,7 +33,9 @@
                             <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                @if ($role->name != 'admin')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                @endif
                             </form>
                         </td>
                     </tr>
