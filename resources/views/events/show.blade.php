@@ -6,7 +6,7 @@
         <div class="bg-body-light">
             <div class="content content-full">
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between py-2">
-                    <div class="flex-grow-1">
+                    <div class="col-7">
                         <h1 class="h3 fw-bold mb-2">
                             @if(isset($event->name)) {{$event->name}} @else {{'Titel'}} @endif
                         </h1>
@@ -16,7 +16,7 @@
                             </div>
                             @if($event->location)
                             <div>
-                                <small><i class="fa fa-home"></i> {{$event->location}}</small>
+                                <small><i class="fa fa-location-dot"></i> {{$event->location}}</small>
                             </div>
                             @endif
                         </div>
@@ -35,26 +35,40 @@
                             </div>
                         @endif
                     </div>
-                    <div class="flex-grow-1 ms-lg-2 mt-lg-0 mt-2">
+                    <div class="col-3">
                         <h1 class="h3 fw-bold mb-2">
                             Inschrijvingen
                         </h1>
                         @if(Auth::check() && $event->registrations_possible())
+                            <table class="table">
+                            <thead class="visually-hidden">
+                                <tr>
+                                    <th scope="col" width=""></th>
+                                    <th scope="col" width="90%"></th>
+                                    <th scope="col" width="10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
+                                <tr>
                                 <form action="{{ route('enlistment.destroy') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="enlistment_id" value="{{$enlist->id}}">
                                     <input type="hidden" name="event_id" value="{{$event->id}}">
-
-                                    <small><span class="badge bg-primary rounded-pill"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}
-                                        @can(['enlistment.destroy'])
-                                            <button type="submit" class="">
-                                                <i class="fa fa-times text-danger"></i>
-                                            </button>
-                                        @endcan
-                                    </small>
+                                    <td class="px-0"><span class="badge bg-primary rounded-pill"> {{ $enlist->eventrounds()->first()->round }}</span></td>
+                                    <td class="pr-0"><small>{{ $enlist->activity->name }}</small></td>
+                                    @can(['enlistment.destroy'])
+                                    <td class="px-0">
+                                        <button type="submit" class="btn btn-danger btn-sm p-0" style="width: 1.5rem; height: 1.5rem; text-align:center;">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                    @endcan
                                 </form>
+                                </tr>
                             @endforeach
+                            </tbody>
+                            </table>
                         @elseif (!$event->registrations_possible())
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
                                 <small class="text-muted"><span class="badge rounded-pill bg-muted"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small><br>
