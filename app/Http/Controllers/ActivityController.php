@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Activity;
-use App\Models\Eventround;
 use App\Rules\NamePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
@@ -62,11 +60,6 @@ class ActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $errors = $validator->errors();
-            if ($errors->has('id')) {
-                $id = intval($request->id);
-                return redirect()->route('dashboard')->with('errors', ['Error met data contact persoon.']);
-            }
             return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 
@@ -94,7 +87,7 @@ class ActivityController extends Controller
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangemaakt.'));
+        return redirect()->route('dashboard')->withSuccess(__('succes.activity.store', ['name'=> $activity->name]));
     }
 
     /**
@@ -123,11 +116,11 @@ class ActivityController extends Controller
         $activity_id = intval($activity_id['activity_id']);
 
         if ($validator->fails()) {
-            return redirect()->route('dashboard')->with('errors', ['Error met activiteiten data.']);
+            return redirect()->route('dashboard')->with('errors', __('failed.activity.not_found'));
         }
 
         $activity = Activity::find($activity_id);
-        $events = Event::with('eventrounds')->where('ends_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name']);
+        $events = Event::with('eventrounds')->where('enlist_starts_at', '>', Carbon::now()->toDateTimeString())->get(['id','name']);
         $oldKeys = [];
         $oldValues = [];
 
@@ -163,16 +156,20 @@ class ActivityController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            if ($errors->has('id')) {
-                $id = intval($request->id);
-                return redirect()->route('dashboard')->with('errors', ['Error met data contact persoon.']);
+            if ($errors->has('activity_id')) {
+                return redirect()->route('dashboard')->with('errors', __('failed.activity.not_found'));
             }
             return redirect()->route('activity.edit', ['activity_id' => Crypt::encrypt($request->activity_id)])->withinput($request->all())->with('errors', $validator->errors());
         }
 
-
         $event_id = $request->event_id;
         $event = Event::find($event_id);
+
+        if ($event->after_event_registration()) {
+            return redirect()->route('dashboard')->with('errors', __('failed.event.registration.started'));
+        } else if(!$event->has_rounds()) {
+            return redirect()->route('dashboard')->with('errors', __('failed.activity.eventrounds.none'));
+        }
 
         $activity = Activity::find($request->activity_id);
         $activity->name = $request->name;
@@ -195,7 +192,7 @@ class ActivityController extends Controller
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangepast.'));
+        return redirect()->route('dashboard')->withSuccess(__('succes.activity.update', ['name'=> $activity->name]));
     }
 
     /**

@@ -32,7 +32,6 @@ class RoleSeeder extends Seeder
             "password.request",
             "password.reset",
             "password.update",
-            "register",
             "verification.notice",
             "verification.send",
             "verification.verify",
@@ -46,9 +45,6 @@ class RoleSeeder extends Seeder
             "event.show",
             "activity.create",
             "activity.store",
-            "activity.edit",
-            "activity.update",
-            "activity.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -56,21 +52,12 @@ class RoleSeeder extends Seeder
             "password.request",
             "password.reset",
             "password.update",
-            "register",
             "verification.notice",
             "verification.send",
             "verification.verify"
         ])->get();
         $role->permissions()->attach($permissions);
-
-        // $role = Role::create(['name' => 'workshophouderbeheerder']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        // $role = Role::create(['name' => 'ontwikkelaar']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
+        
         $role = Role::create(['name' => 'admin']);
         $permissions = Permission::pluck('id','id')->all();
         $role->permissions()->attach($permissions);
