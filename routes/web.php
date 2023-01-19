@@ -23,19 +23,22 @@ use Illuminate\Support\Facades\Artisan;
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
 
-
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
+
 // Route voor evenementen
+Route::group(['middleware'=>['auth', 'verified']], function() {
 Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
         Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
         Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+        Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
+        Route::post('/update', [ContactController::class, 'update'])->name('contacts.update');
 
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
@@ -46,6 +49,8 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show')->whereNumber('user');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
+
+        Route::get('/resentAttachment', [UsersController::class, 'resentAttachment'])->name('users.resentAttachment');
     });
 
     // Route voor activiteiten
@@ -53,10 +58,11 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
+        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         //editen en verwijderen functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
-        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
+
     });
 
     Route::group(['prefix' => '/event'], function() {
@@ -86,7 +92,7 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function() {return redirect()->route('login');});
 });
 
-Route::group(['middleware'=>['auth', 'verified']], function() {
+
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function() {
         Route::get('/', function () { return view('settings'); })->name('settings');
@@ -100,19 +106,10 @@ Route::group(['middleware'=>['auth', 'verified']], function() {
     // });
 });
 
-// Mail voor workshophouder inschrijvingen
-Route::get('mail/workshophouder', function() {
-    Artisan::call('info:day');
-});
-
-Route::get('console/mailstudent', function() {
-    Artisan::call('info:student');
-});
 
 // link afbeeldingen opslag ÉÉNMALIG BIJ ELKE LIVESERVER UPLOAD
 Route::get('console/storagelink', function () {
     Artisan::call('storage:link');
 });
-
 
 require __DIR__. '/auth.php';

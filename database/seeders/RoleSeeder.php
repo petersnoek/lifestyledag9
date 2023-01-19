@@ -35,7 +35,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify", 
+            "verification.verify",
             "users.update2"
         ])->get();
         $role->permissions()->attach($permissions);
@@ -59,7 +59,10 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify"
+            "activity.destroy",
+            "activity.store",
+            "activity.create",
+            "verification.verify",
         ])->get();
         $role->permissions()->attach($permissions);
 
