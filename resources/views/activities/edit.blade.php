@@ -61,7 +61,11 @@
 
                             <div class="mb-4 form-floating">
                                 <select id="eventSelect" class="form-select form-control-alt @if ($errors->has('event_id')) {{'is-invalid'}} @endif" name="event_id" onchange="createCapacityTable(this.value)" required>
-                                <option value="" style="display:none">-</option>
+                                @if(count($events) == 0)
+                                    <option value="">Geen evenementen beschikbaar.</option>
+                                @else
+                                    <option value="" style="display:none">-</option>
+                                @endif
                                 @foreach($events as $event)
                                     <option
                                         @if ((old('event_id') === null && $activity->event()->first()->id === $event->id) || (old('event_id') == $event->id))
@@ -83,38 +87,13 @@
 
                             <div class="mb-4 d-none" id="section-inputs-eventrounds">
                                 <label>Studenten capaciteit per ronde: *</label>
-                                <div class="form-control form-control-lg p-0 mb-4 d-flex justify-content-evenly container-inputs-eventrounds2"></div>
+                                <div class="form-control form-control-lg form-control-alt p-0 mb-4 d-flex justify-content-evenly container-inputs-eventrounds2"></div>
                             </div>
 
-                            <div class="w-3 d-none" id="section-inputs-eventrounds2">
-                                <label class="text-center"></label>
-                                <input type="number" data-toggle="tooltip" title="" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" step="1" name="" value="">
-                                {{-- <div class="invalid-feedback d-none"></div> --}}
+                            <div class="form-floating w-100 d-none" id="section-inputs-eventrounds2">
+                                <input id="" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" type="number" step="1" min="0" max="1000" name="">
+                                <label id="" for="" class="text-center w-100"></label>
                             </div>
-
-                            {{-- @foreach($oldKeys as $key)
-                                @if ($errors->has('max_participants.'. $number))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('max_participants.1') }}
-                                    </div>
-                                @endif
-                            @endforeach --}}
-
-                            {{-- <div id="capaciteitErrors">
-                                @php $capErrors = []; @endphp
-                                @if (count($errors) > 0)
-                                    @foreach($oldKeys as $key)
-                                        @if (array_key_exists($key,$errors))
-                                            @foreach($errors[$key] as $error)
-                                                <div class="invalid-feedback">
-                                                    {{$error}}
-                                                </div>
-                                                @php $capErrors[$key] = $error @endphp
-                                            @endforeach
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </div> --}}
                         </div>
 
                         <div class="col-sm-8 col-xl-5">
@@ -176,6 +155,17 @@
             var oldValues = {!!json_encode($oldValues)!!};
         @endif
 
+        /*update 'visually-hidden' class on <label> when <input> is filled to hide or show it */
+        function updateLabel(input_value, labelId){
+            var label = document.getElementById(labelId);
+            if(input_value != "" && !label.classList.contains("visually-hidden")){
+                label.classList.add('visually-hidden')
+            }
+            else if (input_value == "" && label.classList.contains("visually-hidden")){
+                label.classList.remove('visually-hidden')
+            }
+        }
+
         /*clear the container and create max capacity tables dynamicly upon selecting corrosponding event*/
         function createCapacityTable(eventId,oldInputs){
             var container = document.getElementById("container-inputs-eventrounds");
@@ -184,6 +174,7 @@
                 container.removeChild(container.lastElementChild);
             }
 
+            // section and section2 are templates, the clone_section and container_clone_section2 are clones of the template that can be changed.
             var section = document.getElementById("section-inputs-eventrounds");
             var section2 = document.getElementById("section-inputs-eventrounds2");
             var clone_section = section.cloneNode(true);
@@ -191,6 +182,10 @@
             if (clone_section.classList.contains("d-none")) {
                 clone_section.classList.remove("d-none");
             }
+            if (clone_section.id == "section-inputs-eventrounds") {
+                clone_section.id = "";
+            }
+
             container.appendChild(clone_section);
 
             @php forEach($events as $event){ @endphp
@@ -199,41 +194,46 @@
                     var clone_section2 = section2.cloneNode(true);
                     var container_clone_section2 = container.querySelector('div.container-inputs-eventrounds2');
 
+                    if (clone_section2.id == "section-inputs-eventrounds2") {
+                        clone_section2.id = "";
+                    }
+
                     var label = clone_section2.querySelector('label');
                     var input = clone_section2.querySelector('input');
-                    // var error_div = clone_section2.querySelector('div.invalid-feedback');
 
                     var eventround = {!!json_encode($eventround)!!};
                     var time = "{{App\Models\Eventround::find($eventround->id)->startAndEndTime()}}";
                     var name = 'max_participants[' + eventround['round'] + ']';
-                    // var errors = {!!json_encode($errors)!!};
+                    var label_id = 'capLabel_' + eventround['round'];
+                    var input_id = 'cap_' + eventround['round'];
 
                     if (clone_section2.classList.contains("d-none")) {
                         clone_section2.classList.remove("d-none");
                     }
 
+                    /* change label */
                     label.innerText = time;
+                    label.id = label_id;
+                    label.htmlFor = input_id;
 
                     if(oldInputs == true){
-                        input.value = oldValues[eventround['round']-1]
+                        input.value = oldValues[eventround['round']-1];
                     }
+
+                    /* change input */
+                    input.id = input_id;
                     input.title = time;
                     input.name = name;
                     input.required = true;
 
-                    // console.log(input, errors);
-
-                    // if(errors.includes(name)) {
-                    //     error_div.innerText = errors[errors.indexOf(name)];
-                    //     if (error_div.classList.contains("d-none")) {
-                    //         error_div.classList.remove("d-none");
-                    //     }
-                    //     if (!input.classList.contains("is-invalid")) {
-                    //         input.classList.add("is-invalid");
-                    //     }
-                    // }
+                    /*add oninput listener to input*/
+                    input.setAttribute('oninput',`updateLabel(this.value, '${label_id}')`);
 
                     container_clone_section2.appendChild(clone_section2);
+
+                    if(oldInputs == true){
+                        updateLabel(input.value, label.id);
+                    }
                 @php } @endphp
                 }
             @php } @endphp

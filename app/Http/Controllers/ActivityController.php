@@ -144,8 +144,8 @@ class ActivityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'activity_id' => ['required', 'min:0', Rule::exists(Activity::class, 'id')],
-            'name' => ['required', 'max:255', new NamePattern()],
-            'description' => [new DescriptionPattern()],
+            'name' => ['required', 'max:255', new TitlePattern()],
+            'description' => ['max:255', new DescriptionPattern()],
             'event_id' => ['required', 'min:0', Rule::exists(Event::class, 'id')],
             'image' => ['image','mimes:jpeg,png,jpg'],
             'max_participants' => ['required', 'array', 'min:1'],
