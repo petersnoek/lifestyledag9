@@ -31,9 +31,8 @@
                 @foreach($users as $user)
                     <tr>
                         <th scope="row">{{ $user->id }}</th>
-                        <td>{{ $user->first_name }}</td>
+                        <td>{{ $user->first_name . ' ' . $user->insertion . ' ' . $user->last_name}}</td>
                         <td>{{ $user->email }}</td>
-                        {{-- <td>{{ $user->username }}</td> --}}
                         <td>
                             @foreach($user->roles as $role)
                                 <span class="badge bg-primary">{{ $role->name }}</span>
