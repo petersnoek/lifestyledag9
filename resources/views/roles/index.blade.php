@@ -6,13 +6,14 @@
         <h1>Rollen</h1>
         <div class="lead">
             Beheer hier de rollen.
-            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Rol toevoegen</a>
         </div>
 
         <div class="mt-2">
             @include('layouts.partials.messages')
         </div>
-
+        <div class="mb-2">
+            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Rol toevoegen</a>
+        </div>
         <div class="block-content block-content-full block block-rounded">
             <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
             <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">

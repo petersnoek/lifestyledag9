@@ -57,10 +57,12 @@
                       <label class="form-label" for="lastname">Achternaam</label>
                       <input type="text" class="form-control" id="lastname" name="last_name" value="{{Auth::user()->last_name}}" placeholder="Achternaam">
                     </div>
+                    @if(Auth::user()->getRoleNames()[0] == 'student')
                     <div class="mb-4">
                       <label class="form-label" for="class_code">Klascode</label>
                       <input type="text" class="form-control" id="class_code" name="class_code" value="{{Auth::user()->class_code}}" placeholder="Vul je klascode in..">
                     </div>
+                    @endif
                     <div class="mb-4">
                       <label class="form-label" for="email">Email</label>
                       <input type="email" class="form-control" id="email" name="email" value="{{Auth::user()->email}}" placeholder="Vul je email in..">
