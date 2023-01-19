@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <textarea type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('description')) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving">@if(old('description') === null){{$activity->description}}@else{{old('description')}}@endif</textarea>
+                                <textarea type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('description')) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving" maxlength="255">@if(old('description') === null){{$activity->description}}@else{{old('description')}}@endif</textarea>
 
                                 @if ($errors->has('description'))
                                     <div class="invalid-feedback">
@@ -92,11 +92,13 @@
                                 {{-- <div class="invalid-feedback d-none"></div> --}}
                             </div>
 
-                            {{-- @if ($errors->has('max_participants.1'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('max_participants.1') }}
-                                </div>
-                            @endif --}}
+                            {{-- @foreach($oldKeys as $key)
+                                @if ($errors->has('max_participants.'. $number))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('max_participants.1') }}
+                                    </div>
+                                @endif
+                            @endforeach --}}
 
                             {{-- <div id="capaciteitErrors">
                                 @php $capErrors = []; @endphp

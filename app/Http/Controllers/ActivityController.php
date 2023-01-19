@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Activity;
 use App\Rules\NamePattern;
+use App\Rules\TitlePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
 use Illuminate\Support\Facades\Crypt;
@@ -52,8 +53,8 @@ class ActivityController extends Controller
         // dd($request->max_participants[$request->event_id]);
         // $test = 'max_participants.3.1';
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:255', new NamePattern()],
-            'description' => [new DescriptionPattern()],
+            'name' => ['required', 'max:255', new TitlePattern()],
+            'description' => ['max:255', new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'],
             'max_participants.*' => ['required','numeric', 'min:0', 'max:1000']
