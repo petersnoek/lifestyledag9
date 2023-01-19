@@ -206,7 +206,8 @@
                                 capaciteitInput = document.createElement('input')
                                 capaciteitInput.id = 'cap_' + eventround['round']
                                 capaciteitInput.classList.add("form-control","form-control-lg", "form-control-alt", "text-center", "border-end", "border-start", "py-3")
-                                capaciteitInput.type = "text"
+                                capaciteitInput.type = "number"
+                                capaciteitInput.step = '1'
                                 capaciteitInput.min = '0'
                                 capaciteitInput.max = '1000'
                                 capaciteitInput.name = 'max_participants[' + eventround['round'] + ']'
