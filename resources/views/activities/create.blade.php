@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <textarea type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
+                                <textarea style="max-height: 10rem" maxlength="255" type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
                                 
                                 @if (count($errors) > 0 && array_key_exists("description",$errors))
                                     @foreach($errors['description'] as $error)
@@ -64,7 +64,7 @@
                             
                             <div class="mb-4 form-floating">
                                 <select id="eventSelect" class="form-select form-control-alt @if (count($errors) > 0 && array_key_exists("event_id",$errors)) {{'is-invalid'}} @endif" name="event_id" onchange="createCapacityTable(this.value)" required>
-                                <option value="">-</option>
+                                <option value="">@if(count($events) == 0)geen evenementen beschikbaar @else - @endif</option>
                                 @foreach($events as $event)
                                     <option
                                         @if (old('event_id') == $event->id)
@@ -189,7 +189,7 @@
                             container.appendChild(subContainer)
                             /*create collumn label*/
                             collumnLabel = document.createElement('label')
-                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde*:'
+                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde: *'
                             subContainer.appendChild(collumnLabel)
                             /*create collumn*/
                             capaciteitCollumn = document.createElement('div')

@@ -53,7 +53,7 @@ class ActivityController extends Controller
         // $test = 'max_participants.3.1';
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new TitlePattern()],
-            'description' => [new DescriptionPattern()],
+            'description' => ['max:255',new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
             'max_participants.*' => ['required', 'numeric', 'min:0', 'max:1000']
