@@ -88,7 +88,7 @@
 
                             <div class="w-3 d-none" id="section-inputs-eventrounds2">
                                 <label class="text-center"></label>
-                                <input type="number" data-toggle="tooltip" title="" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" name="" value="">
+                                <input type="number" data-toggle="tooltip" title="" class="form-control form-control-lg form-control-alt text-center border-end border-start py-3" min="0" max="1000" step="1" name="" value="">
                                 {{-- <div class="invalid-feedback d-none"></div> --}}
                             </div>
 
@@ -168,71 +168,12 @@
         @endif
     @endforeach
 
-    {{-- @php $events.forEach(function($event){ @endphp
-        if(event['id'] == eventId){
-            @php $event->eventrounds.forEach(function(eventround){ @endphp
-                let clone_section2 = section2.cloneNode(true);
-                let container_clone_section2 = container.querySelector('div.container-inputs-eventrounds2');
-
-                let label = clone_section2.querySelector('label');
-                let input = clone_section2.querySelector('input');
-
-                let time = {{Eventround::find(eventround['id'])->startAndEndTime()}};
-                let name = 'max_participants[' + eventround['round'] + ']';
-
-                if (clone_section2.classList.contains("d-none")) {
-                    clone_section2.classList.remove("d-none");
-                }
-
-                label.innerText = oldValues[index]["time"];
-
-                input.value = oldValues[eventround['round']-1];
-                input.title = oldValues[index]["time"];
-                input.name = name;
-
-                container_clone_section2.appendChild(clone_section2);
-            @php }) @endphp
-        }
-    @php }) @endphp --}}
-
     @push('js_scripts')
         <script>
-        /*converts php $events var to js*/
-        // var events = {!!json_encode($events->toArray())!!}; /*dumps all data in html text, is that alright?*/
         @if(isset($oldValues))
             var oldValues = {!!json_encode($oldValues)!!};
         @endif
-        /*update 'visually-hidden' class on <label> when <input> is filled to hide or show it */
-        function updateLabel(inputId, labelId){
-            if(document.getElementById(inputId).value != ""){
-                    document.getElementById(labelId).classList.add('visually-hidden')
-            }
-            else{
-                document.getElementById(labelId).classList.remove('visually-hidden')
-            }
-        }
 
-        function test(value) {
-            @php
-                $oldKeys = [];
-                $oldValues = [];
-                @endphp console.log({!!json_encode($oldValues)!!}); @php
-                foreach($events as $event) { @endphp
-                if({{($activity->event()->first() !== null && $activity->event()->first()->id == $event->id) ? : 0}} !== 0 && {!!json_encode($activity->event()->first()->id)!!} == parseInt(value)) {
-                    @php
-                        for($x = 1; $x < (count($event->eventrounds)+1); $x++) {
-                            $key = 'max_participants.' . $x;
-                            $eventround = $event->eventrounds[$x-1];
-                            array_push($oldKeys,$key);
-                            array_push($oldValues, ($activity->rounds()->where('eventround_id', $eventround->id)->first() !== null) ? $activity->rounds()->where('eventround_id', $eventround->id)->first()->max_participants : 0);
-                        }
-                    @endphp
-                }
-            @php } @endphp
-            console.log({!!json_encode($oldValues)!!});
-
-            createCapacityTable(value @if(count($oldValues) > 0),true @endif)
-        }
         /*clear the container and create max capacity tables dynamicly upon selecting corrosponding event*/
         function createCapacityTable(eventId,oldInputs){
             var container = document.getElementById("container-inputs-eventrounds");
@@ -250,50 +191,50 @@
             }
             container.appendChild(clone_section);
 
-        @php forEach($events as $event){ @endphp
-            if({!!json_encode($event->id)!!} == eventId){
-            @php forEach($event->eventrounds as $eventround) { @endphp
-                var clone_section2 = section2.cloneNode(true);
-                var container_clone_section2 = container.querySelector('div.container-inputs-eventrounds2');
+            @php forEach($events as $event){ @endphp
+                if({!!json_encode($event->id)!!} == eventId){
+                @php forEach($event->eventrounds as $eventround) { @endphp
+                    var clone_section2 = section2.cloneNode(true);
+                    var container_clone_section2 = container.querySelector('div.container-inputs-eventrounds2');
 
-                var label = clone_section2.querySelector('label');
-                var input = clone_section2.querySelector('input');
-                // var error_div = clone_section2.querySelector('div.invalid-feedback');
+                    var label = clone_section2.querySelector('label');
+                    var input = clone_section2.querySelector('input');
+                    // var error_div = clone_section2.querySelector('div.invalid-feedback');
 
-                var eventround = {!!json_encode($eventround)!!};
-                var time = "{{App\Models\Eventround::find($eventround->id)->startAndEndTime()}}";
-                var name = 'max_participants[' + eventround['round'] + ']';
-                // var errors = {!!json_encode($errors)!!};
+                    var eventround = {!!json_encode($eventround)!!};
+                    var time = "{{App\Models\Eventround::find($eventround->id)->startAndEndTime()}}";
+                    var name = 'max_participants[' + eventround['round'] + ']';
+                    // var errors = {!!json_encode($errors)!!};
 
-                if (clone_section2.classList.contains("d-none")) {
-                    clone_section2.classList.remove("d-none");
+                    if (clone_section2.classList.contains("d-none")) {
+                        clone_section2.classList.remove("d-none");
+                    }
+
+                    label.innerText = time;
+
+                    if(oldInputs == true){
+                        input.value = oldValues[eventround['round']-1]
+                    }
+                    input.title = time;
+                    input.name = name;
+                    input.required = true;
+
+                    // console.log(input, errors);
+
+                    // if(errors.includes(name)) {
+                    //     error_div.innerText = errors[errors.indexOf(name)];
+                    //     if (error_div.classList.contains("d-none")) {
+                    //         error_div.classList.remove("d-none");
+                    //     }
+                    //     if (!input.classList.contains("is-invalid")) {
+                    //         input.classList.add("is-invalid");
+                    //     }
+                    // }
+
+                    container_clone_section2.appendChild(clone_section2);
+                @php } @endphp
                 }
-
-                label.innerText = time;
-
-                if(oldInputs == true){
-                    input.value = oldValues[eventround['round']-1]
-                }
-                input.title = time;
-                input.name = name;
-                input.required = true;
-
-                // console.log(input, errors);
-
-                // if(errors.includes(name)) {
-                //     error_div.innerText = errors[errors.indexOf(name)];
-                //     if (error_div.classList.contains("d-none")) {
-                //         error_div.classList.remove("d-none");
-                //     }
-                //     if (!input.classList.contains("is-invalid")) {
-                //         input.classList.add("is-invalid");
-                //     }
-                // }
-
-                container_clone_section2.appendChild(clone_section2);
             @php } @endphp
-            }
-        @php } @endphp
         }
         </script>
     @endpush
