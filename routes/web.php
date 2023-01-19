@@ -10,7 +10,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
-use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -22,7 +21,6 @@ use Illuminate\Support\Facades\Artisan;
 // ------------ nieuwe route zonder inloggen aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
-
 
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
@@ -92,16 +90,5 @@ Route::group(['middleware' => ['guest']], function() {
 //     Artisan::call('migrate:fresh');
 //     Artisan::call('db:seed');
 // });
-
-// Mail voor workshophouder inschrijvingen
-Route::get('mail/workshophouder', function () {
-    Artisan::call('info:day');
-});
-
-// Mail voor student inschrijvingen
-Route::get('console/mailstudent', function () {
-    Artisan::call('info:student');
-});
-
 
 require __DIR__. '/auth.php';

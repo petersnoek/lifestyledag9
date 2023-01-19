@@ -83,7 +83,7 @@
 
                                             <label for="startRound" id="round_label"><b>Ronde {{$i}} :</b></label> &nbsp; &nbsp;
                                             <span class="input-group-text">Start</span>
-                                            <input type="time" id="startRound" class="@if (count($errors) > 0 && array_key_exists("startRound.*",$errors)) {{"is-invalid"}}@endif form-control"  value="{{ old('startRound.*')}}" name="startRound[{{$i}}]" title="Start ronde" required/>
+                                            <input type="time" id="startRound" class="@if (count($errors) > 0 && array_key_exists("startRound.{{$i}}",$errors)) {{"is-invalid"}} @endif form-control" value="{{ old('startRound.<?php $i ?>')}}" name="startRound[{{$i}}]" title="Start ronde"/>
                                          
                                             @if (count($errors) > 0 && array_key_exists("startRound.{{$i}}",$errors))
                                                 @foreach($errors['startRound.{{$i}}'] as $error)
@@ -94,7 +94,7 @@
                                             @endif
             
                                             <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                            <input type="time" id="endRound" class="@if (count($errors) > 0 && array_key_exists("endRound.*",$errors)) {{"is-invalid"}}@endif form-control" value="{{ old('endRound.*')}}" name="endRound[{{$i}}]" title="Eind ronde" required/> &nbsp;
+                                            <input type="time" id="endRound" class="@if (count($errors) > 0 && array_key_exists("endRound.{{$i}}",$errors)) {{"is-invalid"}} @endif form-control" value="{{ old('endRound.<?php $i ?>')}}" name="endRound[{{$i}}]" title="Eind ronde"/> &nbsp;
                                             @if (count($errors) > 0 && array_key_exists("endRound.{{$i}}",$errors))
                                                 @foreach($errors['endRound.{{$i}}'] as $error)
                                                     <div class="invalid-feedback">
@@ -102,11 +102,18 @@
                                                     </div>
                                                 @endforeach
                                             @endif
+
+                                            <?php 
+                                                // if (count($errors) > 0) {
+                                                //     dd($errors);
+                                                // }
+                                            ?>
                                         
                                         </div>
                                         <br>
                                     </section>
                                     <?php } ?>
+                                    <i>* Niet alle rondes zijn verplicht in te vullen</i>
                                 </div> 
                             </div>
                         </div>

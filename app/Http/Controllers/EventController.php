@@ -22,6 +22,12 @@ class EventController extends Controller
 
     // Functie om de data van het evenement aanmaken op te slaan in de db
     public function store(Request $request) {
+        // for ($i=1; $i <=5 ; $i++) { 
+        //     if ('startRound.*' && 'endRound.*' == null) {
+        //         dd('ronde ' + $i +  ' heeft geen start of eindtijd');
+        //     }
+        // }
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => [new DescriptionPattern()],
@@ -33,14 +39,14 @@ class EventController extends Controller
             'startEnlistment' => ['required', 'date', 'before:startDate'],
             'endEnlistment' => ['required', 'date', 'after:startEnlistment', 'before:startDate'],
 
-            'round' => ['required', 'array', 'min:1'],
-            'round.*' => ['required', 'numeric'],
+            'round' => ['array', 'min:1'],
+            'round.*' => ['numeric'],
 
-            'startRound' => ['required', 'array', 'min:1'],
-            'startRound.*' => ['required', 'after:startDate', 'before:endDate'],
+            'startRound' => ['array', 'min:1'],
+            'startRound.*' => ['nullable','after:startDate', 'before:endDate'],
             
-            'endRound' => ['required', 'array', 'min:1'],
-            'endRound.*' => ['required', 'after:startRound.*', 'before:endDate'],
+            'endRound' => ['array', 'min:1'],
+            'endRound.*' => ['nullable','after:startRound.*', 'before:endDate'],
             
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
         ]);
@@ -83,8 +89,12 @@ class EventController extends Controller
             $eventRound->start_time = $request->startRound[$key];
             $eventRound->end_time = $request->endRound[$key];
 
-            $eventRound->save();
+            /* if start_time and end_time are null, remove row from database*/ 
+            if($eventRound->start_time == null && $eventRound->end_time == null){
+                $eventRound->where('event_id',  $eventRound->event_id)->whereNull('start_time')->whereNull('end_time')->delete();
+            }
             
+            $eventRound->save();
         }
         return redirect()->route('dashboard');
     }
