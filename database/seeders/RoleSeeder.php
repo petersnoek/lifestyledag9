@@ -66,16 +66,17 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
-        // $role = Role::create(['name' => 'workshophouderbeheerder']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        // $role = Role::create(['name' => 'ontwikkelaar']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
+        //admin gets all permissions except the permissions in the array
+        $exceptAdminPermissions = [
+            "permissions.create",
+            "permissions.store",
+            "permissions.edit",
+            "permissions.update",
+            "permissions.destroy"
+        ];
 
         $role = Role::create(['name' => 'admin']);
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::whereNotIn('name', $exceptAdminPermissions)->get(['id']);
         $role->permissions()->attach($permissions);
     }
 }

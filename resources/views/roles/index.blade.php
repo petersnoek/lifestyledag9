@@ -29,16 +29,19 @@
                       
                         <td>{{ $role->name }}</td>
                         <td><a class="btn btn-info btn-sm" href="{{ route('roles.show', $role->id) }}">Show</a></td>
-                        <td><a class="btn btn-primary btn-sm" href="{{ route('roles.edit', $role->id) }}">Edit</a></td>
-                        <td>
-                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display:inline">
-                                @csrf
-                                @method('DELETE')
-                                @if ($role->name != 'admin')
+                        @if (strtolower($role->name) != "admin")
+                            <td><a class="btn btn-primary btn-sm" href="{{ route('roles.edit', $role->id) }}">Edit</a></td>
+                            <td>
+                                <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                @endif
-                            </form>
-                        </td>
+                                </form>
+                            </td>
+                        @else
+                            <td></td>
+                            <td></td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

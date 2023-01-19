@@ -102,6 +102,6 @@ class UsersController extends Controller
     public function resentAttachment() {
         Artisan::call('info:day');
         Artisan::call('info:student');
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->withSuccess(__('Email succesvol verstuurd.'));
     }
 }
