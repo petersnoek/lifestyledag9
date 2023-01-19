@@ -19,6 +19,9 @@
                         <a class="link-fx" href="{{ route('roles.index') }}">Rollenbeheer</a> 
                     </li>
                     <li class="breadcrumb-item" aria-current="page">
+                        {{$role->name}}
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
                         Edit
                     </li>
                     </ol>
@@ -30,23 +33,13 @@
 
     
         <div class="container mt-4">
-            <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-                <a href="{{ route('roles.index') }}" class="btn btn-default">Terug</a>
-
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('layouts.partials.errorMessages')
 
             <form method="POST" action="{{ route('roles.update', $role->id) }}">
                 @method('patch')
                 @csrf
+                <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                <a href="{{ route('roles.index') }}" class="btn btn-default">Terug</a>
                 <div class="mb-3">
                     <label for="name" class="form-label">Naam</label>
                     <input value="{{ $role->name }}"
@@ -60,7 +53,7 @@
 
                 <table class="table table-striped">
                     <thead>
-                        <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
+                        <th scope="col" width="1%"></th>
                         <th scope="col" width="20%">Naam</th>
                         <th scope="col" width="1%">Guard</th>
                     </thead>

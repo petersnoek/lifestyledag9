@@ -20,6 +20,9 @@
                         <a class="link-fx" href="{{ route('users.index') }}">Gebruikers</a> 
                     </li>
                     <li class="breadcrumb-item" aria-current="page">
+                        {{$user->first_name}}
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
                         Edit
                     </li>
                     </ol>
@@ -37,7 +40,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Naam</label>
-                    <input value="{{ $user->name }}"
+                    <input value="{{ $user->first_name }}"
                         type="text"
                         class="form-control"
                         name="name"

@@ -19,7 +19,7 @@
                             <a class="link-fx" href="{{ route('roles.index') }}">Rollenbeheer</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
-                            Show
+                            {{$role->name}}
                         </li>
                         </ol>
                     </nav>
