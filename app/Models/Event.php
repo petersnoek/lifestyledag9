@@ -53,12 +53,14 @@ class Event extends Model
     }
 
     //return if this event can be vieuw by logedin user.
-    public function can_vieuw() {
+    public function can_view() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {
             return true;
         }
 
-        return ($this->frontpage == true);
+        if($this->ends_at >= Carbon::now()->toDateTimeString()){
+            return true;
+        }
     }
 }

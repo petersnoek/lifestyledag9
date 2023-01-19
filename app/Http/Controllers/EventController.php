@@ -27,8 +27,8 @@ class EventController extends Controller
         $event_id = $event_id['event_id'];
         $event = Event::find($event_id);
 
-        if (!$event->can_vieuw()) {
-            return redirect()->route('dashboard');
+        if (!$event->can_view()) {
+            return redirect()->route('dashboard')->withErrors(__('U heeft niet de juist bevoegdheden om deze pagina te zien.'));
         }
 
         return response()->view('events.show', [

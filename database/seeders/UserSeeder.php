@@ -28,7 +28,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'first_name' => 'Student',
-                'last_name' => 'test',
+                'insertion' => 'de',
+                'last_name' => 'student',
                 'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm',

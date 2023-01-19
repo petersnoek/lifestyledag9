@@ -3,30 +3,30 @@
 @section('content')
 
     <div class="bg-light p-4 rounded">
-        <h1>Roles</h1>
+        <h1>Rollen</h1>
         <div class="lead">
-            Manage your roles here.
-            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Add role</a>
+            Beheer hier de rollen.
         </div>
 
         <div class="mt-2">
             @include('layouts.partials.messages')
         </div>
-
+        <div class="mb-2">
+            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-right">Rol toevoegen</a>
+        </div>
         <div class="block-content block-content-full block block-rounded">
             <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
             <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
                 <thead>
                 <tr>
-                    <th width="1%">No</th>
-                    <th>Name</th>
-                    <th width="3%" colspan="3">Action</th>
+                    <th>Naam</th>
+                    <th width="3%" colspan="3">Actie</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach ($roles as $key => $role)
                     <tr>
-                        <td>{{ $role->id }}</td>
+                      
                         <td>{{ $role->name }}</td>
                         <td><a class="btn btn-info btn-sm" href="{{ route('roles.show', $role->id) }}">Show</a></td>
                         @if (strtolower($role->name) != "admin")

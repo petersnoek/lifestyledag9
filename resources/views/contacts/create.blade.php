@@ -67,7 +67,7 @@
                             <div class="form-check form-switch">
                                 <input type="hidden" name="on_mailinglist" value="0"/>
                                 <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif value="1">
-                                <label class="form-check-label">Op de mailinglijst.</label>
+                                <label class="form-check-label">Op de mailinglijst</label>
                                 @if ($errors->has('on_mailinglist'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('on_mailinglist') }}

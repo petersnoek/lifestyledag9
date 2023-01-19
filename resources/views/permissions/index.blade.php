@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="bg-light p-4 rounded">
-        <h2>Permissions</h2>
+        <h2>Permissies</h2>
         <div class="lead">
-            Manage your permissions here.
+           Beheer hier de permissies
             @can(['permissions.create', 'permissions.store'])
                 <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm float-right">Add permissions</a>
             @endcan
@@ -20,7 +20,7 @@
             <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col" width="15%">Naam</th>
                     <th scope="col">Guard</th>
                     @canany(['permissions.update', 'permissions.destroy'])
                         <th scope="col" colspan="2"></th>

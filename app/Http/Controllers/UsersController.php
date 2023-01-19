@@ -35,12 +35,6 @@ class UsersController extends Controller
             ->withSuccess(__('User created successfully.'));
     }
 
-    public function show(User $user) {
-        return response()->view('users.show', [
-            'user' => $user
-        ]);
-    }
-
     public function edit(User $user) {
         return response()->view('users.edit', [
             'user' => $user,

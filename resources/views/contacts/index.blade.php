@@ -13,16 +13,7 @@
 
                     </h2>
                 </div>
-                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-alt">
-                        <li class="breadcrumb-item">
-                            <a class="link-fx" href="javascript:void(0)">Lifestyledag</a>
-                        </li>
-                        <li class="breadcrumb-item" aria-current="page">
-                            Contactpersonen
-                        </li>
-                    </ol>
-                </nav>
+                
             </div>
         </div>
     </div>
@@ -49,7 +40,7 @@
                     <h3 class="mb-0">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
                         <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
-                        <button type="submit" class="btn btn-primary">Maak workshophouders</button>
+                        <button type="submit" class="btn btn-primary">Maak workshophouder</button>
                     </h3>
                 </div>
 
@@ -64,9 +55,9 @@
                             <th>Achternaam</th>
                             <th>Email</th>
                             <th>Mobiel</th>
-                            <th>User</th>
+                            <th>Gebruiker</th>
                             @can(['contacts.edit'])
-                                <th>Acties</th>
+                                <th>Actie</th>
                             @endcan
                         </thead>
 
@@ -90,7 +81,7 @@
                                     <input type="checkbox" disabled @if($contact->user()->first() !== null){{"checked"}}@endif>
                                 </td>
                                 @can(['contacts.edit'])
-                                    <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a></td>
+                                    <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">Edit</a></td>
                                 @endcan
                             </tr>
                         @endforeach
