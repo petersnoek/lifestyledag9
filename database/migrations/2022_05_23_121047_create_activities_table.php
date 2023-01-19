@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('event_id')->unsigned();
             $table->bigInteger('owner_user_id')->unsigned();
             $table->string('name');
-            $table->string('description')->nullable()->default('');
+            $table->string('description')->nullable();
             $table->string('image')->nullable()->default(null);
             $table->boolean('isActive')->default(false);
             $table->timestamps();

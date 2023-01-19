@@ -4,7 +4,9 @@
     <div class="bg-light p-4 rounded">
         <h1>{{ ucfirst($role->name) }} Role</h1>
         <div class="mt-4">
-            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
+            @if (strtolower($role->name) != "admin")
+                <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
+            @endif
             <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
         </div>
         <div class="block-content block-content-full block block-rounded">

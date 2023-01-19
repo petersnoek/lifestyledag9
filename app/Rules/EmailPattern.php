@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ClassCodePattern implements Rule
+class EmailPattern implements Rule
 {
   public function __construct()
   {
@@ -12,11 +12,11 @@ class ClassCodePattern implements Rule
 
   public function passes($attribute, $value)
   {
-    return preg_match("/^[a-zA-Z0-9]+$/", $value);
+    return preg_match('/[^A-Za-z0-9]/', $value);
   }
 
   public function message()
   {
-    return 'Error: Klascode mag alleen uit letters en nummers bestaan.';
+    return 'Error: Email mag alleen uit letters en nummers bestaan.';
   }
 }
