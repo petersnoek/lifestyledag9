@@ -22,16 +22,10 @@ class EventController extends Controller
 
     // Functie om de data van het evenement aanmaken op te slaan in de db
     public function store(Request $request) {
-        // for ($i=1; $i <=5 ; $i++) { 
-        //     if ('startRound.*' && 'endRound.*' == null) {
-        //         dd('ronde ' + $i +  ' heeft geen start of eindtijd');
-        //     }
-        // }
-
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
-            'description' => [new DescriptionPattern()],
-            'location' => ['required', 'max:80', new LocationPattern()],
+            'description' => ['max:255',new DescriptionPattern()],
+            'location' => ['required', 'max:255', new LocationPattern()],
 
             'startDate' => ['required', 'date'],
             'endDate' => ['required', 'date', 'after:startDate'],
@@ -89,10 +83,14 @@ class EventController extends Controller
             $eventRound->start_time = $request->startRound[$key];
             $eventRound->end_time = $request->endRound[$key];
 
-            /* if start_time and end_time are null, remove row from database*/ 
+            /* if start_time and end_time are null, remove row from database */
             if($eventRound->start_time == null && $eventRound->end_time == null){
                 $eventRound->where('event_id',  $eventRound->event_id)->whereNull('start_time')->whereNull('end_time')->delete();
             }
+
+            // if($eventRound->round == 5){
+                // dd($eventRound->start_time);
+            // }
             
             $eventRound->save();
         }

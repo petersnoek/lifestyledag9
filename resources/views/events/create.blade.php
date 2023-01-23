@@ -16,7 +16,7 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="">Mijn Evenementen</a>
+                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
                             Nieuw evenement
@@ -53,7 +53,7 @@
                         
 
                             <div class="mb-4">
-                              <textarea class="@if (count($errors) > 0 && array_key_exists("description",$errors)) {{"is-invalid"}}@endif form-control form-control-lg form-control-alt py-3" type="text" name="description" placeholder="Beschrijving *" required>{{{ old('description') }}}</textarea>
+                              <textarea class="@if (count($errors) > 0 && array_key_exists("description",$errors)) {{"is-invalid"}}@endif form-control form-control-lg form-control-alt py-3" type="text" maxlength="255" name="description" placeholder="Beschrijving *" required>{{{ old('description') }}}</textarea>
                                 @if (count($errors) > 0 && array_key_exists("description",$errors))
                                     @foreach($errors['description'] as $error)
                                         <div class="invalid-feedback">
