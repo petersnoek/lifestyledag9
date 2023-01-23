@@ -40,7 +40,7 @@
                 @foreach($events as $event)
                 <!-- Story -->
                 <div class="col-lg-4">
-                    <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('activity.index', ['event_id' => Crypt::encrypt($event->id)]) }}">
+                    <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', ['event_id' => Crypt::encrypt($event->id)]) }}">
                       <img class="img-fluid" src="@if(isset($event->image)) {{asset('storage/eventHeaders/'.$event->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
                         <div class="block-content">
                             <h4 class="mb-1">

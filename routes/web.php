@@ -45,7 +45,6 @@ Route::group(['middleware' => ['permission']], function() {
 
     // Route voor de activity
     Route::group(['prefix' => '/activity'], function() {
-        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('activity.index');
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
 
@@ -55,6 +54,7 @@ Route::group(['middleware' => ['permission']], function() {
 
     // Route voor het event
     Route::group(['prefix' => '/event'], function() {
+        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('event.show');
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });

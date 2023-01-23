@@ -35,7 +35,7 @@ class ActivityController extends Controller
         $event_id = $event_id['event_id'];
         $event = Event::find($event_id);
 
-        return response()->view('activities.index', [
+        return response()->view('events.show', [
             'event' => $event
         ]);
     }

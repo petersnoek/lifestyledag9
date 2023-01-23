@@ -35,6 +35,16 @@
                 <div>
                     <div class="mt-2">
                         {{-- @include('layouts.partials.errorMessages') --}}
+                        @if(count($errors))
+                            <div class="is-invalid"></div>
+                            <div class='invalid-feedback'>
+                                @foreach($errors as $error)
+                                @foreach($error as $erro)
+                                <div>{{$erro}}</div>
+                                @endforeach
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <form class="d-flex justify-content-evenly" action="{{ route('event.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
@@ -76,44 +86,58 @@
 
                             <div class="input-group">
                                 <div id="container">
+                                    <div class="mb-3">
+                                        <div class="is-invalid"></div>
+                                        @if(count($errors) > 0 && array_key_exists("startRound",$errors))
+                                            @foreach($errors['startRound'] as $error)
+                                                <div class="invalid-feedback">
+                                                    {{$error}}
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @if (count($errors) > 0 && array_key_exists("endRound",$errors))
+                                            @foreach($errors['endRound'] as $error)
+                                                <div class="invalid-feedback">
+                                                    {{$error}}
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
                                     <section id="mainsection">
-                                        <?php for ($i=1; $i <= 5; $i++) { ?>
-                                        <div class="input-group">
-                                            <input type="hidden" id="round" name="round[{{$i}}]" value="{{$i}}"> 
+                                        @for($i=1; $i <= 5; $i++)
+                                            
+                                            <div class="input-group">
+                                                <input type="hidden" id="round" name="round[{{$i}}]" value="{{$i}}"> 
 
-                                            <label for="startRound" id="round_label"><b>Ronde {{$i}} :</b></label> &nbsp; &nbsp;
-                                            <span class="input-group-text">Start</span>
-                                            <input type="time" id="startRound" class="@if (count($errors) > 0 && array_key_exists("startRound.{{$i}}",$errors)) {{"is-invalid"}} @endif form-control" value="{{ old('startRound.<?php $i ?>')}}" name="startRound[{{$i}}]" title="Start ronde"/>
-                                         
-                                            @if (count($errors) > 0 && array_key_exists("startRound.{{$i}}",$errors))
-                                                @foreach($errors['startRound.{{$i}}'] as $error)
-                                                    <div class="invalid-feedback">
-                                                        {{$error}}
-                                                    </div>
-                                                @endforeach
-                                            @endif
-            
-                                            <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
-                                            <input type="time" id="endRound" class="@if (count($errors) > 0 && array_key_exists("endRound.{{$i}}",$errors)) {{"is-invalid"}} @endif form-control" value="{{ old('endRound.<?php $i ?>')}}" name="endRound[{{$i}}]" title="Eind ronde"/> &nbsp;
-                                            @if (count($errors) > 0 && array_key_exists("endRound.{{$i}}",$errors))
-                                                @foreach($errors['endRound.{{$i}}'] as $error)
-                                                    <div class="invalid-feedback">
-                                                        {{$error}}
-                                                    </div>
-                                                @endforeach
-                                            @endif
+                                                <label for="startRound" id="round_label"><b>Ronde {{$i}} :</b></label> &nbsp; &nbsp;
+                                                <span class="input-group-text">Start</span>
+                                                <input type="time" id="startRound" class="form-control @if (count($errors) > 0 && array_key_exists("startRound.".$i,$errors)) {{"is-invalid"}} @endif" value="{{ old('startRound.'.$i)}}" name="startRound[{{$i}}]" title="Start ronde"/>
 
-                                            <?php 
-                                                // if (count($errors) > 0) {
-                                                //     dd($errors);
-                                                // }
-                                            ?>
-                                        
-                                        </div>
-                                        <br>
+                                                <span class="input-group-text" style="border-left: 0; border-right: 0;">Eind</span>
+                                                <input type="time" id="endRound" class="form-control @if (count($errors) > 0 && array_key_exists("endRound.".$i,$errors)) {{"is-invalid"}} @endif" value="{{ old('endRound.'.$i)}}" name="endRound[{{$i}}]" title="Eind ronde"/> &nbsp;
+                                                
+                                                @if (count($errors) > 0 && array_key_exists("startRound.".$i,$errors))
+                                                    @foreach($errors['startRound.'.$i] as $error)
+                                                        <div class="invalid-feedback">
+                                                            {{$error}}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                                @if (count($errors) > 0 && array_key_exists("endRound.".$i,$errors))
+                                                    @foreach($errors['endRound.'.$i] as $error)
+                                                        <div class="invalid-feedback">
+                                                            {{$error}}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+
+                                            </div>
+                                            <br>
+                                        @endfor
                                     </section>
-                                    <?php } ?>
+                                    
                                     <i>* Niet alle rondes zijn verplicht in te vullen</i>
+                                    
                                 </div> 
                             </div>
                         </div>
