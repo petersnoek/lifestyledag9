@@ -63,11 +63,14 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
+        $role = Role::create(['name' => 'geblokkeerd', 'color' => '#dd4c4c']);
+        $permissions = Permission::whereIn("name", [
+            "dashboard"
+        ])->get();
+        $role->permissions()->attach($permissions);
+
         $role = Role::create(['name' => 'admin', 'color' => '#4c78dd']);
         $permissions = Permission::pluck('id','id')->all();
         $role->permissions()->attach($permissions);
-
-
-        Role::create(['name' => 'geblokeerd', 'color' => '#dd4c4c']);
     }
 }

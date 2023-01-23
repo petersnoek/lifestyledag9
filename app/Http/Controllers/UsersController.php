@@ -23,6 +23,10 @@ class UsersController extends Controller
         return response()->view('users.create');
     }
 
+    public function blocked() {
+        return response()->view('users.blocked');
+    }
+
     public function store(User $user, StoreUserRequest $request) {
         //For demo purposes only. When creating user or inviting a user
         // you should create a generated random password and email it to the user
@@ -108,11 +112,11 @@ class UsersController extends Controller
         $user = User::find($request->user_id);
 
         if($user->roles[0]->name == 'student'){
-            $role = Role::where('name', 'geblokeerd')->first()->id;
+            $role = Role::where('name', 'geblokkeerd')->first()->id;
             $user->syncRoles($role);
 
             return redirect()->route('users.index')
-            ->withSuccess(__('Gebruiker succesvol geblokeerd'));
+            ->withSuccess(__('Gebruiker succesvol geblokkeerd'));
         }
         else{
             return redirect()->route('users.index')

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
 use App\Http\Controllers\EventController;
-use Illuminate\Support\Facades\Artisan;
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -97,15 +97,5 @@ Route::group(['middleware'=>['auth', 'verified']], function() {
     //     Artisan::call('db:seed');
     // });
 });
-
-// Mail voor workshophouder inschrijvingen
-Route::get('mail/workshophouder', function() {
-    Artisan::call('info:day');
-});
-
-Route::get('console/mailstudent', function() {
-    Artisan::call('info:student');
-});
-
 
 require __DIR__. '/auth.php';
