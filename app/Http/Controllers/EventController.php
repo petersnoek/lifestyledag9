@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\EventRound;
@@ -16,18 +15,13 @@ use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
-    public function index() {
-
-    }
-
     public function create() {
         return response()->view('events.create');
     }
 
     // Functie om de data van het evenement aanmaken op te slaan in de db
     public function store(Request $request) {
-/*         dd($request->startRound);
- */        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new NamePattern()],
             'description' => ['max:255',new DescriptionPattern()],
             'location' => ['required', 'max:255', new LocationPattern()],
@@ -147,13 +141,10 @@ class EventController extends Controller
                 $eventRound->end_time = $request->endRound[$key];
     
             }
-            // if($eventRound->round == 5){
-                // dd($eventRound->start_time);
-            // }
-            
             $eventRound->save();
         }
         return redirect()->route('dashboard');
+    }
 
     public function show($event_id) {
         $event_id = ['event_id' => Crypt::decrypt($event_id)];
@@ -171,7 +162,6 @@ class EventController extends Controller
         if (!$event->can_view()) {
             return redirect()->route('dashboard')->withErrors(__('U heeft niet de juist bevoegdheden om deze pagina te zien.'));
         }
-
         return response()->view('events.show', [
             'event' => $event
         ]);

@@ -76,7 +76,7 @@
                             <br><br>
                             <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigd.</small></b>
                         @else
-                            <small>Om je te kunnen inschrijven voor activiteiten moet je eerst inloggen.</small>
+                            <small>Om te kunnen inschrijven voor activiteiten moet je eerst inloggen.</small>
                         @endif
                     </div>
                 </div>

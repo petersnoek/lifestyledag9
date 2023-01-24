@@ -3,30 +3,26 @@
 @section('content')
     <!-- Hero -->
     <div class="bg-body-light">
-    <div class="content content-full">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-        <div class="flex-grow-1">
-            <h1 class="h3 fw-bold mb-2">
-            Dashboard
-            </h1>
-            <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-            Welkom op de website van Lifestyledag, {{Auth::user()->first_name}}.
-            </h2>
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h1 class="h3 fw-bold mb-2">
+                    Dashboard
+                    </h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                    Welkom op de website van Lifestyledag, {{Auth::user()->first_name}}.
+                    </h2>
+                </div>
+            </div>
+            @can(['event.create'])
+                <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
+            @endcan
+    
+            @can(['activity.create'])
+                <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
+            @endcan
         </div>
-        </div>
-        @can(['activity.create'])
-            <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
-        @endcan
     </div>
-    @can(['event.create'])
-      <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
-    @endcan
-
-    @can(['activity.create'])
-      <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
-    @endcan
-  </div>
-</div>
 <!-- END Hero -->
 
 	 <!-- Page Content -->
@@ -68,7 +64,7 @@
                     </div>
                 </div>
                 @can(['activity.create'])
-                    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a>
+                    <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
                 @endcan
                 </div>
             </div>
