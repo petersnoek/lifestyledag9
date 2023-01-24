@@ -20,8 +20,7 @@
                 <th scope="col" width="16%">Name</th>
                 <th scope="col" width="20%">Email</th>
                 <th scope="col" width="10%">Role</th>
-                <th scope="col" width="1%" colspan="1"></th>
-                <th scope="col" width="1%" colspan="1"></th>
+                <th scope="col" width="1%" colspan="1">Actie</th>
             </tr>
             </thead>
             <tbody>
@@ -35,12 +34,7 @@
                             @endforeach
                         </td>
                         <td>
-                            @if($user->roles[0]->name != 'geblokeerd')
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm disabled">Edit</a>
-                            @endif
-                        </td>
-                        <td>
-                            @if($user->roles[0]->name == 'student')
+                            @if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd')
                                 <a href="{{ route('users.blockConfirm', $user->id) }}" class="btn btn-danger btn-sm">Block</a>
                             @endif
                         </td>
