@@ -7,10 +7,10 @@
         <div class="lead">
             Beheer hier de gebruikers.
             <br>
-
-            <td><a href="{{ route('users.resentAttachment') }}" class="btn btn-primary btn-sm" title='Stuur een mail naar de studenten/workshophouders met de inschrijvingen van de activiteiten'>Mail versturen</a></td>
         </div>
-
+        <div class="mt-2"> 
+            <a href="{{ route('users.resentAttachment') }}" class="btn btn-primary btn-sm" title='Stuur een mail naar de studenten/workshophouders met de inschrijvingen van de activiteiten'>Mail versturen</a>
+        </div>
         <div class="mt-2">
             @include('layouts.partials.messages')
             @include('layouts.partials.errorMessages')
@@ -19,8 +19,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" width="15%">Naam</th>
-                <th scope="col">Email</th>
+                <th scope="col" width="16%">Naam</th>
+                <th scope="col" width="20%">Email</th>
                 {{-- <th scope="col" width="10%">Username</th> --}}
                 <th scope="col" width="10%">Rollen</th>
                 <th scope="col" width="1%" colspan="1">Actie</th>

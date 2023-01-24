@@ -98,14 +98,14 @@ class UsersController extends Controller
 
     public function blockConfirm(User $user){
         /* change role to blocked and delete all users enlistment and or activities*/
-        if($user->roles[0]->name != 'student'){
-            return redirect()->route('users.index')
-            ->withErrors(__('Gebruiker heeft niet de rol \'student\', actie geanuleerd'));
-        }
-        else{
+        if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd'){
             return response()->view('users.block', [
                 'user' => $user
             ]);
+        }
+        else{
+            return redirect()->route('users.index')
+            ->withErrors(__('Gebruiker kan niet worden geblokkeerd'));
         }
     }
 
@@ -122,16 +122,26 @@ class UsersController extends Controller
 
         $user = User::find($request->user_id);
 
-        if($user->roles[0]->name == 'student'){
-            $role = Role::where('name', 'geblokkeerd')->first()->id;
-            $user->syncRoles($role);
+        if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd'){
+            if($user->roles[0]->name == 'student' && count($user->enlistment) > 0){
+                //if user has enlistments loop through them and delete any that aren't too old/archived
+            }
+            if(count($user->activities) > 0){
+                //if user has activites loop through them and delete any that aren't too old/archived
+                /* foreach($user->activites as $activity){
+                    dd($activity);
+                } */
+                dd($user->activites); //WHY DOESN'T THIS GIVE ME THE ACTIVITIES??
+            }
+            /* $role = Role::where('name', 'geblokkeerd')->first()->id;
+            $user->syncRoles($role); */
 
             return redirect()->route('users.index')
-            ->withSuccess(__('Gebruiker succesvol geblokkeerd'));
+            ->withSuccess(__('Gebruiker \''. $user->first_name .'\' succesvol geblokkeerd.'));
         }
         else{
             return redirect()->route('users.index')
-            ->withErrors(__('Gebruiker heeft niet de rol \'student\', actie geanuleerd'));
+            ->withErrors(__('Gebruiker kan niet worden geblokkeerd'));
         }
         
     }

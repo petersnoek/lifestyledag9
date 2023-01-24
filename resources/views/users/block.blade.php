@@ -6,7 +6,7 @@
             <div class="block-content block-content-full">
                 <div>
                     <div class="block-rounded px-5 py-3 alert alert-danger">
-                        <h1>Weet je zeker dat je '{{$user->name}}' wilt blokeren?</h1>
+                        <h1>Weet je zeker dat je '{{$user->first_name}}' wilt blokeren?</h1>
                         <ul>
                             <li>Deze gebruiker zal niet meer kunnen inloggen op dit account</li>
                             <li>Het email adress '{{$user->email}}' kan niet gebruikt worden om een nieuw account te maken</li>
