@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\EventRound;
 use App\Rules\NamePattern;
 use App\Rules\LocationPattern;
 use App\Rules\DescriptionPattern;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
-    public function index(Request $request) {
-        return view('dashboard', ['events' => Event::all()]);
+    public function index() {
+
     }
 
     public function create() {
@@ -150,5 +154,26 @@ class EventController extends Controller
             $eventRound->save();
         }
         return redirect()->route('dashboard');
+
+    public function show($event_id) {
+        $event_id = ['event_id' => Crypt::decrypt($event_id)];
+        $validator = Validator::make($event_id, [
+            'event_id' => ['required', Rule::exists(Event::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->withinput($event_id['event_id'])->with('errors', $validator->errors());
+        }
+
+        $event_id = $event_id['event_id'];
+        $event = Event::find($event_id);
+
+        if (!$event->can_view()) {
+            return redirect()->route('dashboard')->withErrors(__('U heeft niet de juist bevoegdheden om deze pagina te zien.'));
+        }
+
+        return response()->view('events.show', [
+            'event' => $event
+        ]);
     }
 }

@@ -32,6 +32,7 @@
   <script>
     window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
   </script>
+  @stack('js_scripts')
 </head>
 
 <body>

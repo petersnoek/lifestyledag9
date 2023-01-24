@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
-            "activity.index",
+            "event.show",
             "enlistment.store",
             "enlistment.destroy",
             "login",
@@ -35,17 +35,20 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify"
+            "verification.verify",
+            "users.update2"
         ])->get();
         $role->permissions()->attach($permissions);
 
         $role = Role::create(['name' => 'workshophouder']);
         $permissions = Permission::whereIn("name", [
-            "aanmelden.end",
-            "aanmelden.index",
-            "aanmelden.show",
             "dashboard",
-            "activity.index",
+            "event.show",
+            "activity.create",
+            "activity.store",
+            "activity.edit",
+            "activity.update",
+            "activity.destroy",
             "login",
             "logout",
             "password.confirm",
@@ -56,22 +59,24 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify",
+            "activity.destroy",
+            "activity.store",
             "activity.create",
-            "activity.store"
+            "verification.verify",
         ])->get();
         $role->permissions()->attach($permissions);
 
-        // $role = Role::create(['name' => 'workshophouderbeheerder']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        // $role = Role::create(['name' => 'ontwikkelaar']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
+        //admin gets all permissions except the permissions in the array
+        $exceptAdminPermissions = [
+            "permissions.create",
+            "permissions.store",
+            "permissions.edit",
+            "permissions.update",
+            "permissions.destroy"
+        ];
 
         $role = Role::create(['name' => 'admin']);
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::whereNotIn('name', $exceptAdminPermissions)->get(['id']);
         $role->permissions()->attach($permissions);
     }
 }

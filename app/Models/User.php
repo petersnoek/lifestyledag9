@@ -20,9 +20,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'insertion',
+        'last_name',
+        'class_code',
         'email',
-        'password',
+        'password'
     ];
 
     /**
@@ -61,6 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function contact_last_edited_by()
     {
         return $this->hasMany(Contact::class, 'id', 'last_edited_by');
+    }
+
+    public function activities() {
+        return $this->hasMany(Activity::class, "owner_user_id", "id");
     }
 
     function is_enlisted_for($activity_id) {
