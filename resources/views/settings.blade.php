@@ -5,7 +5,8 @@
           <div class="bg-primary-dark-op">
             <div class="content content-full text-center">
               <div class="my-3">
-                <img class="img-avatar img-avatar-thumb" src="assets/media/avatars/avatar13.jpg" alt="">
+                {{-- <img class="img-avatar img-avatar-thumb" src="assets/media/avatars/avatar13.jpg" alt=""> --}}
+                <img class="img-avatar img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="Header Avatar">
               </div>
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
 
