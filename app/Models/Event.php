@@ -11,6 +11,17 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'location',
+        'image',
+        'starts_at',
+        'ends_at',
+        'enlist_starts_at',
+        'enlist_stops_at',
+    ];
+
     public function displayName() {
         return $this->name;
     }

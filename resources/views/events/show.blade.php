@@ -30,7 +30,7 @@
                             <h4 style="margin-bottom: 0.5rem">Rondes:</h4>
                             <div>
                             @foreach($event->eventrounds as $round)
-                                <span class="badge bg-primary rounded-pill">{{ $round->round }}</span> {{ Carbon\Carbon::parse($round->start_time)->format('H:i') }}
+                                <span class="badge bg-primary rounded-pill">{{ $round->round }}</span> {{ Carbon\Carbon::parse($round->start_time)->format('H:i') }}{{-- when it's empty it'll fill it in with current time --}}
                             @endforeach
                             </div>
                         @endif
@@ -174,4 +174,5 @@
                 @endforeach
             </div>
         </div>
+
 @endsection

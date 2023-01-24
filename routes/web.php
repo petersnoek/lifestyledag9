@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
-use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Artisan;
+
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -56,22 +57,26 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
-
+        
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         //editen en verwijderen functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
-
     });
 
+    // Route voor het event
     Route::group(['prefix' => '/event'], function() {
-        Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
+        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('event.show');
+        Route::get('/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });
 
+    // Route voor inschrijvingen
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
+
 
     Route::group(['prefix' => '/dashboard'], function() {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

@@ -18,8 +18,17 @@
             <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
         @endcan
     </div>
-    </div>
-    <!-- END Hero -->
+    @can(['event.create'])
+      <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
+    @endcan
+
+    @can(['activity.create'])
+      <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
+    @endcan
+  </div>
+</div>
+<!-- END Hero -->
+
 	 <!-- Page Content -->
     <div class="content content-boxed">
         <div class="mt-2">
@@ -31,16 +40,17 @@
                 <!-- Story -->
                 <div class="col-lg-4">
                     <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', ['event_id' => Crypt::encrypt($event->id)]) }}">
-                        <img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg')}}" alt="">
+                      <img class="img-fluid" src="@if(isset($event->image)) {{asset('storage/eventHeaders/'.$event->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
+
                         <div class="block-content">
                             <h4 class="mb-1">
-                                {{ $event->name }}
+                              {{ $event->name }}
                             </h4>
                             <p class="fs-sm fw-medium mb-2">
-                                {{ $event->starts_at  }} - {{ $event->ends_at  }}
+                              {{ $event->starts_at }} - {{ $event->ends_at }}
                             </p>
                             <p class="fs-sm text-muted">
-                                {{ $event->description }}
+                              {{ $event->description }}
                             </p>
                         </div>
                     </a>

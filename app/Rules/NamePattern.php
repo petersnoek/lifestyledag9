@@ -16,6 +16,6 @@ class NamePattern implements Rule
 
     public function message()
     {
-        return 'Error: Alleen letters zijn toegestaan bij je naam.';
+        return 'Error: Ongeldige invoer bij "naam". Alleen letters zijn toegestaan';
     }
 }
