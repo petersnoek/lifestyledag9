@@ -1,14 +1,26 @@
-@extends((Auth::user()->hasRole('geblokkeerd')) ? 'layout.blocked' : 'layouts.backend')
+@extends((Auth::user()->hasRole('geblokkeerd')) ? 'layouts.blocked' : 'layouts.backend')
 
     @if(Auth::user()->hasRole('geblokkeerd'))
-        <div class="bg-body-light">
-            <div class="content content-full">
-                <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                    <div class="flex-grow-1">
-                        <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                            {{Auth::user()->name}} je bent geblokkeerd door een beheerder van de Lifestyledag.
-                        </h2>
+        @section('content') 
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div>
+                <div class="flex-grow-1">
+                    <div>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item d-flex align-items-center justify-content-between">
+                            <span class="fs-sm fw-medium">Log Out</span>
+                        </a>
+                    
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
+
+                    <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                        {{Auth::user()->name}} je bent geblokkeerd door een beheerder van de Lifestyledag.
+                        <br>
+                        Neem contact op met een beheerder voor eventuele opheffing.
+                    </h2>
                 </div>
             </div>
         </div>
@@ -164,5 +176,5 @@
 		<!-- END Footer -->
 	</div>
 	<!-- END Page Container -->
-@endsection
-@endif
+    @endsection
+    @endif

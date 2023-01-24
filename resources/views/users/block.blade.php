@@ -20,7 +20,7 @@
                     <form action="{{ route('users.block') }}" method="post" class="mt-4">
                         @csrf
                         <input type="hidden" name="user_id" value="{{$user->id}}">
-                        <button type="submit" class="btn btn-danger">Blokeer</button>
+                        <button type="submit" class="btn btn-danger">Blokkeer</button>
                         <a href="{{ route('users.index') }}" class="btn btn-info">Annuleer</a>
                     </form>
                 </div>
