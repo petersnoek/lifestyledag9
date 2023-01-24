@@ -52,12 +52,12 @@ class EventController extends Controller
             ],
             'startRound.*' => [/* removed nullable and added it to closure rule functions cuz otherwise it ignorse them (most importantly the last one)  */
                 function ($attribute,$value, $fail){
-                    //check if startRound.* is before startDate
+                    //check if startRound.* isn't before startDate
                     if($value < date_format(date_create(request('startDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be before '. date_format(date_create(request('startDate')),"H:i"));
                     }},
                 function ($attribute,$value, $fail){
-                    //check if startRound.* is after endDate
+                    //check if startRound.* isn't after endDate
                     if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be after '. date_format(date_create(request('endDate')),"H:i"));
                     }},
@@ -82,15 +82,20 @@ class EventController extends Controller
                         $fail('Vul tenminste één \'ronde eind-tijd\' in');
                     }},
             ],
-            'endRound.*' => ['after:startRound.*',/* this might not quite work cuz of the after:startRound but I'm running out of time */
+            'endRound.*' => [/* this might not quite work cuz of the after:startRound but I'm running out of time */
                 function ($attribute,$value, $fail){
-                    //check if endRound.* is after endDate
+                //check if endRound.* isn't before startRound
+                if($value < request('startRound.'. explode('.',$attribute)[1]) && $value != null){
+                    $fail($attribute .' can\'t be before '. date_format(date_create(request('endDate')),"H:i"));
+                }},
+                function ($attribute,$value, $fail){
+                    //check if endRound.* isn't after endDate
                     if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be after '. date_format(date_create(request('endDate')),"H:i"));
                     }},
                 function ($attribute,$value, $fail){
                     //check if there's a filled in startRound with the same .* and if this endRound.* is null it needs to be filled in
-                    if(request('startRound.'. explode('.',$attribute)[1]) != null && $value === null){
+                    if($value === null && request('startRound.'. explode('.',$attribute)[1]) != null){
                         $fail('Bijbehorende endRound.'.explode('.',$attribute)[1].' is verijst.');
                     }}
             ],
