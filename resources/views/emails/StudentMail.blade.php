@@ -1,7 +1,7 @@
 @component('mail::message')
 
 # Opgegeven activiteiten.
-{{ $mailInfo["student"] }}, Hier is het overzicht van de door jouw opgegeven activiteiten.
+{{ $mailInfo["student"] }}, Hier is het overzicht van de door jou opgegeven activiteiten.
 
 <table class="table" style="border-spacing: 20px">
 <thead>

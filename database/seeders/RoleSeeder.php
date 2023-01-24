@@ -35,7 +35,7 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify", 
+            "verification.verify",
             "users.update2"
         ])->get();
         $role->permissions()->attach($permissions);
@@ -59,7 +59,10 @@ class RoleSeeder extends Seeder
             "register",
             "verification.notice",
             "verification.send",
-            "verification.verify"
+            "activity.destroy",
+            "activity.store",
+            "activity.create",
+            "verification.verify",
         ])->get();
         $role->permissions()->attach($permissions);
 
@@ -68,9 +71,17 @@ class RoleSeeder extends Seeder
             "dashboard"
         ])->get();
         $role->permissions()->attach($permissions);
+        //admin gets all permissions except the permissions in the array
+        $exceptAdminPermissions = [
+            "permissions.create",
+            "permissions.store",
+            "permissions.edit",
+            "permissions.update",
+            "permissions.destroy"
+        ];
 
         $role = Role::create(['name' => 'admin', 'color' => '#4c78dd']);
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::whereNotIn('name', $exceptAdminPermissions)->get(['id']);
         $role->permissions()->attach($permissions);
     }
 }

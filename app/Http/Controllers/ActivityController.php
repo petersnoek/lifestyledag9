@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Activity;
 use App\Models\Eventround;
-use App\Rules\NamePattern;
+use App\Rules\TitlePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class ActivityController extends Controller
 {
@@ -35,8 +37,7 @@ class ActivityController extends Controller
     {
         /* send to create activity forum view, might not need the Evenround:all() instead $event->eventrounds */
         return response()->view('activities.create', [
-            'events' => Event::all(),
-            'rounds' => Eventround::all()
+            'events' => Event::with('eventrounds')->where('enlist_starts_at', '>=', Carbon::now()->toDateTimeString())->get(['id','name',]),
         ]);
     }
 
@@ -48,23 +49,26 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->max_participants[$request->event_id]);
+        // $test = 'max_participants.3.1';
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:255', new NamePattern()],
-            'description' => [new DescriptionPattern()],
+            'name' => ['required', 'max:255', new TitlePattern()],
+            'description' => ['max:255',new DescriptionPattern()],
             'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
             'image' => ['image','mimes:jpeg,png,jpg'], /* needs file type validation */
-            'max_participants' => ['required', 'numeric', 'min:0', 'max:1000']
+            'max_participants.*' => ['required', 'numeric', 'min:0', 'max:1000']
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors());
+            
+            return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 
         $event_id = $request->event_id;
         $event = Event::find($event_id);
 
         /* stores image in public/ActivityHeaders folder */
-        if(isset($request->image)){
+        if (isset($request->image)) {
             $request->image->store('activityHeaders', 'public');
         }
 
@@ -83,11 +87,11 @@ class ActivityController extends Controller
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
             $activityRound->eventround_id = $eventround->id;
-            $activityRound->max_participants = $request->max_participants;
+            $activityRound->max_participants = $request->max_participants[$eventround->round];
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->withSuccess(__('Uw activiteit "' . $activity->name . '" is aangemaakt.'));;
     }
 
     /**
@@ -138,8 +142,29 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')],
+            'event_id' => ['required', 'numeric', Rule::exists(Event::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
+        }
+
+        $event_id = intval($request->event_id);
+        $activity_id = intval($request->activity_id);
+        $activity = Activity::find($activity_id);
+        $image = $activity->image;
+        $activity_round = ActivityRound::all()->where("activity_id", $activity_id);
+
+        
+        $activity->delete();
+        Storage::disk('public')->delete("activityHeaders/" . $image);  
+        foreach ($activity_round as $activity) {
+            $activity->delete($activity_id);
+        }
+        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($event_id)]);
+            }
 }

@@ -4,12 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
-use App\Http\Controllers\EventController;
+use Illuminate\Support\Facades\Artisan;
+
 
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
@@ -22,17 +24,23 @@ use App\Http\Controllers\EventController;
 // 1. maak een route en stop deze in Route group met middleware guest
 // 2. check of de route beschikbaar is zonder in te loggen
 
-
 // ------------ nieuwe route die alle gebruikers kunnen bezoeken aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware auth
 // 2. log in met een account en check of de route beschikbaar is
 // 3. check of de route beschikbaar is zonder in te loggen
 
+
 // Route voor evenementen
+Route::group(['middleware'=>['auth', 'verified']], function() {
 Route::group(['middleware' => ['permission']], function() {
     // Route voor contacten overzicht
     Route::group(['prefix'=> '/contacts'], function() {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+        Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
+        Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
+        Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
+        Route::post('/update', [ContactController::class, 'update'])->name('contacts.update');
+
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
@@ -43,27 +51,34 @@ Route::group(['middleware' => ['permission']], function() {
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
         Route::get('/{user}/blockConfirm', [UsersController::class, 'blockConfirm'])->name('users.blockConfirm')->whereNumber('user');
         Route::post('/block', [UsersController::class, 'block'])->name('users.block');
+
+        Route::get('/resentAttachment', [UsersController::class, 'resentAttachment'])->name('users.resentAttachment');
     });
 
     // Route voor activiteiten
     Route::group(['prefix' => '/activity'], function() {
         Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
-
+        
+        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         //editen en verwijderen functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
-        Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
     });
 
+    // Route voor het event
     Route::group(['prefix' => '/event'], function() {
-        Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
+        Route::get('/event/{event_id}', [EventController::class, 'show'])->name('event.show');
+        Route::get('/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });
 
+    // Route voor inschrijvingen
     Route::group(['prefix' => '/enlistment'], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
+
 
     Route::group(['prefix' => '/dashboard'], function() {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -83,7 +98,7 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', function() {return redirect()->route('login');});
 });
 
-Route::group(['middleware'=>['auth', 'verified']], function() {
+
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function() {
         Route::get('/', function () { return view('settings'); })->name('settings');
@@ -95,6 +110,12 @@ Route::group(['middleware'=>['auth', 'verified']], function() {
     //     Artisan::call('migrate:fresh');
     //     Artisan::call('db:seed');
     // });
+});
+
+
+// link afbeeldingen opslag ÉÉNMALIG BIJ ELKE LIVESERVER UPLOAD
+Route::get('console/storagelink', function () {
+    Artisan::call('storage:link');
 });
 
 require __DIR__. '/auth.php';

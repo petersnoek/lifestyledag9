@@ -78,7 +78,8 @@ hier komt alles te staan dat gebruikt kan worden na de overdracht van de applica
 4. Zet met Filezilla de bestanden naar de live omgeving.
     -	zonder private folder
     -	zonder .env
-5. De migration route aan zetten en naar toe gaan in de online applicatie.
-6. De migration route uit zetten. 
-7. De live omgeving testen.
-8. Bugs aanmaken op GitHub en daarna de bugs in de devBugs branch oplossen.
+5. check of alle bestanden waaronder het .env en .htacces bestand in de online omgeving staan
+6. De migration route aan zetten en naar toe gaan in de online applicatie.
+7. De migration route uit zetten. 
+8. De live omgeving testen.
+9. Bugs aanmaken op GitHub en daarna de bugs in de devBugs branch oplossen.

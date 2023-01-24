@@ -3,10 +3,12 @@
 @section('content')
 
     <div class="bg-light p-4 rounded">
-        <h1>Users</h1>
+        <h1>Gebruiker</h1>
         <div class="lead">
-            Manage your users here.
-            {{-- <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right">Add new user</a> --}}
+            Beheer hier de gebruikers.
+            <br>
+
+            <td><a href="{{ route('users.resentAttachment') }}" class="btn btn-primary btn-sm" title='Stuur een mail naar de studenten/workshophouders met de inschrijvingen van de activiteiten'>Mail versturen</a></td>
         </div>
 
         <div class="mt-2">
@@ -17,16 +19,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" width="16%">Name</th>
-                <th scope="col" width="20%">Email</th>
-                <th scope="col" width="10%">Role</th>
+                <th scope="col" width="15%">Naam</th>
+                <th scope="col">Email</th>
+                {{-- <th scope="col" width="10%">Username</th> --}}
+                <th scope="col" width="10%">Rollen</th>
                 <th scope="col" width="1%" colspan="1">Actie</th>
             </tr>
             </thead>
             <tbody>
                 @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->first_name . ' ' . $user->insertion . ' ' . $user->last_name}}</td>
                         <td>{{ $user->email }}</td>
                         <td>
                             @foreach($user->roles as $role) {{-- waarom is dit een loop? --}}
