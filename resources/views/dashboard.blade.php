@@ -2,19 +2,9 @@
 
     @if(Auth::user()->hasRole('geblokkeerd'))
         @section('content') 
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div>
-                <div class="flex-grow-1">
-                    <div>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item d-flex align-items-center justify-content-between">
-                            <span class="fs-sm fw-medium">Log Out</span>
-                        </a>
-                    
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="margin-top: 15rem; margin-left: -240px">
+                <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-danger">
                     <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">
                         {{Auth::user()->name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
@@ -24,8 +14,10 @@
                 </div>
             </div>
         </div>
+        
+        @endsection
     @else
-   
+
 
     <!-- Hero -->
     {{-- @extends('layouts.backend') --}}

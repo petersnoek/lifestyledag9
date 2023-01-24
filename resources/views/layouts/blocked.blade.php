@@ -40,9 +40,24 @@
 
     
       <!-- Header Content -->
+      <header id="page-header">
+      <!-- Header Content -->
       <div class="content-header">
         <!-- Left Section -->
         <div class="d-flex align-items-center">
+        </div>
+        <!-- END Left Section -->
+
+        <!-- Right Section -->
+        <div class="d-flex align-items-center">
+          
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-alt-secondary d-flex align-items-center">Uitloggen</button>
+          </form>
+          
+        </div>
+        <!-- END Right Section -->
       </div>
       <!-- END Header Content -->
 
@@ -57,6 +72,7 @@
       </div>
       <!-- END Header Loader -->
     </header>
+    <!-- END Header -->
     <!-- END Header -->
 
     <!-- Main Container -->
