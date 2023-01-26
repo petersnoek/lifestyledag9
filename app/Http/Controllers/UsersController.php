@@ -133,7 +133,7 @@ class UsersController extends Controller
                     }
                 }
             }
-            /* if($user->roles[0]->name == 'workshophouder' && count($user->enlistments) > 0){
+            /* if($user->roles[0]->name == 'workshophouder' && count($user->activities) > 0){
                 //if user has activities loop through them and delete any that aren't too old/archived
                 foreach($user->activities as $activity){
                     if($activity->event->enlist_starts_at > Carbon::now()->toDateTimeString()){
