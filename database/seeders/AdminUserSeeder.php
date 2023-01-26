@@ -18,7 +18,8 @@ class AdminUserSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Admin',
+                'first_name' => 'Admin',
+                'last_name' => 'test',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$lnA9B4HuQvixVrktB8dLSOksmbhhCCoUuQGS7PXmORvTeM/SLxuKC'

@@ -28,9 +28,18 @@ class EventroundSeeder extends Seeder
         DB::table('eventrounds')->insert(['event_id' => 1, 'round' => 2, 'start_time' => $elfuur, 'end_time' => $twaalfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
         DB::table('eventrounds')->insert(['event_id' => 1, 'round' => 3, 'start_time' => $eenuur, 'end_time' => $tweeuur, 'created_at' => $nu, 'updated_at' => $nu,]);
 
+        DB::table('eventrounds')->insert(['event_id' => 2, 'round' => 1, 'start_time' => $tienuur, 'end_time' => $elfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('eventrounds')->insert(['event_id' => 2, 'round' => 2, 'start_time' => $elfuur, 'end_time' => $twaalfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('eventrounds')->insert(['event_id' => 2, 'round' => 3, 'start_time' => $eenuur, 'end_time' => $tweeuur, 'created_at' => $nu, 'updated_at' => $nu,]);
 
         DB::table('eventrounds')->insert(['event_id' => 3, 'round' => 1, 'start_time' => $tienuur, 'end_time' => $elfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
         DB::table('eventrounds')->insert(['event_id' => 3, 'round' => 2, 'start_time' => $elfuur, 'end_time' => $twaalfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
         DB::table('eventrounds')->insert(['event_id' => 3, 'round' => 3, 'start_time' => $eenuur, 'end_time' => $tweeuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+
+        DB::table('eventrounds')->insert(['event_id' => 4, 'round' => 1, 'start_time' => $tienuur, 'end_time' => $elfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('eventrounds')->insert(['event_id' => 4, 'round' => 2, 'start_time' => $elfuur, 'end_time' => $twaalfuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('eventrounds')->insert(['event_id' => 4, 'round' => 3, 'start_time' => $eenuur, 'end_time' => $tweeuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('eventrounds')->insert(['event_id' => 4, 'round' => 4, 'start_time' => $tweeuur, 'end_time' => $drieuur, 'created_at' => $nu, 'updated_at' => $nu,]);
+
     }
 }

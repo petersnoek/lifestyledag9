@@ -39,7 +39,7 @@ class SendWorkshopMail extends Command
 
                 $mailInfo = [
                     'activity' => $activity->name,
-                    'workshophouder' => $workshophouder->name,
+                    'workshophouder' => $workshophouder->first_name,
                     'email' => $workshophouder->email,
                     'eventrounds' => $eventrounds
                 ];

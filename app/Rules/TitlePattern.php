@@ -4,10 +4,11 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class NamePattern implements Rule
+class TitlePattern implements Rule
 {
     public function __construct()
     {
+  
     }
     public function passes($attribute, $value)
     {
@@ -16,6 +17,6 @@ class NamePattern implements Rule
 
     public function message()
     {
-        return 'Error: Ongeldige invoer bij "naam". Alleen letters zijn toegestaan';
+        return 'Error: Alleen letters, cijfers en "_-.,?!&"\'()" zijn toegestaan.';
     }
 }

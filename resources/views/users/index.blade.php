@@ -3,10 +3,12 @@
 @section('content')
 
     <div class="bg-light p-4 rounded">
-        <h1>Users</h1>
+        <h1>Gebruiker</h1>
         <div class="lead">
-            Manage your users here.
-            {{-- <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right">Add new user</a> --}}
+            Beheer hier de gebruikers.
+            <br>
+
+            <td><a href="{{ route('users.resentAttachment') }}" class="btn btn-primary btn-sm" title='Stuur een mail naar de studenten/workshophouders met de inschrijvingen van de activiteiten'>Mail versturen</a></td>
         </div>
 
         <div class="mt-2">
@@ -17,10 +19,10 @@
             <thead>
             <tr>
                 <th scope="col" width="1%">#</th>
-                <th scope="col" width="15%">Name</th>
+                <th scope="col" width="15%">Naam</th>
                 <th scope="col">Email</th>
                 {{-- <th scope="col" width="10%">Username</th> --}}
-                <th scope="col" width="10%">Roles</th>
+                <th scope="col" width="10%">Rollen</th>
                 <th scope="col" width="1%" colspan="2"></th>
                 {{-- <th scope="col" width="1%" colspan="3"></th> --}}
             </tr>
@@ -29,16 +31,14 @@
                 @foreach($users as $user)
                     <tr>
                         <th scope="row">{{ $user->id }}</th>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->first_name . ' ' . $user->insertion . ' ' . $user->last_name}}</td>
                         <td>{{ $user->email }}</td>
-                        {{-- <td>{{ $user->username }}</td> --}}
                         <td>
                             @foreach($user->roles as $role)
                                 <span class="badge bg-primary">{{ $role->name }}</span>
                             @endforeach
                         </td>
-                        <td><a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm">Show</a></td>
-                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm">Edit</a></td>
+                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a></td>
                         {{-- <td>
                             {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}

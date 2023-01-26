@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -19,8 +20,14 @@ class DashboardController extends Controller
         if ($User->can('view-any-event')) {
             $events = Event::orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
         } else {
-            $events = Event::where('frontpage', true)->orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
+            $events = Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
         }
+        
+        $workshops = $User->activities()->get()->sortByDesc(function ($data) {
+            return $data->event()->first()->ends_at;
+        })->sortBy(function ($data) {
+            return $data['name'];
+        })->all();
 
         $workshops = $User->activities()->get()->sortByDesc(function ($data) {
             return $data->event()->first()->ends_at;

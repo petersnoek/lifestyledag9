@@ -4,13 +4,8 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class DescriptionPattern implements Rule
+class LocationPattern implements Rule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
@@ -25,11 +20,7 @@ class DescriptionPattern implements Rule
      */
     public function passes($attribute, $value)
     {
-        if($value !== null) {
-            return preg_match('/^[a-zA-Z0-9_\-., ?!""\'()]+$/', $value);
-        } else {
-            return true;
-        }
+        return preg_match('/^[a-zA-Z\s]*$/', $value);
     }
 
     /**
@@ -39,6 +30,6 @@ class DescriptionPattern implements Rule
      */
     public function message()
     {
-        return 'Error: Ongeldige invoer bij "beschrijving".';
+        return 'Error: Ongeldige invoer bij "locatie". Alleen letters zijn toegestaan';
     }
 }
