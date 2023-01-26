@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class SurnamePattern implements Rule
+class insertionPattern implements Rule
 {
     public function __construct()
     {
