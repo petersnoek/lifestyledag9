@@ -10,20 +10,19 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $students = [
+        $admin = [
             [
-                'first_name' => 'Student',
-                'insertion' => 'de',
-                'last_name' => 'student',
-                'email' => 'student@gmail.com',
+                'first_name' => 'Admin',
+                'last_name' => 'test',
+                'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
-                'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm',
+                'password' => '$2y$10$lnA9B4HuQvixVrktB8dLSOksmbhhCCoUuQGS7PXmORvTeM/SLxuKC'
             ]
         ];
 
-        $role = Role::where('name', 'student')->first()->id;
+        $role = Role::where(['name' => 'admin'])->first()->id;
 
-        foreach ($students as $key => $value) {
+        foreach ($admin as $key => $value) {
             $user = User::create($value);
             $user->syncRoles($role);
         }
@@ -44,19 +43,20 @@ class UserSeeder extends Seeder
             $user->syncRoles($role);
         }
 
-        $admin = [
+        $students = [
             [
-                'first_name' => 'Admin',
-                'last_name' => 'test',
-                'email' => 'admin@gmail.com',
+                'first_name' => 'Student',
+                'insertion' => 'de',
+                'last_name' => 'student',
+                'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
-                'password' => '$2y$10$lnA9B4HuQvixVrktB8dLSOksmbhhCCoUuQGS7PXmORvTeM/SLxuKC'
+                'password' => '$2y$10$5jnlp82C7RYyWNKNEYXzPOj3su8JcCmonxpaAzLXSE6VGQncZybDm',
             ]
         ];
 
-        $role = Role::where(['name' => 'admin'])->first()->id;
+        $role = Role::where('name', 'student')->first()->id;
 
-        foreach ($admin as $key => $value) {
+        foreach ($students as $key => $value) {
             $user = User::create($value);
             $user->syncRoles($role);
         }
