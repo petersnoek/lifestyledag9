@@ -148,11 +148,6 @@
                                 <h4 class="mb-1 text-start">
                                     {{ $number++ . " " . $activity->name }}
                                 </h4>
-                                @if (isset($activity->executed_by) && ltrim($activity->executed_by, '&#64;') !== '')
-                                    <p class="fs-sm fw-medium mb-2 text-start">
-                                        &#64;{{ ltrim($activity->executed_by, '&#64;') }}
-                                    </p>
-                                @endif
                                 <p class="fs-sm text-muted text-start @can(['enlistment.store']) mb-2 @else mb-0 @endcan">
                                     {{ $activity->description }}
                                 </p>
