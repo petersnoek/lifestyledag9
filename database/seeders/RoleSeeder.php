@@ -77,7 +77,9 @@ class RoleSeeder extends Seeder
             "permissions.store",
             "permissions.edit",
             "permissions.update",
-            "permissions.destroy"
+            "permissions.destroy",
+            "permissions.index",
+            "roles.index"
         ];
 
         $role = Role::create(['name' => 'admin', 'color' => '#4c78dd']);

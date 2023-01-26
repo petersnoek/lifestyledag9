@@ -90,7 +90,7 @@ class Activity extends Model
         }
 
         if ($max_participants <= 0) {
-            return 'geen plaatsen beschikbaar';
+            return 'geen plaatsen beschikbaar.';
         } else if ($enlistment_count >= $max_participants) {
             return 'vol';
         } else if ($enlistment_for_activity_exists) {
@@ -98,7 +98,7 @@ class Activity extends Model
         } else if ($enlistment_for_round_exists) {
             return 'Je bent al ingeschreven in deze ronde.';
         } else {
-            return ($max_participants - $enlistment_count) . ' plekken beschikbaar';
+            return ($max_participants - $enlistment_count) . ' plekken beschikbaar.';
         }
     }
 }
