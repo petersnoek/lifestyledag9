@@ -37,7 +37,7 @@
                             @endforeach
                         </td>
                         <td>
-                            @if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd')
+                            @if($user->roles[0]->name === 'student')
                                 <a href="{{ route('users.blockConfirm', $user->id) }}" class="btn btn-danger btn-sm">Block</a>
                             @endif
                         </td>
