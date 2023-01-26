@@ -85,10 +85,23 @@
 
         <div class="mt-2">
             @include('layouts.partials.errorMessages')
-        </div>
+        </div>    
 
         <div class="content">
             <div class="row" style="display: flex; display: -webkit-flex; flex-wrap: wrap;">
+
+                @if (count($event->activities) <= 0)
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div>
+                            <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-secondary">
+                                <h1 class="h3 fw-bold mb-2">Geen activiteiten</h1>
+                                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                                    Er zijn nog geen activiteiten voor {{$event->name}}.
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
                 <?php $number = 1; ?>
                 @foreach ($event->activities as $activity)
