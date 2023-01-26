@@ -72,9 +72,9 @@
                                         : '' }}>
                                 </td>
                                 <td>{{ $contact->organisation }}</td>
-                                <td>{{ $contact->firstname }}</td>
-                                <td>{{ $contact->surname }}</td>
-                                <td>{{ $contact->lastname }}</td>
+                                <td>{{ $contact->first_name }}</td>
+                                <td>{{ $contact->insertion }}</td>
+                                <td>{{ $contact->last_name }}</td>
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->mobiel }}</td>
                                 <td>
