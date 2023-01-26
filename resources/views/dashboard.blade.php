@@ -1,7 +1,27 @@
-@extends('layouts.backend')
+@extends((Auth::user()->hasRole('geblokkeerd')) ? 'layouts.blocked' : 'layouts.backend')
 
-@section('content')
+    @if(Auth::user()->hasRole('geblokkeerd'))
+        @section('content') 
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="margin-top: 15rem; margin-left: -240px">
+                <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-danger">
+                    <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                        {{Auth::user()->first_name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
+                        <br>
+                        Neem contact op met een beheerder voor eventuele opheffing.
+                    </h2>
+                </div>
+            </div>
+        </div>
+        
+        @endsection
+    @else
+
+
     <!-- Hero -->
+    {{-- @extends('layouts.backend') --}}
+    @section('content')
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -146,4 +166,5 @@
 		<!-- END Footer -->
 	</div>
 	<!-- END Page Container -->
-@endsection
+    @endsection
+    @endif
