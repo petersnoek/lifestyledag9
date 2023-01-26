@@ -7,7 +7,7 @@
                 <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-danger">
                     <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                        {{Auth::user()->name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
+                        {{Auth::user()->first_name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
                         <br>
                         Neem contact op met een beheerder voor eventuele opheffing.
                     </h2>
