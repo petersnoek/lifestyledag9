@@ -28,7 +28,7 @@ class SendStudentmail extends Command
 
             $student = $enlistments->first()->user;
             $mailInfo = [
-                'student' => $student->name,
+                'student' => $student->first_name,
                 'email' => $student->email,
             ];
 
@@ -37,8 +37,8 @@ class SendStudentmail extends Command
             foreach ($enlistments as $enlistment) {
                 $activityInfo = [
                     'activity' => $enlistment->activity->name,
-                    'rounds' => $enlistment->round->round,
-                    'start_time' => $enlistment->round->start_time
+                    'rounds' => $enlistment->eventrounds->round,
+                    'start_time' => $enlistment->eventrounds->startTimeText()
                 ];
 
                 $activities[] = $activityInfo;

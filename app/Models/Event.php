@@ -11,8 +11,28 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'location',
+        'image',
+        'starts_at',
+        'ends_at',
+        'enlist_starts_at',
+        'enlist_stops_at',
+    ];
+
     public function displayName() {
         return $this->name;
+    }
+
+    public function startAndEndDate()
+    {
+        $format = 'd-m-Y H:i';
+        $start_date = Carbon::parse($this->starts_at)->format($format);
+        $end_date = Carbon::parse($this->ends_at)->format($format);
+
+        return $start_date . ' - ' . $end_date;
     }
 
     public function eventrounds()
@@ -66,12 +86,14 @@ class Event extends Model
     }
 
     //return if this event can be vieuw by logedin user.
-    public function can_vieuw() {
+    public function can_view() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {
             return true;
         }
 
-        return ($this->frontpage == true);
+        if($this->ends_at >= Carbon::now()->toDateTimeString()){
+            return true;
+        }
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Enlistment;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Activity extends Model
@@ -34,6 +35,13 @@ class Activity extends Model
 
     function max_participants_round($eventround_id) {
         return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
+    }
+
+    public function is_owner(){
+        if ($this->user()->first()->id == User::find(Auth::user()->id)->id) {
+            return false;
+        }
+        return true;
     }
 
     public function delete_rounds()
@@ -98,5 +106,13 @@ class Activity extends Model
         } else {
             return ($max_participants - $enlistment_count) . ' plekken beschikbaar';
         }
+    }
+
+    public function updatedAtDate()
+    {
+        $format = 'd-m-Y H:i';
+        $updated_at_date = Carbon::parse($this->updated_at)->format($format);
+
+        return $updated_at_date;
     }
 }

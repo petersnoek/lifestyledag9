@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 use App\Rules\ClassCodePattern;
+use App\Rules\EmailPattern;
+use App\Rules\NamePattern;
+use App\Rules\InsertionPattern;
 
 class RegisteredUserController extends Controller
 {
@@ -36,16 +39,24 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'classCode' => ['nullable', 'string', new ClassCodePattern()],
+            'first_name' => ['required', 'string', 'max:255', new NamePattern()],
+            'insertion' => ['string', 'nullable', 'max:255', new InsertionPattern()],
+            'last_name' => ['required', 'string', 'max:255', new NamePattern()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new EmailPattern()], 
+            'class_code' => ['required', 'string', new ClassCodePattern()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ],
+        [
+         'password.min'=> 'Je wachtwoord moet uit minimaal 8 tekens bestaan.', // custom message
+        ]
+        );
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'insertion' => $request->insertion,
+            'last_name' => $request->last_name,
             'email' => $request->email,
-            'classCode' => $request->classCode,
+            'class_code' => $request->class_code,
             'password' => Hash::make($request->password),
         ]);
 
@@ -55,6 +66,10 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        if(isset($_POST['signup-terms'])){
+            return redirect(RouteServiceProvider::HOME);
+        }
 
         return redirect()->route('verification.notice');
     }

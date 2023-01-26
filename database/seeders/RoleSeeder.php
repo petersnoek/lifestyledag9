@@ -15,9 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        // Permission::whereIn("name", [])->get();
-
-        // var_export(Permission::pluck('name')->all());
+        // var_export(Permission::pluck('name')->all()); //log all the permissions in de console
 
         $role = Role::create(['name' => 'student']);
         $permissions = Permission::whereIn("name", [
@@ -27,6 +25,9 @@ class RoleSeeder extends Seeder
             "enlistment.destroy",
             "login",
             "logout",
+            "register",
+            "settings",
+            "users.update2",
             "password.confirm",
             "password.email",
             "password.request",
@@ -47,6 +48,9 @@ class RoleSeeder extends Seeder
             "activity.store",
             "login",
             "logout",
+            "register",
+            "settings",
+            "users.update2",
             "password.confirm",
             "password.email",
             "password.request",
@@ -54,12 +58,32 @@ class RoleSeeder extends Seeder
             "password.update",
             "verification.notice",
             "verification.send",
-            "verification.verify"
+            "activity.destroy",
+            "activity.store",
+            "activity.create",
+            "verification.verify",
         ])->get();
         $role->permissions()->attach($permissions);
-        
+
+        //admin gets all permissions except the permissions in the array
+        $exceptAdminPermissions = [
+            "permissions.index",
+            "permissions.show",
+            "permissions.create",
+            "permissions.store",
+            "permissions.edit",
+            "permissions.update",
+            "permissions.destroy",
+            "roles.index",
+            "roles.show",
+            "roles.create",
+            "roles.edit",
+            "roles.update",
+            "roles.destroy"
+        ];
+
         $role = Role::create(['name' => 'admin']);
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::whereNotIn('name', $exceptAdminPermissions)->get(['id']);
         $role->permissions()->attach($permissions);
     }
 }

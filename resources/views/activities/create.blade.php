@@ -38,7 +38,7 @@
                         <div class="col-sm-8 col-xl-6">
                             <div class="mb-4">
                                 <input type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("name",$errors)) {{'is-invalid'}} @endif" name="name" placeholder="Activiteit naam *"  value="{{ old('name')}}" required>
-                                
+
                                 @if (count($errors) > 0 && array_key_exists("name",$errors))
                                     @foreach($errors['name'] as $error)
                                         <div class="invalid-feedback">
@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <textarea type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving">{{ old('description')}}</textarea>
+                                <textarea style="max-height: 10rem" type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving" maxlength="255">{{ old('description')}}</textarea>
 
                                 @if (count($errors) > 0 && array_key_exists("description",$errors))
                                     @foreach($errors['description'] as $error)
@@ -62,7 +62,7 @@
 
                             <div class="mb-4 form-floating">
                                 <select id="eventSelect" class="form-select form-control-alt @if (count($errors) > 0 && array_key_exists("event_id",$errors)) {{'is-invalid'}} @endif" name="event_id" onchange="createCapacityTable(this.value)" required>
-                                <option value="">-</option>
+                                <option value="">@if(count($events) == 0)geen evenementen beschikbaar @else - @endif</option>
                                 @foreach($events as $event)
                                     <option
                                         @if (old('event_id') == $event->id)
@@ -123,8 +123,12 @@
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
+
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
-                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
+                                    <div style="overflow:hidden; height:11.75rem;" class="position-relative">
+                                        <img id='headerPreview' style="top: 50%; left: 50%; transform: translate(-50%, -50%); min-height: 11.75rem; min-width: 100%" class="w-100 position-absolute" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="kan afbeelding niet inladen.">
+                                        {{-- image still stretches a bit cuz I can't not give it a width or height; this is like near impossible --}}
+                                    </div>
                                 </div>
                                 <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 @if (count($errors) > 0 && array_key_exists("image",$errors)) {{'is-invalid'}} @endif">Afbeelding</label>
                                 <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
@@ -142,7 +146,6 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -188,7 +191,7 @@
                             container.appendChild(subContainer)
                             /*create collumn label*/
                             collumnLabel = document.createElement('label')
-                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde*:'
+                            collumnLabel.innerHTML = 'Studenten capaciteit per ronde: *'
                             subContainer.appendChild(collumnLabel)
                             /*create collumn*/
                             capaciteitCollumn = document.createElement('div')
@@ -205,7 +208,8 @@
                                 capaciteitInput = document.createElement('input')
                                 capaciteitInput.id = 'cap_' + eventround['round']
                                 capaciteitInput.classList.add("form-control","form-control-lg", "form-control-alt", "text-center", "border-end", "border-start", "py-3")
-                                capaciteitInput.type = "text"
+                                capaciteitInput.type = "number"
+                                capaciteitInput.step = '1'
                                 capaciteitInput.min = '0'
                                 capaciteitInput.max = '1000'
                                 capaciteitInput.name = 'max_participants[' + eventround['round'] + ']'

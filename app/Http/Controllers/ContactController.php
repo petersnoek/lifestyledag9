@@ -7,7 +7,7 @@ use App\Models\Event;
 use App\Models\Contact;
 use App\Models\Eventround;
 use App\Rules\PhonePattern;
-use App\Rules\SurnamePattern;
+use App\Rules\InsertionPattern;
 use App\Rules\LetterPattern;
 use App\Rules\OrganisationNamePattern;
 use Illuminate\Validation\Rule;
@@ -82,7 +82,9 @@ class ContactController extends Controller
             $hashed_random_password = Hash::make($unhashed_random_password);
 
             $user = User::create([
-                'name' => $contact->displayName(),
+                'first_name' => $contact->first_name,
+                'insertion' => $contact->insertion,
+                'last_name' => $contact->last_name,
                 'email' => $contact->email,
                 'password' => $hashed_random_password,
             ]);
@@ -128,9 +130,9 @@ class ContactController extends Controller
      */
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'firstname' => ['required', new LetterPattern(), 'max:255'],
-            'surname' => [new SurnamePattern(), 'max:255'],
-            'lastname' => ['required', new LetterPattern(), 'max:255'],
+            'first_name' => ['required', new LetterPattern(), 'max:255'],
+            'insertion' => [new InsertionPattern(), 'max:255'],
+            'last_name' => ['required', new LetterPattern(), 'max:255'],
             'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
             'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class) , 'max:255'],
             'on_mailinglist' => ['required', 'boolean'],
@@ -142,9 +144,9 @@ class ContactController extends Controller
         }
 
         $contact = new Contact();
-        $contact->firstname = Contact::nameTrimming($request->firstname);
-        $contact->surname = Contact::SurnameTrimming($request->surname);
-        $contact->lastname = Contact::nameTrimming($request->lastname);
+        $contact->first_name = Contact::nameTrimming($request->first_name);
+        $contact->insertion = Contact::insertionTrimming($request->insertion);
+        $contact->last_name = Contact::nameTrimming($request->last_name);
         $contact->organisation = trim($request->organisation);
         $contact->email = trim($request->email);
         $contact->on_mailinglist = $request->on_mailinglist;
@@ -201,9 +203,9 @@ class ContactController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id' => ['bail', 'required', 'integer', 'min:1', Rule::exists(contact::class, 'id')],
-            'firstname' => ['required', new LetterPattern(), 'max:255'],
-            'surname' => [new SurnamePattern(), 'max:255'],
-            'lastname' => ['required', new LetterPattern(), 'max:255'],
+            'first_name' => ['required', new LetterPattern(), 'max:255'],
+            'insertion' => [new InsertionPattern(), 'max:255'],
+            'last_name' => ['required', new LetterPattern(), 'max:255'],
             'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
             'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class)->ignore($request->id), 'max:255'],
             'on_mailinglist' => ['required', 'boolean'],
@@ -220,9 +222,9 @@ class ContactController extends Controller
         }
 
         $contact = Contact::find($request->id);
-        $contact->firstname = Contact::nameTrimming($request->firstname);
-        $contact->surname = Contact::SurnameTrimming($request->surname);
-        $contact->lastname = Contact::nameTrimming($request->lastname);
+        $contact->first_name = Contact::nameTrimming($request->first_name);
+        $contact->insertion = Contact::insertionTrimming($request->insertion);
+        $contact->last_name = Contact::nameTrimming($request->last_name);
         $contact->organisation = trim($request->organisation);
         $contact->email = trim($request->email);
         $contact->on_mailinglist = $request->on_mailinglist;

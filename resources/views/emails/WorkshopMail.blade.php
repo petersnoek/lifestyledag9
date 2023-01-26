@@ -22,9 +22,9 @@ Het inschrijven is gesloten, hier is een lijst met alle aanmeldingen van uw work
 <?php $student = $enlistment->user()->first(); ?>
 <tr>
 <td>{{$eventround->round}}</td>
-<td>{{$eventround->start_time}}</td>
-<td>{{$eventround->end_time}}</td>
-<td>{{$student->name}}</td>
+<td>{{$eventround->startTimeText()}}</td>
+<td>{{$eventround->endTimeText()}}</td>
+<td>{{$student->displayName()}}</td>
 </tr>
 @endforeach
 

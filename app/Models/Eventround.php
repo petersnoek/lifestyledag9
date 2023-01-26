@@ -20,6 +20,22 @@ class Eventround extends Model
         return $start_time . ' - ' . $end_time;
     }
 
+    public function startTimeText()
+    {
+        $format = 'H:i';
+        $start_time = Carbon::parse($this->start_time)->format($format);
+
+        return $start_time;
+    }
+
+    public function endTimeText()
+    {
+        $format = 'H:i';
+        $end_time = Carbon::parse($this->end_time)->format($format);
+
+        return $end_time;
+    }
+
     public function event()
     {
         return $this->belongsTo(Event::class);

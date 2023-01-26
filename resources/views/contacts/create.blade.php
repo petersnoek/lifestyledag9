@@ -39,35 +39,35 @@
                         <div class="col-sm-6 col-xl-6">
                             <div class="mb-4">
                                 <label class="form-check-label">Voornaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" value="{{ old('firstname')}}" maxlength="255" required>
-                                @if ($errors->has('firstname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('first_name')) {{'is-invalid'}} @endif" name="first_name" placeholder="Voornaam" value="{{ old('first_name')}}" maxlength="255" required>
+                                @if ($errors->has('first_name'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('firstname') }}
+                                        {{ $errors->first('first_name') }}
                                     </div>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Tussenvoegsel</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('surname')) {{'is-invalid'}} @endif" name="surname" placeholder="Tussenvoegsel" value="{{ old('surname')}}" maxlength="255">
-                                @if ($errors->has('surname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('insertion')) {{'is-invalid'}} @endif" name="insertion" placeholder="Tussenvoegsel" value="{{ old('insertion')}}" maxlength="255">
+                                @if ($errors->has('insertion'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('surname') }}
+                                        {{ $errors->first('insertion') }}
                                     </div>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Achternaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('lastname')) {{'is-invalid'}} @endif" name="lastname" placeholder="Achternaam"  value="{{ old('lastname')}}" maxlength="255" required>
-                                @if ($errors->has('lastname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('last_name')) {{'is-invalid'}} @endif" name="last_name" placeholder="Achternaam"  value="{{ old('last_name')}}" maxlength="255" required>
+                                @if ($errors->has('last_name'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('lastname') }}
+                                        {{ $errors->first('last_name') }}
                                     </div>
                                 @endif
                             </div>
                             <div class="form-check form-switch">
                                 <input type="hidden" name="on_mailinglist" value="0"/>
                                 <input type="checkbox" class="form-check-input @if ($errors->has('on_mailinglist')) {{'is-invalid'}} @endif" name="on_mailinglist" @if(old('on_mailinglist') !== null && old('on_mailinglist')) {{"checked"}} @endif value="1">
-                                <label class="form-check-label">Op de mailinglijst.</label>
+                                <label class="form-check-label">Op de mailinglijst</label>
                                 @if ($errors->has('on_mailinglist'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('on_mailinglist') }}

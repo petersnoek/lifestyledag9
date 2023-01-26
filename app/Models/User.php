@@ -20,10 +20,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'insertion',
+        'last_name',
+        'class_code',
         'email',
-        'password',
-        'classCode'
+        'password'
     ];
 
     /**
@@ -44,6 +46,30 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function displayName() {
+        return $this->trimmedfirst_name() . (strlen($this->trimmedinsertion())>0 ? " " . $this->trimmedinsertion() : "") . " " . $this->trimmedlast_name();
+    }
+
+    public static function nameTrimming($string) {
+        return trim(ucfirst(strtolower($string)));
+    }
+
+    public static function insertionTrimming($string) {
+        return trim(strtolower($string));
+    }
+
+    public function trimmedfirst_name() {
+        return $this->nameTrimming($this->first_name);
+    }
+
+    public function trimmedinsertion() {
+        return $this->insertionTrimming($this->insertion);
+    }
+
+    public function trimmedlast_name() {
+        return $this->nameTrimming($this->last_name);
+    }
 
     public function enlistments(){
         return $this->hasMany(Enlistment::class);

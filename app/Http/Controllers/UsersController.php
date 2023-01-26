@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
@@ -14,7 +15,7 @@ use App\Rules\ClassCodePattern;
 class UsersController extends Controller
 {
     public function index() {
-        $users = User::orderBy('name')->paginate(10);
+        $users = User::orderBy('first_name')->paginate(10);
 
         return response()->view('users.index', compact('users'));
     }
@@ -32,12 +33,6 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')
             ->withSuccess(__('User created successfully.'));
-    }
-
-    public function show(User $user) {
-        return response()->view('users.show', [
-            'user' => $user
-        ]);
     }
 
     public function edit(User $user) {
@@ -58,8 +53,10 @@ class UsersController extends Controller
     // Update gegevens van de student
     public function update2(Request $request, $id) {
         $validator = Validator::make($request->all(), [
-            'name' => ['max:255', 'nullable', new NamePattern()],
-            'classCode' => ['nullable', new ClassCodePattern()]
+            'first_name' => ['max:255', 'nullable', new NamePattern()],
+            'insertion' => ['max:255', 'nullable', new NamePattern()],
+            'last_name' => ['max:255', 'nullable', new NamePattern()],
+            'class_code' => [new ClassCodePattern()]
         ]);
 
         if ($validator->fails()) {
@@ -67,16 +64,24 @@ class UsersController extends Controller
         }
 
         $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->classCode = $request->input('classCode');
+        $user->first_name = $request->input('first_name');
+        $user->insertion = $request->input('insertion');
+        $user->last_name = $request->input('last_name');
+        $user->class_code = $request->input('class_code');
         $user->email = $request->input('email');
 
         // Als een request input null is pak dan de waarde van de database
-        if($request->name == null){
-            $user->name = Auth::user()->name;
+        if($request->first_name == null){
+            $user->first_name = Auth::user()->first_name;
         }
-        if($request->classCode == null){
-            $user->classCode = Auth::user()->classCode;
+        if($request->insertion == null){
+            $user->insertion = Auth::user()->insertion;
+        }
+        if($request->last_name == null){
+            $user->last_name = Auth::user()->last_name;
+        }
+        if($request->class_code == null){
+            $user->class_code = Auth::user()->class_code;
         }
         if($request->email == null){
             $user->email = Auth::user()->email;
@@ -92,5 +97,11 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')
             ->withSuccess(__('User deleted successfully.'));
+    }
+
+    public function resentAttachment() {
+        Artisan::call('info:day');
+        Artisan::call('info:student');
+        return redirect()->route('users.index')->withSuccess(__('Email succesvol verstuurd.'));
     }
 }
