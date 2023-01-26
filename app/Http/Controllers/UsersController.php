@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\NamePattern;
 use App\Rules\ClassCodePattern;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -123,16 +124,25 @@ class UsersController extends Controller
         $user = User::find($request->user_id);
 
         if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd'){
-            if($user->roles[0]->name == 'student' && count($user->enlistment) > 0){
+            if($user->roles[0]->name == 'student' && count($user->enlistments) > 0){
                 //if user has enlistments loop through them and delete any that aren't too old/archived
+                foreach($user->enlistments as $enlistment){
+                    if($enlistment->event->ends_at > Carbon::now()->toDateTimeString()){
+                        //if the enlistment is for an event that hasn't ended yet then it can delete it
+                        $enlistment->delete();
+                    }
+                }
             }
-            if(count($user->activities) > 0){
-                //if user has activites loop through them and delete any that aren't too old/archived
-                /* foreach($user->activites as $activity){
-                    dd($activity);
-                } */
-                dd($user->activites); //WHY DOESN'T THIS GIVE ME THE ACTIVITIES??
-            }
+            /* if($user->roles[0]->name == 'workshophouder' && count($user->enlistments) > 0){
+                //if user has activities loop through them and delete any that aren't too old/archived
+                foreach($user->activities as $activity){
+                    if($activity->event->enlist_starts_at > Carbon::now()->toDateTimeString()){
+                        //if the activity is for an event that hasn't ended yet then it can delete it
+                        $activity->delete();
+                    }
+                }
+            } */
+            
             /* $role = Role::where('name', 'geblokkeerd')->first()->id;
             $user->syncRoles($role); */
 
