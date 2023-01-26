@@ -143,8 +143,8 @@ class UsersController extends Controller
                 }
             } */
             
-            /* $role = Role::where('name', 'geblokkeerd')->first()->id;
-            $user->syncRoles($role); */
+            $role = Role::where('name', 'geblokkeerd')->first()->id;
+            $user->syncRoles($role);
 
             return redirect()->route('users.index')
             ->withSuccess(__('Gebruiker \''. $user->first_name .'\' succesvol geblokkeerd.'));
