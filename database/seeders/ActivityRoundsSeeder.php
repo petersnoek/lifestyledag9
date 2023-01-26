@@ -55,6 +55,26 @@ class ActivityRoundsSeeder extends Seeder
                 'eventround_id' => 13,
                 'max_participants' => 8
             ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 10,
+                'max_participants' => 15
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 11,
+                'max_participants' => 10
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 12,
+                'max_participants' => 8
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 13,
+                'max_participants' => 8
+            ],
         ];
 
         foreach ($data as $key => $value) {
