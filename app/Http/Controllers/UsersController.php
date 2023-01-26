@@ -141,6 +141,7 @@ class UsersController extends Controller
                         $activity->delete();
                     }
                 }
+                //verwijdert niet de activity rounds
             } */
             
             $role = Role::where('name', 'geblokkeerd')->first()->id;
