@@ -63,7 +63,7 @@ class Event extends Model
         return $enlist_starts_at->isPast();
     }
 
-    //return if this event can be vieuw by logedin user.
+    //return if this event can be view by logged in user.
     public function can_view() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {

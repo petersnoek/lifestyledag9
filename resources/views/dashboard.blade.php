@@ -35,6 +35,14 @@
                 @foreach($events as $event)
                 <!-- Story -->
                 <div class="col-lg-4">
+                    <form action="{{ route('event.edit') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="event_id" value="{{$event->id}}">
+
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            Edit
+                        </button>
+                    </form>
                     <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', ['event_id' => Crypt::encrypt($event->id)]) }}">
                       <img class="img-fluid" src="@if(isset($event->image)) {{asset('storage/eventHeaders/'.$event->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
 
@@ -122,8 +130,6 @@
                                 </td>
                             </tr>
                             @endforeach
-
-
                             </tbody>
                         </table>
                     </div>

@@ -6,17 +6,58 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\EventRound;
 use App\Rules\NamePattern;
+use App\Rules\TitlePattern;
 use App\Rules\LocationPattern;
+use Illuminate\Validation\Rule;
 use App\Rules\DescriptionPattern;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Validation\Rule;
-
 use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
     public function create() {
         return response()->view('events.create');
+    }
+
+    public function edit(Request $request, $id) {
+        $id = ['id' => Crypt::decrypt($id)];
+        $validator = Validator::make($id, [
+            'id' => ['required', Rule::exists(Event::class, 'id')]
+        ]);
+        $id = $id['id'];
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->withinput($id)->with('errors', $validator->errors());
+        }
+
+        $event = Event::find($id);
+
+        return response()->view('events.edit', [
+            'event' => $event
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['bail', 'required', 'integer', 'min:1', Rule::exists(Event::class, 'id')],
+            'name' => ['required', new TitlePattern(), 'max:255'],
+            'description' => [new DescriptionPattern(), 'max:255'],
+            'location' => ['required', new LocationPattern(), 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('dashboard', ['id' => Crypt::encrypt($request->id)])->withinput($request->all())->with('errors', $validator->errors());
+        }
+
+        $event = Event::find($request->id);
+        $event->name = $request->NamePattern;
+        $event->description = $request->description;
+        $event->location = $request->location;
+        $event->save();
+
+        return redirect()->route('dashboard')->withSuccess(__('succes.events.update'));
     }
 
     // Functie om de data van het evenement aanmaken op te slaan in de db

@@ -68,6 +68,7 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix' => '/event'], function() {
         Route::get('/event/{event_id}', [EventController::class, 'show'])->name('event.show');
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/edit', [EventController::class, 'edit'])->name('event.edit');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });
 
