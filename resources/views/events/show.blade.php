@@ -37,7 +37,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <h1 class="h3 fw-bold mb-2">
                             Inschrijvingen
                         </h1>
@@ -51,6 +51,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <b><small class="text-info">{{$event->startAndEndEnlistDate()}}</small></b><br>
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
                                 <tr>
                                 <form action="{{ route('enlistment.destroy') }}" method="POST">
@@ -72,11 +73,12 @@
                             </tbody>
                             </table>
                         @elseif (!$event->registrations_possible())
+                            <b><small class="text-info">{{$event->startAndEndEnlistDate()}}</small></b><br>
                             @foreach(Auth::user()->enlistments_for_event($event->id) as $enlist)
                                 <small class="text-muted"><span class="badge rounded-pill bg-muted"> {{ $enlist->eventrounds()->first()->round }}</span> {{ $enlist->activity->name }}</small><br>
                             @endforeach
                             <br><br>
-                            <b><small class="text-info">Registraties voor dit event zijn nog niet begonnen of al geëindigd.</small></b>
+                            <b><small class="text-info">{{$event->registrations_possible_message()}}</small></b>
                         @else
                             <small>Om te kunnen inschrijven voor activiteiten moet je eerst inloggen.</small>
                         @endif

@@ -35,6 +35,16 @@ class Event extends Model
         return $start_date . ' - ' . $end_date;
     }
 
+    public function startAndEndEnlistDate()
+    {
+        $format = 'd-m-Y H:i';
+        $enlist_start_date = Carbon::parse($this->enlist_starts_at)->format($format);
+        $enlist_end_date = Carbon::parse($this->enlist_stops_at)->format($format);
+
+        return $enlist_start_date . ' - ' . $enlist_end_date;
+        // return 'Registraties voor dit evenement zijn van: ' .$enlist_start_date . ' tot ' . $enlist_end_date;
+    }
+
     public function eventrounds()
     {
         return $this->hasMany(Eventround::class, 'event_id', 'id')->orderBy('round');
