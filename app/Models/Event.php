@@ -42,7 +42,6 @@ class Event extends Model
         $enlist_end_date = Carbon::parse($this->enlist_stops_at)->format($format);
 
         return $enlist_start_date . ' - ' . $enlist_end_date;
-        // return 'Registraties voor dit evenement zijn van: ' .$enlist_start_date . ' tot ' . $enlist_end_date;
     }
 
     public function eventrounds()
