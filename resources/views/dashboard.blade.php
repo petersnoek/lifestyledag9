@@ -1,55 +1,72 @@
-@extends('layouts.backend')
+@extends((Auth::user()->hasRole('geblokkeerd')) ? 'layouts.blocked' : 'layouts.backend')
 
-@section('content')
+    @if(Auth::user()->hasRole('geblokkeerd'))
+        @section('content') 
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="margin-top: 15rem; margin-left: -240px">
+                <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-danger">
+                    <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                        {{Auth::user()->first_name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
+                        <br>
+                        Neem contact op met een beheerder voor eventuele opheffing.
+                    </h2>
+                </div>
+            </div>
+        </div>
+        
+        @endsection
+    @else
+
+
     <!-- Hero -->
+    {{-- @extends('layouts.backend') --}}
+    @section('content')
     <div class="bg-body-light">
-    <div class="content content-full">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-        <div class="flex-grow-1">
-            <h1 class="h3 fw-bold mb-2">
-            Dashboard
-            </h1>
-            <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-            Welkom op de website van Lifestyledag, {{Auth::user()->first_name}}.
-            </h2>
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h1 class="h3 fw-bold mb-2">
+                    Dashboard
+                    </h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                    Welkom op de website van Lifestyledag, {{Auth::user()->first_name}}.
+                    </h2>
+                </div>
+            </div>
+            @can(['event.create'])
+                <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
+            @endcan
+    
+            @can(['activity.create'])
+                <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
+            @endcan
         </div>
-        <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-alt">
-            <li class="breadcrumb-item">
-                <a class="link-fx" href="javascript:void(0)">App</a>
-            </li>
-            <li class="breadcrumb-item" aria-current="page">
-                Dashboard
-            </li>
-            </ol>
-        </nav>
-        </div>
-        @can(['activity.create'])
-            <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
-        @endcan
     </div>
-    </div>
-    <!-- END Hero -->
+<!-- END Hero -->
+
 	 <!-- Page Content -->
     <div class="content content-boxed">
         <div class="mt-2">
             @include('layouts.partials.messages')
+            @include('layouts.partials.errorMessages')
         </div>
             <div class="row">
                 @foreach($events as $event)
                 <!-- Story -->
                 <div class="col-lg-4">
                     <a class="block block-rounded block-link-pop overflow-hidden" href="{{ route('event.show', ['event_id' => Crypt::encrypt($event->id)]) }}">
-                        <img class="img-fluid" src="{{ asset('media/photos/photo2@2x.jpg')}}" alt="">
+                      <img class="img-fluid" src="@if(isset($event->image)) {{asset('storage/eventHeaders/'.$event->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
+
                         <div class="block-content">
                             <h4 class="mb-1">
-                                {{ $event->name }}
+                              {{ $event->name }}
                             </h4>
                             <p class="fs-sm fw-medium mb-2">
-                                {{ $event->starts_at  }} - {{ $event->starts_at  }}
+                              {{ $event->starts_at }} - {{ $event->ends_at }}
                             </p>
                             <p class="fs-sm text-muted">
-                                {{ $event->description }}
+                              {{ $event->description }}
                             </p>
                         </div>
                     </a>
@@ -67,7 +84,7 @@
                     </div>
                 </div>
                 @can(['activity.create'])
-                    <a class="btn-sm btn-alt-secondary" href="{{Route('activity.create')}}">Activteit aanmaken</a>
+                    <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
                 @endcan
                 </div>
             </div>
@@ -82,19 +99,17 @@
                         <table class="table table-bordered table-striped js-dataTable-full">
                             <thead>
                             <tr>
-                                <th class="text-center">#</th>
                                 {{-- <th>Afbeelding</th> --}}
                                 <th>Evenement</th>
                                 <th>Activiteit</th>
                                 <th>Gewijzigd</th>
-                                <th class="text-center" style="width: 5%;">Acties</th>
+                                <th class="text-center" style="width: 5%;">Actie</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             @foreach($workshops as $activity)
                             <tr>
-                                <td class="text-center">{{ $activity->id }}</td>
                                 {{-- <td class="text-left"><img src="/{{ $activity->banner_image }}" style="height:20px;"></td> --}}
                                 <td class="text-left">{{ $activity->event->name }}</td>
                                 <td class="text-left">{{ $activity->name }}</td>
@@ -151,4 +166,5 @@
 		<!-- END Footer -->
 	</div>
 	<!-- END Page Container -->
-@endsection
+    @endsection
+    @endif

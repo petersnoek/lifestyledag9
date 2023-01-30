@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\NamePattern;
 use App\Rules\ClassCodePattern;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -24,6 +25,10 @@ class UsersController extends Controller
         return response()->view('users.create');
     }
 
+    public function blocked() {
+        return response()->view('users.blocked');
+    }
+
     public function store(User $user, StoreUserRequest $request) {
         //For demo purposes only. When creating user or inviting a user
         // you should create a generated random password and email it to the user
@@ -35,12 +40,6 @@ class UsersController extends Controller
             ->withSuccess(__('User created successfully.'));
     }
 
-    public function show(User $user) {
-        return response()->view('users.show', [
-            'user' => $user
-        ]);
-    }
-
     public function edit(User $user) {
         return response()->view('users.edit', [
             'user' => $user,
@@ -49,11 +48,11 @@ class UsersController extends Controller
         ]);
     }
 
-    public function update(User $user) {
+    public function update(User $user) { /* doesn't work */
         $user->update();
 
         return redirect()->route('users.index')
-            ->withSuccess(__('User updated successfully.'));
+            ->withErrors(__('functionaliteit nog niet geimplementeerd'));
     }
 
     // Update gegevens van de student
@@ -98,6 +97,69 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
+    public function blockConfirm(User $user){
+        /* change role to blocked and delete all users enlistment and or activities*/
+        if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd'){
+            return response()->view('users.block', [
+                'user' => $user
+            ]);
+        }
+        else{
+            return redirect()->route('users.index')
+            ->withErrors(__('Gebruiker kan niet worden geblokkeerd'));
+        }
+    }
+
+    public function block(Request $request) {
+        /* TODO: make sure it's a student account and also delete any enlistments */
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'numeric']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('users.index')
+            ->withErrors(__('Onbekend User Account'));       
+        }
+
+        $user = User::find($request->user_id);
+
+        if($user->roles[0]->name != 'admin' && $user->roles[0]->name != 'geblokkeerd'){
+            if($user->roles[0]->name == 'student' && count($user->enlistments) > 0){
+                //if user has enlistments loop through them and delete any that aren't too old/archived
+                foreach($user->enlistments as $enlistment){
+                    if($enlistment->event->ends_at > Carbon::now()->toDateTimeString()){
+                        //if the enlistment is for an event that hasn't ended yet then it can delete it
+                        $enlistment->delete();
+                    }
+                }
+            }
+            /* if($user->roles[0]->name == 'workshophouder' && count($user->activities) > 0){
+                //if user has activities loop through them and delete any that aren't too old/archived
+                foreach($user->activities as $activity){
+                    if($activity->event->enlist_starts_at > Carbon::now()->toDateTimeString()){
+                        //if the activity is for an event that hasn't ended yet then it can delete it
+                        $activity->delete();
+                    }
+                }
+                //verwijdert niet de activity rounds
+            } */
+            
+            $role = Role::where('name', 'geblokkeerd')->first()->id;
+            $user->syncRoles($role);
+
+            return redirect()->route('users.index')
+            ->withSuccess(__('Gebruiker \''. $user->first_name .'\' succesvol geblokkeerd.'));
+        }
+        else{
+            return redirect()->route('users.index')
+            ->withErrors(__('Gebruiker kan niet worden geblokkeerd'));
+        }
+        
+    }
+
+    public function test1(Request $request) {
+    }
+
     public function destroy(User $user) {
         $user->delete();
 
@@ -108,6 +170,6 @@ class UsersController extends Controller
     public function resentAttachment() {
         Artisan::call('info:day');
         Artisan::call('info:student');
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->withSuccess(__('Email succesvol verstuurd.'));
     }
 }

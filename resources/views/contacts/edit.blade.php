@@ -16,10 +16,10 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                     <li class="breadcrumb-item">
-                        <a class="link-fx" href="javascript:void(0)">App</a>
+                        <a class="link-fx" href="{{ route('contacts.index') }}">Contactpersonen</a>
                     </li>
                     <li class="breadcrumb-item" aria-current="page">
-                        Dashboard
+                        Edit
                     </li>
                     </ol>
                 </nav>
@@ -41,28 +41,28 @@
                         <div class="col-sm-6 col-xl-6">
                             <div class="mb-4">
                                 <label class="form-check-label">Voornaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('firstname')) {{'is-invalid'}} @endif" name="firstname" placeholder="Voornaam" value="@if(old('firstname') === null){{$contact->firstname}}@else{{old('firstname')}}@endif" maxlength="255" required>
-                                @if ($errors->has('firstname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('first_name')) {{'is-invalid'}} @endif" name="first_name" placeholder="Voornaam" value="@if(old('first_name') === null){{$contact->first_name}}@else{{old('first_name')}}@endif" maxlength="255" required>
+                                @if ($errors->has('first_name'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('firstname') }}
+                                        {{ $errors->first('first_name') }}
                                     </div>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Tussenvoegsel</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('surname')) {{'is-invalid'}} @endif" name="surname" placeholder="Tussenvoegsel" value="@if(old('surname') === null){{$contact->surname}}@else{{old('surname')}}@endif" maxlength="255">
-                                @if ($errors->has('surname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('insertion')) {{'is-invalid'}} @endif" name="insertion" placeholder="Tussenvoegsel" value="@if(old('insertion') === null){{$contact->insertion}}@else{{old('insertion')}}@endif" maxlength="255">
+                                @if ($errors->has('insertion'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('surname') }}
+                                        {{ $errors->first('insertion') }}
                                     </div>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-check-label">Achternaam *</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('lastname')) {{'is-invalid'}} @endif" name="lastname" placeholder="Achternaam"  value="@if(old('lastname') === null){{$contact->lastname}}@else{{old('lastname')}}@endif" maxlength="255" required>
-                                @if ($errors->has('lastname'))
+                                <input type="text" class="form-control form-control-lg form-control-alt py-3 @if ($errors->has('last_name')) {{'is-invalid'}} @endif" name="last_name" placeholder="Achternaam"  value="@if(old('last_name') === null){{$contact->last_name}}@else{{old('last_name')}}@endif" maxlength="255" required>
+                                @if ($errors->has('last_name'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('lastname') }}
+                                        {{ $errors->first('last_name') }}
                                     </div>
                                 @endif
                             </div>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
-                                    Maak contactpersoon
+                                    Wijzig contactpersoon
                                 </button>
                             </div>
                         </div>

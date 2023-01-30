@@ -28,7 +28,7 @@ class SendStudentmail extends Command
 
             $student = $enlistments->first()->user;
             $mailInfo = [
-                'student' => $student->name,
+                'student' => $student->first_name,
                 'email' => $student->email,
             ];
 

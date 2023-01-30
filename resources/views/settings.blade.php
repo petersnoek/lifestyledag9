@@ -5,7 +5,8 @@
           <div class="bg-primary-dark-op">
             <div class="content content-full text-center">
               <div class="my-3">
-                <img class="img-avatar img-avatar-thumb" src="assets/media/avatars/avatar13.jpg" alt="">
+                {{-- <img class="img-avatar img-avatar-thumb" src="assets/media/avatars/avatar13.jpg" alt=""> --}}
+                <img class="img-avatar img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="Header Avatar">
               </div>
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
 
@@ -46,21 +47,23 @@
                   </div>
                   <div class="col-lg-8 col-xl-5">
                     <div class="mb-4">
-                      <label class="form-label" for="firstname">Naam</label>
-                      <input type="text" class="form-control" id="firstname" name="first_name" value="{{Auth::user()->first_name}}" placeholder="Naam">
+                      <label class="form-label" for="first_name">Naam</label>
+                      <input type="text" class="form-control" id="first_name" name="first_name" value="{{Auth::user()->first_name}}" placeholder="Naam">
                     </div>
                     <div class="mb-4">
                       <label class="form-label" for="insertion">Tussenvoegsel</label>
                       <input type="text" class="form-control" id="insertion" name="insertion" value="{{Auth::user()->insertion}}" placeholder="Tussenvoegsel">
                     </div>
                     <div class="mb-4">
-                      <label class="form-label" for="lastname">Achternaam</label>
-                      <input type="text" class="form-control" id="lastname" name="last_name" value="{{Auth::user()->last_name}}" placeholder="Achternaam">
+                      <label class="form-label" for="last_name">Achternaam</label>
+                      <input type="text" class="form-control" id="last_name" name="last_name" value="{{Auth::user()->last_name}}" placeholder="Achternaam">
                     </div>
+                    @if(Auth::user()->getRoleNames()[0] == 'student')
                     <div class="mb-4">
                       <label class="form-label" for="class_code">Klascode</label>
                       <input type="text" class="form-control" id="class_code" name="class_code" value="{{Auth::user()->class_code}}" placeholder="Vul je klascode in..">
                     </div>
+                    @endif
                     <div class="mb-4">
                       <label class="form-label" for="email">Email</label>
                       <input type="email" class="form-control" id="email" name="email" value="{{Auth::user()->email}}" placeholder="Vul je email in..">

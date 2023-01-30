@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class insertionPattern implements Rule
+class LocationPattern implements Rule
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class insertionPattern implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-z ]*$/', $value);
+        return preg_match('/^[a-zA-Z\s]*$/', $value);
     }
 
     /**
@@ -30,6 +30,6 @@ class insertionPattern implements Rule
      */
     public function message()
     {
-        return 'Invalid :attribute. only lowercase and spaces are allowed.';
+        return 'Error: Ongeldige invoer bij "locatie". Alleen letters zijn toegestaan';
     }
 }

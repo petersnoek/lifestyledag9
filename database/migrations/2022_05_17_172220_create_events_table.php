@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->boolean('frontpage')->nullable()->default(true);
             $table->datetime('starts_at')->nullable();
             $table->datetime('ends_at')->nullable();
             $table->string('location')->nullable()->default('');
+            $table->string('image')->nullable()->default(null);
 
             $table->datetime('enlist_starts_at')->nullable();
             $table->datetime('enlist_stops_at')->nullable();

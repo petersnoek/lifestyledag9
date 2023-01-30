@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
 
         // var_export(Permission::pluck('name')->all());
 
-        $role = Role::create(['name' => 'student']);
+        $role = Role::create(['name' => 'student','color' => '#4cbcdd']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "event.show",
@@ -40,7 +40,7 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
-        $role = Role::create(['name' => 'workshophouder']);
+        $role = Role::create(['name' => 'workshophouder', 'color' => '#ddb44c']);
         $permissions = Permission::whereIn("name", [
             "dashboard",
             "event.show",
@@ -66,16 +66,24 @@ class RoleSeeder extends Seeder
         ])->get();
         $role->permissions()->attach($permissions);
 
-        // $role = Role::create(['name' => 'workshophouderbeheerder']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
+        $role = Role::create(['name' => 'geblokkeerd', 'color' => '#dd4c4c']);
+        $permissions = Permission::whereIn("name", [
+            "dashboard"
+        ])->get();
+        $role->permissions()->attach($permissions);
+        //admin gets all permissions except the permissions in the array
+        $exceptAdminPermissions = [
+            "permissions.create",
+            "permissions.store",
+            "permissions.edit",
+            "permissions.update",
+            "permissions.destroy",
+            "permissions.index",
+            "roles.index"
+        ];
 
-        // $role = Role::create(['name' => 'ontwikkelaar']);
-        // $permissions = Permission::pluck('id','id')->all();
-        // $role->permissions()->attach($permissions);
-
-        $role = Role::create(['name' => 'admin']);
-        $permissions = Permission::pluck('id','id')->all();
+        $role = Role::create(['name' => 'admin', 'color' => '#4c78dd']);
+        $permissions = Permission::whereNotIn('name', $exceptAdminPermissions)->get(['id']);
         $role->permissions()->attach($permissions);
     }
 }
