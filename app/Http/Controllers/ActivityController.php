@@ -55,12 +55,16 @@ class ActivityController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255', new TitlePattern()],
             'description' => ['max:255', new DescriptionPattern()],
-            'event_id' => ['required', Rule::exists(Event::class, 'id')], /* this error gives 'The event id field is required.' which might not be a good error message */
+            'event_id' => ['required', Rule::exists(Event::class, 'id')],
             'image' => ['image','mimes:jpeg,png,jpg'],
             'max_participants.*' => ['required', 'numeric', 'min:0', 'max:1000']
+        ], [
+            'event_id.exists' => 'De event bestaat niet.',
+            'event_id.required' => 'Er moet een event gekozen zijn.',
         ]);
 
         if ($validator->fails()) {
+
             return redirect()->route('activity.create')->withinput($request->all())->with('errors', $validator->errors()->getmessages());
         }
 

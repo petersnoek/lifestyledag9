@@ -37,8 +37,8 @@ class ActivityRoundsSeeder extends Seeder
             ],
             [
                 'activity_id' => 2,
-                'eventround_id' => 5,
-                'max_participants' => 10
+                'eventround_id' => 12,
+                'max_participants' => 8
             ],
             [
                 'activity_id' => 2,
@@ -64,6 +64,16 @@ class ActivityRoundsSeeder extends Seeder
                 'activity_id' => 5,
                 'eventround_id' => 13,
                 'max_participants' => 20
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 12,
+                'max_participants' => 8
+            ],
+            [
+                'activity_id' => 4,
+                'eventround_id' => 13,
+                'max_participants' => 8
             ],
         ];
 

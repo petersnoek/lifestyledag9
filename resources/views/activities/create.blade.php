@@ -50,7 +50,6 @@
 
                             <div class="mb-4">
                                 <textarea style="max-height: 10rem" type="text" class="form-control form-control-lg form-control-alt py-3 @if (count($errors) > 0 && array_key_exists("description",$errors)) {{'is-invalid'}} @endif" name="description" placeholder="Beschrijving" maxlength="255">{{ old('description')}}</textarea>
-
                                 @if (count($errors) > 0 && array_key_exists("description",$errors))
                                     @foreach($errors['description'] as $error)
                                         <div class="invalid-feedback">
@@ -123,7 +122,6 @@
                         </div>
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
-
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
                                     <div style="overflow:hidden; height:11.75rem;" class="position-relative">
                                         <img id='headerPreview' style="top: 50%; left: 50%; transform: translate(-50%, -50%); min-height: 11.75rem; min-width: 100%" class="w-100 position-absolute" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="kan afbeelding niet inladen.">

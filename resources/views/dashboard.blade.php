@@ -1,6 +1,21 @@
-@extends('layouts.backend')
+@extends((Auth::user()->hasRole('geblokkeerd')) ? 'layouts.blocked' : 'layouts.backend')
 
 @section('content')
+    <!-- Hero -->
+    @if(Auth::user()->hasRole('geblokkeerd'))
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="margin-top: 15rem; margin-left: -240px">
+                <div class="flex-grow-1 block-rounded px-5 py-3 alert alert-danger">
+                    <h1 class="h3 fw-bold mb-2">Geblokkeerd</h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                        {{Auth::user()->first_name}}, je bent geblokkeerd door een beheerder van de Lifestyledag.
+                        <br>
+                        Neem contact op met een beheerder voor eventuele opheffing.
+                    </h2>
+                </div>
+            </div>
+        </div>
+    @else
     <!-- Hero -->
     <div class="bg-body-light">
         <div class="content content-full">
@@ -17,15 +32,13 @@
             @can(['event.create'])
                 <a class="btn btn-sm btn-alt-primary" href="{{Route('event.create')}}">Evenement aanmaken</a>
             @endcan
-
             @can(['activity.create'])
                 <a class="btn btn-sm btn-alt-primary" href="{{Route('activity.create')}}">Activiteit aanmaken</a>
             @endcan
         </div>
     </div>
-<!-- END Hero -->
-
-	 <!-- Page Content -->
+    <!-- END Hero -->
+	<!-- Page Content -->
     <div class="content content-boxed">
         <div class="mt-2">
             @include('layouts.partials.messages')

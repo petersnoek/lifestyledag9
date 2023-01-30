@@ -19,7 +19,7 @@ class EventSeeder extends Seeder
 
         DB::table('events')->insert([
             'id' => 1,
-            'name' => 'Lifestyledag 2017',
+            'name' => 'Lifestyledag 2021',
             'location' => 'Buiten de waterpoort, Gorinchem (verzamelen op grote veld, bij je eigen trajectbegeleider)',
             'description' => 'Samen met andere eerstejaars studenten ga je verschillende activiteiten doen die te maken hebben met (lichamelijk en geestelijk) gezond leven.',
             'starts_at' => Carbon::create(2017, 8, 30, 8, 30, 0)->format('Y-m-d H:i:s'),

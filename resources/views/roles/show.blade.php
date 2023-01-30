@@ -25,7 +25,6 @@
             </div>
         </div>
         <!-- END Hero -->
-        
         <div class="mt-4">
             @can(['roles.edit', 'roles.update'])
                 @if (strtolower($role->name) != "admin")

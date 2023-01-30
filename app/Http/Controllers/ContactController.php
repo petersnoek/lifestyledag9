@@ -231,6 +231,15 @@ class ContactController extends Controller
         $contact->mobiel = $request->phonenumber;
         $contact->save();
 
+        $user = $contact->user()->first();
+        if ($user !== null) {
+            $user->email = trim($request->email);
+            $user->first_name = Contact::nameTrimming($request->first_name);
+            $user->insertion = Contact::insertionTrimming($request->insertion);
+            $user->last_name = Contact::nameTrimming($request->last_name);
+            $user->save();
+        }
+
         return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.update'));
     }
 

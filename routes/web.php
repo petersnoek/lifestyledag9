@@ -12,7 +12,6 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\EnlistmentController;
 use Illuminate\Support\Facades\Artisan;
 
-
 // ------------ nieuwe route met permission aanmaken -----------------
 // 1. maak een route en stop deze in Route group met middleware permission
 // 2. ga naar Roleseeder en voeg de route name toe bij de permissions van elke rol die de route moet kunnen volgen
@@ -54,6 +53,8 @@ Route::group(['middleware' => ['permission']], function() {
     Route::group(['prefix'=> '/settings'], function() {
         Route::get('/', function () { return view('settings'); })->name('settings');
         Route::get('/update/{id}', [UsersController::class, 'update2'])->name('users.update2')->whereNumber('user');
+        Route::get('/{user}/blockConfirm', [UsersController::class, 'blockConfirm'])->name('users.blockConfirm')->whereNumber('user');
+        Route::post('/block', [UsersController::class, 'block'])->name('users.block');
     });
 
     // Route voor activiteiten
@@ -98,25 +99,29 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 Route::group(['middleware'=>['auth', 'verified']], function() {
-    // Route::group(['prefix'=> '/console'], function() {
-    //     // migrate en seed de database zonder console. na gebruik uitzetten met comments
-    //     Route::get('Setup', function () {
-    //         Artisan::call('migrate:fresh');
-    //         Artisan::call('db:seed');
-    //         Artisan::call('storage:link');
-    //     });
+    Route::group(['prefix'=> '/console'], function() {
+        // // voer alle acties uit die gedaan moeten worden na liveserver upload.
+        // // --- LET OP! dat de migration en seed command alle data momenteel in de database verwijderd! ---
+        // // De data uit de seeders wordt daarna in de database gestopt.
+        // Route::get('Setup', function () {
+        //     Artisan::call('migrate:fresh');
+        //     Artisan::call('db:seed');
+        //     Artisan::call('storage:link');
+        // });
 
-    //     // migrate en seed de database zonder console. na gebruik uitzetten met comments
-    //     Route::get('migrate', function () {
-    //         Artisan::call('migrate:fresh');
-    //         Artisan::call('db:seed');
-    //     });
+        // // migrate en seed de database zonder console. na gebruik uitzetten met comments.
+        // // --- LET OP! dat de migration en seed command alle data momenteel in de database verwijderd! ---
+        // // De data uit de seeders wordt daarna in de database gestopt.
+        // Route::get('migrate', function () {
+        //     Artisan::call('migrate:fresh');
+        //     Artisan::call('db:seed');
+        // });
 
-    //     // link afbeeldingen opslag ÉÉNMALIG BIJ ELKE LIVESERVER UPLOAD
-    //     Route::get('storagelink', function () {
-    //         Artisan::call('storage:link');
-    //     });
-    // });
+        // // link afbeeldingen opslag linken, na elke liveserver upload
+        // Route::get('storagelink', function () {
+        //     Artisan::call('storage:link');
+        // });
+    });
 });
 
 require __DIR__. '/auth.php';

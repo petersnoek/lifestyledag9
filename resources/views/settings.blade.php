@@ -8,9 +8,7 @@
                 <img class="img-avatar img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="Header Avatar">
               </div>
               <h1 class="h2 text-white mb-0">Pas gegevens aan</h1>
-
               <br>
-
               <a class="btn btn-alt-secondary" href="{{ route('dashboard') }}">
                 <i class="fa fa-fw fa-arrow-left text-danger"></i> Terug naar dashboard
               </a>
