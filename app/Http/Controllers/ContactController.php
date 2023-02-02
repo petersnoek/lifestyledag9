@@ -37,11 +37,7 @@ class ContactController extends Controller
         ]);
     }
 
-     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // maak workshouphouder gebruikers aan voor de gekozen contact personen.
     public function generate_users(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -242,7 +238,6 @@ class ContactController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'contact_id' => ['required', 'numeric', 'min:1', Rule::exists(contact::class, 'id')],
-            'submit' => ['required', 'integer', Rule::in(['1', '2'])],
         ], [
             'contact_id.exists' => 'De contactpersoon bestaat niet of is al verwijderd.',
         ]);
@@ -252,19 +247,24 @@ class ContactController extends Controller
         }
 
         $contact = Contact::find(intval($request->contact_id));
-        $contact->delete();
+        $user = $contact->user()->first();
 
-        // $user = $contact->user()->first();
-        // if ($request->submit === 1) {
-        //     $contact->delete();
-        // } else if ($request->submit === 2) {
-        //     if ($user !== null && $user->can('user.block')) {
-        //         $user->block();
+        // // ----- de block functie en de route bestaan nog niet! dit is een voorbeeld hoe dat er dan uit zou zien in de contact destroy functie. ------
+        // //de functionaliteit voor het blokkeren van een gebruiker staat in feature 37
+        // //dit moet worden samengevoegd en/of aangepast om hierbij ook te werken.
+        // //de contact persoon word gekoppeld met de gebruiker wanneer de functie generate_users voor de contact persoon word uitgevoerd.
+        // //niet elke contact persoon heeft ook een gebruiker.
+        // if ($user !== null) {
+        //     if ($user->can('user.block')) { // de route kan verschillen
+        //         $user->block(); // moet nog gekoppeld met feature 37 daarin kan een gebruiker geblokkerd worden.
         //         $contact->delete();
+        //         return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.destroy2'));
         //     } else {
-        //         return redirect()->route('contacts.index')->with('errors', "Contact heeft geen gebruiker of je hebt geen toestemming om gebruikers te blokkeren.");
+        //         return redirect()->route('contacts.index')->withSuccess(__('failed.contacts.destroy')); // __() is voor de vertalingen in de language files
         //     }
         // }
+
+        $contact->delete();
 
         return redirect()->route('contacts.index')->withSuccess(__('succes.contacts.destroy'));
     }

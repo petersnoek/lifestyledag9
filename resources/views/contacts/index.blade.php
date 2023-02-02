@@ -92,18 +92,17 @@
                                 </td>
                                 <td>
                                 @can(['contacts.edit', 'contacts.update'])
-                                    <a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">edit</a>
+                                    <a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary" data-toggle="tooltip" title="Contactpersoon en gekoppelde gebruiker aanpassen.">Edit</a>
                                 @endcan
                                 @can(['contacts.destroy'])
                                     <form action="{{ route('contacts.destroy') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="contact_id" value="{{$contact->id}}">
 
-                                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Verwijder activiteit">
-                                            verwijder
+                                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Verwijder contactpersoon en blokeer gekoppelde gebruikers.">
+                                            Delete
                                         </button>
                                     </form>
-                                        {{-- <a href="{{ route('contacts.destroy', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-danger">verwijder</a> --}}
                                 @endcan
                                 </td>
                             </tr>
