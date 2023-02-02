@@ -77,6 +77,7 @@ class RoleSeeder extends Seeder
 
         //admin gets all permissions except the permissions in the array
         $exceptAdminPermissions = [
+            "permissions.index",
             "permissions.create",
             "permissions.store",
             "permissions.edit",
