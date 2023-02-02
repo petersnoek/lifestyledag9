@@ -7,7 +7,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
                     <h1 class="h3 fw-bold mb-2">
-                        Edit evenement
+                        Wijzig evenement
                     </h1>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">
 
@@ -19,7 +19,7 @@
                             <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
-                            Edit evenement
+                            Wijzig evenement
                         </li>
                     </ol>
                 </nav>
