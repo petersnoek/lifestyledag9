@@ -19,18 +19,19 @@ class EventController extends Controller
         return response()->view('events.create');
     }
 
-    public function edit(Request $request, $id) {
-        $id = ['id' => Crypt::decrypt($id)];
-        $validator = Validator::make($id, [
+    public function edit(Request $request, $event_id) {
+        $event_id = ['event_id' => Crypt::decrypt($event_id)];
+        $validator = Validator::make($event_id, [
             'id' => ['required', Rule::exists(Event::class, 'id')]
         ]);
-        $id = $id['id'];
 
-        if ($validator->fails()) {
-            return redirect()->route('dashboard')->withinput($id)->with('errors', $validator->errors());
-        }
+        $event_id = $event_id['event_id'];
 
-        $event = Event::find($id);
+        // if ($validator->fails()) {
+        //     return redirect()->route('dashboard')->withinput($event_id)->with('errors', $validator->errors());
+        // }
+
+        $event = Event::find($event_id);
 
         return response()->view('events.edit', [
             'event' => $event

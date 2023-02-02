@@ -117,7 +117,7 @@
                                             <input type="hidden" name="activity_id" value="{{$activity->id}}">
                                             <input type="hidden" name="event_id" value="{{$event->id}}">
 
-                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Weet u zeker dat u deze activiteit wilt verwijderen? Waarschuwing alle ingschrijvingen worden mee verwijdert!')">
+                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Weet u zeker dat u deze activiteit wilt verwijderen? Waarschuwing alle ingschrijvingen worden mee verwijderd!')">
                                                 Delete
                                             </button>
                                         </form>

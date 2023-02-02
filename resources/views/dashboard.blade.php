@@ -35,9 +35,9 @@
                 @foreach($events as $event)
                 <!-- Story -->
                 <div class="col-lg-4">
-                    <form action="{{ route('event.edit') }}" method="POST">
+                    <form action="{{ route('event.edit', ['event_id' => Crypt::encrypt($event->id)]) }}" method="GET">
                         @csrf
-                        <input type="hidden" name="event_id" value="{{$event->id}}">
+                        {{-- <input type="hidden" name="event_id" value="{{$event->id}}"> --}}
 
                         @can(['event.edit'])
                             <a class="block-rounded block-link-pop overflow-hidden" href="#">
