@@ -48,15 +48,9 @@ class UserSeeder extends Seeder
                 'first_name' => 'Workshophouder',
                 'last_name' => 'test',
                 'email' => 'workshophouder@gmail.com',
+                'email_verified_at' => now(),
                 'password' => '$2y$10$XVD0huqiYWSc8JrfXaWiKeatdaYlvTeSUvsv4N1N9so0Oabo97IMK',
             ],
-            [
-                'first_name' => 'Pieter',
-                'last_name' => 'workshophouder',
-                'email' => '99047256@mydavinci.nl',
-                'email_verified_at' => now(),
-                'password' => '$2y$10$qgwRljCpvoHAPFGqB6sOgelHP1Qz9Ela0SH2MNW50SKczWbPYF78W',
-            ]
         ];
 
         $role = Role::where('name', 'workshophouder')->first()->id;

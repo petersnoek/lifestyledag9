@@ -49,6 +49,8 @@ Route::group(['middleware' => ['permission']], function() {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit')->whereNumber('user');
         Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update')->whereNumber('user');
+        Route::get('/{user}/blockConfirm', [UsersController::class, 'blockConfirm'])->name('users.blockConfirm')->whereNumber('user');
+        Route::post('/block', [UsersController::class, 'block'])->name('users.block');
 
         Route::get('/resentAttachment', [UsersController::class, 'resentAttachment'])->name('users.resentAttachment');
     });
@@ -59,14 +61,14 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
         
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
-        //editen en verwijderen functie werkt nog niet.
+        //editen functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
     });
 
     // Route voor het event
     Route::group(['prefix' => '/event'], function() {
-        Route::get('/event/{event_id}', [ActivityController::class, 'index'])->name('event.show');
+        Route::get('/event/{event_id}', [EventController::class, 'show'])->name('event.show');
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
     });
