@@ -8,28 +8,14 @@ class NamePattern implements Rule
 {
     public function __construct()
     {
-        //
     }
-
-    /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
-     */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z0-9_\-., ?!]+$/', $value);
+        return preg_match('/^[a-zA-Z0-9_\-., ?!&""\'()]+$/', $value);
     }
 
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
     public function message()
     {
-        return 'Invalid :attribute. only letters, numbers, spaces, and some special characters are allowed.';
+        return 'Error: Ongeldige invoer bij "naam". Alleen letters zijn toegestaan';
     }
 }

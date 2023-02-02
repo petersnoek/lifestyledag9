@@ -62,3 +62,24 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+# overdracht voor developers
+hier komt alles te staan dat gebruikt kan worden na de overdracht van de applicatie
+
+## Gebruikte libraries zijn:
+- Het gebruikte thema is [OneUI](https://themeforest.net/item/)
+
+## stappen voor deployment:
+1. Code van dev naar de main branch
+2. Ga naar de main branch
+3. Pull de code in de main branch
+4. Zet met Filezilla de bestanden naar de live omgeving.
+    -	zonder private folder
+    -	zonder .env
+5. check of alle bestanden waaronder het .env en .htacces bestand in de online omgeving staan
+6. De migration route aan zetten en naar toe gaan in de online applicatie.
+7. De migration route uit zetten. 
+8. De live omgeving testen.
+9. Bugs aanmaken op GitHub en daarna de bugs in de devBugs branch oplossen.

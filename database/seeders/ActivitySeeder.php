@@ -17,13 +17,12 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         $nu = Carbon::now();
 
-        DB::table('activities')->insert(['id' => 2,     'event_id' => 3,   'owner_user_id' => 1, 'name' => 'Roeien', 'description' => 'Een kennismaking met roeien voor beginners.', 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('activities')->insert(['id' => 3,     'event_id' => 3,   'owner_user_id' => 1, 'name' => 'Disneyland!', 'description' => 'Een schoolreis naar Disneyland Parijs.', 'created_at' => $nu, 'updated_at' => $nu,]);
-        DB::table('activities')->insert(['id' => 4,     'event_id' => 3,   'owner_user_id' => 1, 'name' => 'Breakdance', 'description' => 'Leer breakdancen', 'created_at' => $nu, 'updated_at' => $nu,]);
-       
+        DB::table('activities')->insert(['id' => 2,     'event_id' => 4,   'owner_user_id' => 1, 'name' => 'Roeien', 'description' => 'Een kennismaking met roeien voor beginners.', 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('activities')->insert(['id' => 3,     'event_id' => 4,   'owner_user_id' => 1, 'name' => 'Disneyland!', 'description' => 'Een schoolreis naar Disneyland Parijs.', 'created_at' => $nu, 'updated_at' => $nu,]);
+        DB::table('activities')->insert(['id' => 4,     'event_id' => 4,   'owner_user_id' => 1, 'name' => 'Breakdance', 'description' => 'Leer breakdancen', 'created_at' => $nu, 'updated_at' => $nu,]);
     }
 }

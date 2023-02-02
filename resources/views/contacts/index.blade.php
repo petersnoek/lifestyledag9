@@ -13,16 +13,7 @@
 
                     </h2>
                 </div>
-                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-alt">
-                        <li class="breadcrumb-item">
-                            <a class="link-fx" href="javascript:void(0)">Lifestyledag</a>
-                        </li>
-                        <li class="breadcrumb-item" aria-current="page">
-                            Contactpersonen
-                        </li>
-                    </ol>
-                </nav>
+                
             </div>
         </div>
     </div>
@@ -46,14 +37,15 @@
                 @csrf
 
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">
+                    <h3 class="mb-0">
                         {{-- Dynamic Table <small>Export Buttons</small> --}}
-                        <button type="submit" class="btn btn-primary">maak users</button>
+                        <a href="{{ route('contacts.create') }}" class="btn btn-primary">Maak contactpersoon</a>
+                        <button type="submit" class="btn btn-primary">Maak workshophouder</button>
                     </h3>
                 </div>
 
-                <div class="block-content block-content-full">
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
+                <div class="block-content block-content-full table-responsive px-3 py-3">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm mb-0">
                         <thead>
                             <th scope="col" width="1%"></th>
                             {{-- <th scope="col" width="1%"><input type="checkbox" name="all_contacts"></th> --}}
@@ -61,8 +53,12 @@
                             <th>Roepnaam</th>
                             <th>Tussenvoegsel</th>
                             <th>Achternaam</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
+                            <th>Email</th>
                             <th>Mobiel</th>
+                            <th>Gebruiker</th>
+                            @can(['contacts.edit'])
+                                <th>Actie</th>
+                            @endcan
                         </thead>
 
                         @foreach($contacts as $contact)
@@ -75,12 +71,18 @@
                                         ? 'checked'
                                         : '' }}>
                                 </td>
-                                <td class="">{{ $contact->organisatie }}</td>
-                                <td class="">{{ $contact->roepnaam }}</td>
-                                <td class="">{{ $contact->tussenvoegsel }}</td>
-                                <td class="">{{ $contact->achternaam }}</td>
-                                <td class="">{{ $contact->email }}</td>
-                                <td style="width: 20%">{{ $contact->mobiel }}</td>
+                                <td>{{ $contact->organisation }}</td>
+                                <td>{{ $contact->first_name }}</td>
+                                <td>{{ $contact->insertion }}</td>
+                                <td>{{ $contact->last_name }}</td>
+                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->mobiel }}</td>
+                                <td>
+                                    <input type="checkbox" disabled @if($contact->user()->first() !== null){{"checked"}}@endif>
+                                </td>
+                                @can(['contacts.edit'])
+                                    <td><a href="{{ route('contacts.edit', ['id' => Crypt::encrypt($contact->id)]) }}" class="btn btn-primary">Edit</a></td>
+                                @endcan
                             </tr>
                         @endforeach
                     </table>
