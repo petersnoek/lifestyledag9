@@ -33,7 +33,7 @@ class Activity extends Model
     }
 
     function max_participants_round($eventround_id) {
-        return $this->hasMany(ActivityRound::class)->where('eventround_id', $eventround_id);
+        return $this->hasMany(ActivityRound::class)->where('event_round_id', $eventround_id);
     }
 
     public function is_owner(){
@@ -61,7 +61,7 @@ class Activity extends Model
     // checkt of inschrijven voor deze activiteit mogelijk is.
     function availability($eventround_id) {
         $enlistment_count = $this->enlistments()->where('round_id', $eventround_id)->count();
-        $round = $this->rounds()->where('eventround_id', $eventround_id)->first();
+        $round = $this->rounds()->where('event_round_id', $eventround_id)->first();
         $enlistment_exists = $this->enlistment_exists($eventround_id);
 
         if($round == null) {
@@ -79,7 +79,7 @@ class Activity extends Model
     // return het bericht dat weergeven moet worden voor de mogelijkheid van het inschrijven.
     function availability_message($eventround_id) {
         $enlistment_count = $this->enlistments()->where('round_id', $eventround_id)->count();
-        $round = $this->rounds()->where('eventround_id', $eventround_id)->first();
+        $round = $this->rounds()->where('event_round_id', $eventround_id)->first();
         $enlistment_for_round_exists = $this->enlistment_for_round_exists($eventround_id);
         $enlistment_for_activity_exists = $this->enlistment_for_activity_exists();
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Event;
+use App\Models\EventRound;
 use App\Models\Activity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,7 @@ class Enlistment extends Model
 
     public function eventrounds()
     {
-        return $this->belongsTo(Eventround::class, 'round_id', 'id');
+        return $this->belongsTo(EventRound::class, 'round_id', 'id');
     }
     
     public function user()

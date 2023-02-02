@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->foreign('event_id')->references('id')->on('events');
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
-            $table->foreign('round_id')->references('id')->on('eventrounds');
+            $table->foreign('round_id')->references('id')->on('event_rounds');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

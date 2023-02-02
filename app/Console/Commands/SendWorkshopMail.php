@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Mail\WorkshopMail;
-use App\Models\Eventround;
+use App\Models\EventRound;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,7 +35,7 @@ class SendWorkshopMail extends Command
                     }
                 }
                 
-                $eventrounds = Eventround::whereIn('id', $round_ids)->get()->sortBy('round');
+                $eventrounds = EventRound::whereIn('id', $round_ids)->get()->sortBy('round');
 
                 $mailInfo = [
                     'activity' => $activity->name,

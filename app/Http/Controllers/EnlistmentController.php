@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Enlistment;
 use App\Models\Activity;
-use App\Models\Eventround;
+use App\Models\EventRound;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -45,7 +45,7 @@ class EnlistmentController extends Controller
         $validator = Validator::make($request->all(), [
             'event_id' => ['required', 'numeric', Rule::exists(Event::class, 'id')],
             'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')],
-            'round_id' => ['required', 'numeric', Rule::exists(Eventround::class, 'id')]
+            'round_id' => ['required', 'numeric', Rule::exists(EventRound::class, 'id')]
         ]);
 
         if ($validator->fails()) {

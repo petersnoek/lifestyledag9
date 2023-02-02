@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Eventround;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,16 +29,16 @@ class Event extends Model
 
     public function eventrounds()
     {
-        return $this->hasMany(Eventround::class, 'event_id', 'id')->orderBy('round');
+        return $this->hasMany(EventRound::class, 'event_id', 'id')->orderBy('round');
     }
 
     public function has_round($round) {
-        return $this->hasMany(Eventround::class, 'event_id', 'id')->where('round', $round)->count() > 0;
+        return $this->hasMany(EventRound::class, 'event_id', 'id')->where('round', $round)->count() > 0;
     }
 
     public function has_rounds()
     {
-        return $this->hasMany(Eventround::class, 'event_id', 'id')->count() > 0;
+        return $this->hasMany(EventRound::class, 'event_id', 'id')->count() > 0;
     }
 
     public function activities() {

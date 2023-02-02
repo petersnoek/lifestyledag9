@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Event;
 use App\Models\Contact;
-use App\Models\Eventround;
 use App\Rules\PhonePattern;
 use App\Rules\insertionPattern;
 use App\Rules\LetterPattern;
@@ -37,7 +35,7 @@ class ContactController extends Controller
         ]);
     }
 
-     /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -116,10 +114,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return response()->view('contacts.create', [
-            'events' => Event::all(),
-            'rounds' => Eventround::all()
-        ]);
+        return response()->view('contacts.create');
     }
 
     /**
@@ -173,19 +168,19 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($wildcard)
     {
-        $id = ['id' => Crypt::decrypt($id)];
+        //gets 'id' wildcard and decrypts and validates it and returns the contacts.edit page with the right contact
+        $id = ['id' => Crypt::decrypt($wildcard)];
         $validator = Validator::make($id, [
             'id' => ['required', Rule::exists(Contact::class, 'id')]
         ]);
-        $id = $id['id'];
-
+        
         if ($validator->fails()) {
             return redirect()->route('contacts.index')->withinput($id)->with('errors', $validator->errors());
         }
 
-        $contact = Contact::find($id);
+        $contact = Contact::find($id['id']);
 
         return response()->view('contacts.edit', [
             'contact' => $contact

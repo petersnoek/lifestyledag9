@@ -6,7 +6,7 @@ use App\Models\Enlistment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Eventround extends Model
+class EventRound extends Model
 {
     use HasFactory;
 

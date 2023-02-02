@@ -17,62 +17,62 @@ class ActivityRoundsSeeder extends Seeder
         $data = [
             [
                 'activity_id' => 3,
-                'eventround_id' => 10,
+                'event_round_id' => 10,
                 'max_participants' => 15
             ],
             [
                 'activity_id' => 3,
-                'eventround_id' => 11,
+                'event_round_id' => 11,
                 'max_participants' => 10
             ],
             [
                 'activity_id' => 3,
-                'eventround_id' => 12,
+                'event_round_id' => 12,
                 'max_participants' => 8
             ],
             [
                 'activity_id' => 3,
-                'eventround_id' => 13,
+                'event_round_id' => 13,
                 'max_participants' => 8
             ],
             [
                 'activity_id' => 2,
-                'eventround_id' => 10,
+                'event_round_id' => 10,
                 'max_participants' => 15
             ],
             [
                 'activity_id' => 2,
-                'eventround_id' => 11,
+                'event_round_id' => 11,
                 'max_participants' => 10
             ],
             [
                 'activity_id' => 2,
-                'eventround_id' => 12,
+                'event_round_id' => 12,
                 'max_participants' => 8
             ],
             [
                 'activity_id' => 2,
-                'eventround_id' => 13,
+                'event_round_id' => 13,
                 'max_participants' => 8
             ],
             [
                 'activity_id' => 4,
-                'eventround_id' => 10,
+                'event_round_id' => 10,
                 'max_participants' => 15
             ],
             [
                 'activity_id' => 4,
-                'eventround_id' => 11,
+                'event_round_id' => 11,
                 'max_participants' => 10
             ],
             [
                 'activity_id' => 4,
-                'eventround_id' => 12,
+                'event_round_id' => 12,
                 'max_participants' => 8
             ],
             [
                 'activity_id' => 4,
-                'eventround_id' => 13,
+                'event_round_id' => 13,
                 'max_participants' => 8
             ],
         ];

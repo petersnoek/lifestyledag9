@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Activity;
-use App\Models\Eventround;
 use App\Rules\TitlePattern;
 use Illuminate\Http\Request;
 use App\Models\ActivityRound;
@@ -86,7 +85,7 @@ class ActivityController extends Controller
         foreach($event->eventrounds()->get() as $eventround){
             $activityRound = new ActivityRound();
             $activityRound->activity_id = $activity->id;
-            $activityRound->eventround_id = $eventround->id;
+            $activityRound->event_round_id = $eventround->id;
             $activityRound->max_participants = $request->max_participants[$eventround->round];
             $activityRound->save();
         }

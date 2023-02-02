@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('activity_rounds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('activity_id');
-            $table->foreignId('eventround_id');
+            $table->foreignId('event_round_id');
             $table->unsignedInteger('max_participants')->default(1);
             $table->timestamps();
         });

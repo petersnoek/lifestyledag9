@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('eventrounds', function (Blueprint $table) {
+        Schema::create('event_rounds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
             $table->integer('round')->unsigned();
