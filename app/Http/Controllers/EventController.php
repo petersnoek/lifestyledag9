@@ -51,12 +51,12 @@ class EventController extends Controller
             'startRound.*' => [/* removed nullable and added it to closure rule functions cuz otherwise it ignorse them (most importantly the last one)  */
                 function ($attribute,$value, $fail){
                     //check if startRound.* isn't before startDate
-                    if($value < date_format(date_create(request('startDate')),"H:i:s") && $value != null){
+                    if($value < date_format(date_create(request('startDate')),"H:i:s") && !$value == date_format(date_create(request('startDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be before '. date_format(date_create(request('startDate')),"H:i"));
                     }},
                 function ($attribute,$value, $fail){
                     //check if startRound.* isn't after endDate
-                    if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != null){
+                    if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != date_format(date_create(request('endDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be after '. date_format(date_create(request('endDate')),"H:i"));
                     }},
                     
@@ -88,7 +88,7 @@ class EventController extends Controller
                 }},
                 function ($attribute,$value, $fail){
                     //check if endRound.* isn't after endDate
-                    if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != null){
+                    if($value > date_format(date_create(request('endDate')),"H:i:s") && $value != date_format(date_create(request('endDate')),"H:i:s") && $value != null){
                         $fail($attribute .' can\'t be after '. date_format(date_create(request('endDate')),"H:i"));
                     }},
                 function ($attribute,$value, $fail){
