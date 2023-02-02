@@ -40,9 +40,17 @@
                         <input type="hidden" name="event_id" value="{{$event->id}}">
 
                         @can(['event.edit'])
-                            <button class="btn btn-primary btn-sm" type="submit">
-                                Edit
-                            </button>
+                            <a class="block-rounded block-link-pop overflow-hidden" href="#">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="nav nav-pills card-header-pills justify-content-end gap-2">
+                                            <button class="btn btn-primary btn-sm" type="submit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         @endcan
 
                     </form>
