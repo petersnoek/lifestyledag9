@@ -55,7 +55,7 @@
         </div>
 
         <div class="mt-2">
-            @include('layouts.partials.errorMessages');
+            @include('layouts.partials.errorMessages')
             @include('layouts.partials.messages')
         </div>
 
