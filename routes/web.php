@@ -40,7 +40,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
         Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
         Route::post('/update', [ContactController::class, 'update'])->name('contacts.update');
-
         Route::patch('/generate-users', [ContactController::class, 'generate_users'])->name('contacts.generate-users');
     });
 
@@ -66,7 +65,7 @@ Route::group(['middleware' => ['permission']], function() {
 
     // Route voor het event
     Route::group(['prefix' => '/event'], function() {
-        Route::get('/event/{event_id}', [EventController::class, 'show'])->name('event.show');
+        Route::get('/{event_id}', [EventController::class, 'show'])->name('event.show');
         Route::get('/create', [EventController::class, 'create'])->name('event.create');
         Route::get('/edit/{event_id}', [EventController::class, 'edit'])->name('event.edit');
         Route::post('/store', [EventController::class, 'store'])->name('event.store');
@@ -77,7 +76,6 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/store', [EnlistmentController::class, 'store'])->name('enlistment.store');
         Route::post('/destroy', [EnlistmentController::class, 'destroy'])->name('enlistment.destroy');
     });
-
 
     Route::group(['prefix' => '/dashboard'], function() {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -96,7 +94,6 @@ Route::group(['middleware' => ['guest']], function() {
     Route::fallback([FallbackController::class, 'fallback1']);
     Route::get('/', function() {return redirect()->route('login');});
 });
-
 
     // Route voor settingspagina
     Route::group(['prefix'=> '/settings'], function() {

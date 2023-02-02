@@ -27,9 +27,9 @@ class EventController extends Controller
 
         $event_id = $event_id['event_id'];
 
-        // if ($validator->fails()) {
-        //     return redirect()->route('dashboard')->withinput($event_id)->with('errors', $validator->errors());
-        // }
+        if ($validator->fails()) {
+            return redirect()->route('dashboard')->withinput($request->all())->with('errors', $validator->errors());
+        }
 
         $event = Event::find($event_id);
 
