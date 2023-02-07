@@ -60,13 +60,13 @@
 
                         <div class="block-content">
                             <h4 class="mb-1">
-                              {{ $event->name }}
+                                {{ $event->name }}
                             </h4>
                             <p class="fs-sm fw-medium mb-2">
-                              {{ $event->starts_at }} - {{ $event->ends_at }}
+                                {{ $event->date }} - {{ Carbon\Carbon::parse($event->starts_at)->format('H:i')}}-{{ Carbon\Carbon::parse($event->ends_at)->format('H:i')}}
                             </p>
                             <p class="fs-sm text-muted">
-                              {{ $event->description }}
+                                {{ $event->description }}
                             </p>
                         </div>
                     </a>

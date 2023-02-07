@@ -127,7 +127,7 @@ class UsersController extends Controller
             if($user->roles[0]->name == 'student' && count($user->enlistments) > 0){
                 //if user has enlistments loop through them and delete any that aren't too old/archived
                 foreach($user->enlistments as $enlistment){
-                    if($enlistment->event->ends_at > Carbon::now()->toDateTimeString()){
+                    if($enlistment->event->date > Carbon::now()->toDateTimeString()){
                         //if the enlistment is for an event that hasn't ended yet then it can delete it
                         $enlistment->delete();
                     }

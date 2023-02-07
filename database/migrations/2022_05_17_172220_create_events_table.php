@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->datetime('starts_at')->nullable();
-            $table->datetime('ends_at')->nullable();
+            $table->date('date')->nullable();
+            $table->time('starts_at')->nullable();
+            $table->time('ends_at')->nullable();
             $table->string('location')->nullable()->default('');
             $table->string('image')->nullable()->default(null);
 
