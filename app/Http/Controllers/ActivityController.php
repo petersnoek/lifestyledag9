@@ -158,14 +158,14 @@ class ActivityController extends Controller
             'max_participants' => ['required', 'array', 'min:1'],
             'max_participants.*' => ['required','integer', 'min:0', 'max:1000']
         ], [
-            'event_id.exists' => 'De event bestaat niet.',
-            'event_id.required' => 'Er moet een event gekozen zijn.',
+            'event_id.exists' => 'Het geselecteerde evenement bestaat niet.',
+            'event_id.required' => 'Er moet een evenement gekozen zijn.',
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             if ($errors->has('activity_id')) {
-                return redirect()->route('dashboard')->with('errors', __('failed.activity.not_found'));
+                return redirect()->route('event.show', ['event_id' => Crypt::encrypt($request->event_id)])->with('errors', __('failed.activity.not_found'));
             }
             return redirect()->route('activity.edit', ['activity_id' => Crypt::encrypt($request->activity_id)])->withinput($request->all())->with('errors', $validator->errors());
         }
@@ -200,7 +200,7 @@ class ActivityController extends Controller
             $activityRound->save();
         }
 
-        return redirect()->route('dashboard')->withSuccess(__('succes.activity.update', ['name'=> $activity->name]));
+        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($request->event_id)])->withSuccess(__('succes.activity.update', ['name'=> $activity->name]));
     }
 
     /**

@@ -87,11 +87,13 @@
         </div>
     </div>
 
-    <div class="mt-2">
-        @include('layouts.partials.errorMessages')
-    </div>
-
     <div class="content py-2">
+        <div class="mt-2">
+            @include('layouts.partials.errorMessages')
+        </div>
+        <div class="mt-2">
+            @include('layouts.partials.messages')
+        </div>
         <div class="row" style="display: flex; display: -webkit-flex; flex-wrap: wrap;">
 
             @if (count($event->activities) <= 0)
@@ -113,9 +115,9 @@
                     {{-- <a class="block-rounded block-link-pop block overflow-hidden" href="#"> --}}
                     <div class="card text-center">
                         @canany(['delete-any-activity', 'edit-any-activity'])
+                        @if (!$event->after_event_registration())
                         <div class="card-header">
                             <ul class="nav nav-pills card-header-pills justify-content-end gap-2">
-                                @if (!$event->after_event_registration())
                                     @can(['edit-any-activity'])
                                     <li>
                                         <a class="btn btn-primary btn-sm" href="{{ route('activity.edit', ['activity_id' => Crypt::encrypt($activity->id)]) }}">Edit</a>
@@ -134,9 +136,9 @@
                                         </form>
                                     </li>
                                     @endcan
-                                @endif
                             </ul>
                         </div>
+                        @endif
                         @endcanany
                         <div style="overflow:hidden; height:11.75rem;" class="position-relative">
                             <img style="top: 50%; left: 50%; transform: translate(-50%, -50%); min-height: 11.75rem; min-width: 100%" class="w-100 position-absolute" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">

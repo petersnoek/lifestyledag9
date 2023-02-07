@@ -16,10 +16,13 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="link-fx" href="{{ route('event.show', ['event_id' => Crypt::encrypt($activity->event->id)]) }}">{{$activity->event->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{$activity->name}}
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
-                            Edit activiteit
+                            Edit
                         </li>
                     </ol>
                 </nav>
@@ -99,7 +102,10 @@
                         <div class="col-sm-8 col-xl-5">
                             <div class="mb-4 ">
                                 <div style="overflow-y:hidden; height:11.75rem" class="form-control form-control-alt rounded-0 rounded-top py-3 pb-0">
-                                    <img id="headerPreview" class="w-100 p-0" src="{{asset('media/photos/photo2@2x.jpg')}}" alt="Activiteit header preview">
+                                    <div style="overflow:hidden; height:11.75rem;" class="position-relative">
+                                        <img id='headerPreview' style="top: 50%; left: 50%; transform: translate(-50%, -50%); min-height: 11.75rem; min-width: 100%" class="w-100 position-absolute" src="@if(isset($activity->image)) {{asset('storage/activityHeaders/'.$activity->image)}} @else {{asset('media/photos/photo2@2x.jpg')}} @endif" alt="kan afbeelding niet inladen.">
+                                        {{-- image still stretches a bit cuz I can't not give it a width or height; this is like near impossible --}}
+                                    </div>                                
                                 </div>
                                 <label for="imageInput" class="btn btn-lg btn-alt-primary rounded-0 rounded-bottom py-3 text-muted fw-normal w-100 @if ($errors->has('image')) {{'is-invalid'}} @endif">Afbeelding</label>
                                 <input id="imageInput" class="visually-hidden" type="file" name="image" onchange="headerPreview.src=window.URL.createObjectURL(this.files[0])" accept="image/png, image/jpg, image/jpeg">
@@ -111,7 +117,7 @@
                             @endif
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-lg btn-alt-primary">
-                                Edit Activiteit
+                                Wijzigingen Opslaan
                                 </button>
                             </div>
                         </div>
