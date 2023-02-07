@@ -18,19 +18,19 @@ class DashboardController extends Controller
     public function index() {
         $User = User::find(Auth::User()->id);
         if ($User->can('view-any-event')) {
-            $events = Event::orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
+            $events = Event::orderBy("date", "desc")->orderBy('name', 'asc')->get();
         } else {
-            $events = Event::where('ends_at', '>=', Carbon::now()->toDateTimeString())->orderBy("starts_at", "desc")->orderBy('name', 'asc')->get();
+            $events = Event::where('date', '>=', Carbon::now()->toDateTimeString())->orderBy("date", "desc")->orderBy('name', 'asc')->get();
         }
         
         $workshops = $User->activities()->get()->sortByDesc(function ($data) {
-            return $data->event()->first()->ends_at;
+            return $data->event()->first()->date;
         })->sortBy(function ($data) {
             return $data['name'];
         })->all();
 
         $workshops = $User->activities()->get()->sortByDesc(function ($data) {
-            return $data->event()->first()->ends_at;
+            return $data->event()->first()->date;
         })->sortBy(function ($data) {
             return $data['name'];
         })->all();

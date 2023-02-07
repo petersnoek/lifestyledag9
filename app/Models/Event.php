@@ -16,6 +16,7 @@ class Event extends Model
         'description',
         'location',
         'image',
+        'date',
         'starts_at',
         'ends_at',
         'enlist_starts_at',
@@ -70,7 +71,7 @@ class Event extends Model
             return true;
         }
 
-        if($this->ends_at >= Carbon::now()->toDateTimeString()){
+        if($this->date >= Carbon::now()->toDateTimeString()){
             return true;
         }
     }

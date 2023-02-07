@@ -12,7 +12,7 @@
                         </h1>
                         <div>
                             <div>
-                                <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->starts_at)->format('d-m-Y H:i') }} - {{ Carbon\Carbon::parse($event->ends_at)->format('   H:i') }}</small>
+                                <small><i class="fa fa-calendar"></i> {{ Carbon\Carbon::parse($event->date)->format('d-m-Y') }} - {{ Carbon\Carbon::parse($event->starts_at)->format('H:i') }}-{{ Carbon\Carbon::parse($event->ends_at)->format('H:i') }}</small>
                             </div>
                             @if($event->location)
                             <div>
@@ -182,5 +182,4 @@
                 @endforeach
             </div>
         </div>
-
 @endsection
