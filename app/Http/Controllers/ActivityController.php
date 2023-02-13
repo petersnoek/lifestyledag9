@@ -142,6 +142,26 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    
+    public function destroyConfirm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'activity_id' => ['required', 'numeric', Rule::exists(Activity::class, 'id')],
+            'event_id' => ['required', 'numeric', Rule::exists(Event::class, 'id')]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('event.show', ['event_id' => Crypt::encrypt($request->event_id)])->with('errors', ['Activiteit kan niet worden verwijdert.']);
+        }
+
+        return response()->view('activities.destroy', [
+            'activity' => Activity::where('id',$request->activity_id)->get(),
+            'event' => Event::where('id',$request->event_id)->get(),
+        ]);
+    }
+
+
     public function destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -150,23 +170,20 @@ class ActivityController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('dashboard')->with('errors', ['Error met data inschrijving.']);
+            return redirect()->route('event.show', ['event_id' => Crypt::encrypt($request->event_id)])->with('errors', ['Error met data inschrijving.']);
         }
 
-        $event_id = intval($request->event_id);
-        $activity_id = intval($request->activity_id);
-        $activity = Activity::find($activity_id);
+        $activity = Activity::find($request->activity_id);
         $image = $activity->image;
-        $activity_round = ActivityRound::all()->where("activity_id", $activity_id);
+        $activity_round = ActivityRound::all()->where("activity_id", $request->activity_id);
 
-        if ($activity->is_owner()) {
-            $activity->delete();
-            Storage::disk('public')->delete("activityHeaders/" . $image);  
-            foreach ($activity_round as $activity) {
-                $activity->delete($activity_id);
-            }
-            return redirect()->route('activity.index', ['event_id' => Crypt::encrypt($event_id)])->withSuccess(__('Activity successfully removed.'));
+        $activity_name = $activity->name;
+
+        $activity->delete();
+        Storage::disk('public')->delete("activityHeaders/" . $image);  
+        foreach ($activity_round as $activity) {
+            $activity->delete($request->activity_id);
         }
-        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($event_id)]);
-            }
+        return redirect()->route('event.show', ['event_id' => Crypt::encrypt($request->event_id)])->withSuccess(__('Activiteit \''.$activity_name.'\' succesvol verwijdert.'));
+    }
 }

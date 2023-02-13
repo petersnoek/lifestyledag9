@@ -83,13 +83,15 @@
             </div>
         </div>
 
-        <div class="mt-2">
-            @include('layouts.partials.errorMessages')
-        </div>    
 
         <div class="content">
             <div class="row" style="display: flex; display: -webkit-flex; flex-wrap: wrap;">
-
+            <div class="mt-2">
+                @include('layouts.partials.errorMessages')
+            </div>  
+            <div class="mt-2">
+                @include('layouts.partials.messages')
+            </div>  
                 @if (count($event->activities) <= 0)
                     <div class="d-flex align-items-center justify-content-center">
                         <div>
@@ -125,12 +127,12 @@
                                     @endcan
                                     @can(['delete-any-activity'])
                                     <li>
-                                        <form action="{{ route('activity.destroy') }}" method="POST">
+                                        <form action="{{ route('activity.destroyConfirm') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="activity_id" value="{{$activity->id}}">
                                             <input type="hidden" name="event_id" value="{{$event->id}}">
 
-                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Weet u zeker dat u deze activiteit wilt verwijderen? Waarschuwing alle ingschrijvingen worden mee verwijdert!')">
+                                            <button class="btn btn-danger btn-sm" type="submit">
                                                 Delete
                                             </button>
                                         </form>

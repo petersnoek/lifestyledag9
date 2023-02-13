@@ -63,6 +63,7 @@ Route::group(['middleware' => ['permission']], function() {
         Route::post('/update', [ActivityController::class, 'update'])->name('activity.update');
         //editen functie werkt nog niet.
         Route::post('/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+        Route::post('/destroyConfirm', [ActivityController::class, 'destroyConfirm'])->name('activity.destroyConfirm');
         Route::post('/destroy', [ActivityController::class, 'destroy'])->name('activity.destroy');
     });
 
