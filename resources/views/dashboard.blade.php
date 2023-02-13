@@ -103,7 +103,7 @@
                                 <th>Evenement</th>
                                 <th>Activiteit</th>
                                 <th>Gewijzigd</th>
-                                <th class="text-center" style="width: 5%;">Actie</th>
+                                {{-- <th class="text-center" style="width: 5%;">Actie</th> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -114,7 +114,7 @@
                                 <td class="text-left">{{ $activity->event->name }}</td>
                                 <td class="text-left">{{ $activity->name }}</td>
                                 <td class="text-left">{{ $activity->updated_at }}</td>
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     <div class="btn-group">
                                         @if (!$activity->event->after_event_registration())
                                             @can(['activity.edit', 'activity.update'])
@@ -139,7 +139,7 @@
                                             @endcan
                                         @endif
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
 
