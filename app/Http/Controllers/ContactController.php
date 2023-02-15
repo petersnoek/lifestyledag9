@@ -7,7 +7,7 @@ use App\Models\Event;
 use App\Models\Contact;
 use App\Models\Eventround;
 use App\Rules\PhonePattern;
-use App\Rules\insertionPattern;
+use App\Rules\InsertionPattern;
 use App\Rules\LetterPattern;
 use App\Rules\OrganisationNamePattern;
 use Illuminate\Validation\Rule;
@@ -131,7 +131,7 @@ class ContactController extends Controller
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', new LetterPattern(), 'max:255'],
-            'insertion' => [new insertionPattern(), 'max:255'],
+            'insertion' => [new InsertionPattern(), 'max:255'],
             'last_name' => ['required', new LetterPattern(), 'max:255'],
             'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
             'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class) , 'max:255'],
@@ -204,7 +204,7 @@ class ContactController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => ['bail', 'required', 'integer', 'min:1', Rule::exists(contact::class, 'id')],
             'first_name' => ['required', new LetterPattern(), 'max:255'],
-            'insertion' => [new insertionPattern(), 'max:255'],
+            'insertion' => [new InsertionPattern(), 'max:255'],
             'last_name' => ['required', new LetterPattern(), 'max:255'],
             'organisation' => ['required', new OrganisationNamePattern(), 'max:255'],
             'email' => ['required', 'email:rfc,dns', Rule::unique(contact::class)->ignore($request->id), 'max:255'],
